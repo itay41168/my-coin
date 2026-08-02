@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>מטבע אישי</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;500;600;700&display=swap');
+
+:root{
+  --parchment:#EFE3C8;
+  --parchment-deep:#E6D6AF;
+  --ink:#2B2417;
+  --ink-soft:#5A5040;
+  --bronze:#A8763E;
+  --bronze-dark:#7C5426;
+  --bronze-deep:#5C3C1E;
+  --patina:#4F6B57;
+  --patina-dark:#354B3B;
+  --gold:#C7A233;
+  --rust:#9C3A2C;
+  --card:#FBF6E9;
+  --line:rgba(92,60,30,.22);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{height:100%;}
+body{margin:0;font-family:'Assistant',sans-serif;background:#DED0AE;background-image:
+  radial-gradient(circle at 20% 20%, rgba(255,255,255,.25), transparent 40%),
+  radial-gradient(circle at 80% 80%, rgba(0,0,0,.05), transparent 40%);
+  color:var(--ink);min-height:100%;display:flex;justify-content:center;
+  font-size:18px;}
+
+.phone{
+  width:100%;max-width:520px;
+  background:var(--parchment);
+  border:none;
+  border-radius:0;
+  box-shadow:none;
+  overflow:hidden;
+  position:relative;
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;flex-direction:column;
+}
+@media (min-width:560px){
+  body{padding:28px 12px;}
+  .phone{min-height:820px;border-radius:32px;border:1px solid var(--line);
+    box-shadow:0 2px 0 rgba(255,255,255,.5) inset, 0 18px 40px rgba(60,40,10,.25);}
+}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 20px 14px;
+  font-family:'Frank Ruhl Libre',serif;
+  font-weight:700;font-size:21px;color:var(--bronze-deep);
+  border-bottom:1px solid var(--line);
+}
+.topbar .icon-btn{
+  width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--line);background:var(--card);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--bronze-dark);
+  font-size:21px;user-select:none;
+}
+.topbar .icon-btn:active{transform:scale(.94);}
+.topbar .spacer{width:46px;}
+
+.screen{flex:1;display:flex;flex-direction:column;padding:26px 22px 34px;gap:20px;overflow-y:auto;}
+.screen h1{font-family:'Frank Ruhl Libre',serif;font-size:28px;margin:0;color:var(--ink);text-align:center;line-height:1.3;}
+.screen p.sub{margin:0;color:var(--ink-soft);text-align:center;font-size:17px;line-height:1.5;}
+
+.btn{
+  border:none;border-radius:16px;padding:20px 20px;font-family:'Assistant',sans-serif;
+  font-weight:700;font-size:19px;cursor:pointer;transition:transform .12s;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(180deg,var(--bronze),var(--bronze-dark));color:#FBF3E2;box-shadow:0 3px 0 var(--bronze-deep);}
+.btn-ghost{background:var(--card);color:var(--bronze-dark);border:1px solid var(--line);}
+.btn-outline{background:transparent;color:var(--bronze-dark);border:1.5px solid var(--bronze-dark);}
+.btn-row{display:flex;gap:14px;}
+.btn-row .btn{flex:1;}
+.btn-circle{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;border:none;cursor:pointer;}
+.btn-circle.yes{background:var(--patina);color:#F3F7F0;}
+.btn-circle.no{background:var(--rust);color:#FBEAE6;}
+
+.medallion-frame{
+  position:relative;width:min(78vw,300px);height:min(78vw,300px);margin:8px auto;border-radius:50%;
+  background:var(--card);border:8px solid var(--bronze);
+  box-shadow:0 0 0 4px var(--parchment), 0 0 0 5px var(--bronze-dark), inset 0 0 0 2px rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.medallion-frame.dashed{border-style:dashed;background:var(--parchment-deep);}
+.medallion-frame img{width:100%;height:100%;object-fit:cover;}
+.medallion-frame .placeholder{color:var(--bronze-dark);font-size:64px;}
+.corner-marks span{position:absolute;width:22px;height:22px;border-color:var(--bronze-dark);}
+.corner-marks span:nth-child(1){top:10px;left:10px;border-top:4px solid;border-right:4px solid;}
+.corner-marks span:nth-child(2){top:10px;right:10px;border-top:4px solid;border-left:4px solid;}
+.corner-marks span:nth-child(3){bottom:10px;left:10px;border-bottom:4px solid;border-right:4px solid;}
+.corner-marks span:nth-child(4){bottom:10px;right:10px;border-bottom:4px solid;border-left:4px solid;}
+
+.rope-ring{position:absolute;inset:-11px;border-radius:50%;pointer-events:none;}
+
+.icon-tile{
+  display:flex;align-items:center;gap:16px;background:var(--card);
+  border:1px solid var(--line);border-radius:18px;padding:18px 20px;cursor:pointer;
+}
+.icon-tile:active{transform:scale(.98);}
+.icon-tile .ico{width:68px;height:68px;border-radius:14px;background:var(--parchment-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:36px;}
+.icon-tile span.label{font-weight:600;font-size:18px;}
+.icon-tile.selected{outline:3px solid var(--bronze);background:#F6EAD2;}
+
+.big-illustration{width:min(80vw,300px);height:min(80vw,300px);border-radius:50%;margin:8px auto;overflow:hidden;border:8px solid var(--bronze);box-shadow:0 0 0 4px var(--parchment), 0 0 0 5px var(--bronze-dark);}
+
+.split-coin{position:relative;width:min(82vw,320px);height:min(82vw,320px);margin:8px auto;border-radius:50%;overflow:hidden;border:9px solid var(--bronze);box-shadow:0 0 0 4px var(--parchment), 0 0 0 5px var(--bronze-dark);}
+.split-coin .half{position:absolute;top:0;bottom:0;width:50%;background-size:cover;background-position:center;}
+.split-coin .half.left{left:0;}
+.split-coin .half.right{right:0;}
+.split-coin .divider{position:absolute;top:0;bottom:0;left:50%;width:3px;background:rgba(92,60,30,.35);transform:translateX(-1px);}
+
+.name-input{
+  width:100%;padding:20px;border-radius:16px;border:1px solid var(--line);
+  background:var(--card);font-family:'Assistant',sans-serif;font-size:19px;text-align:center;
+  color:var(--ink);
+}
+.name-input:focus{outline:3px solid var(--bronze);}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.coin-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;}
+.coin-card .mini-coin{width:110px;height:110px;border-radius:50%;overflow:hidden;border:4px solid var(--bronze);position:relative;}
+.coin-card .mini-coin .half{position:absolute;top:0;bottom:0;width:50%;background-size:cover;background-position:center;}
+.coin-card span.cname{font-weight:600;font-size:16px;}
+.add-card{border:3px dashed var(--bronze);background:transparent;color:var(--bronze-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:18px;padding:28px 16px;cursor:pointer;min-height:180px;}
+.add-card .plus{font-size:38px;}
+
+.sparkle{position:absolute;font-size:26px;color:var(--gold);}
+
+.progress-dots{display:flex;gap:6px;justify-content:center;margin-top:auto;padding-top:8px;}
+.progress-dots span{width:7px;height:7px;border-radius:50%;background:var(--line);}
+.progress-dots span.active{background:var(--bronze);}
+
+.hidden-input{display:none;}
+
+.more-toggle{text-align:center;font-size:16px;color:var(--bronze-dark);font-weight:600;cursor:pointer;padding:8px;}
+
+.share-row{display:flex;gap:14px;}
+.share-row .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;}
+
+.drag-hint{text-align:center;font-size:15px;color:var(--ink-soft);}
+.slider-wrap{width:100%;padding:0 10px;}
+input[type=range]{width:100%;accent-color:var(--bronze);height:36px;}
+</style>
+</head>
+<body>
+
+<div class="phone" id="phone"></div>
+
+<script>
+const state = {
+  step: 'intro',
+  photo: null,
+  secondSide: null,
+  secondSideConfirmed: false,
+  coinName: '',
+  myCoins: [],
+  activeCoinIndex: null,
+  showMoreOptions: false,
+  splitPos: 50
+};
+
+const SIDE_OPTIONS = [
+  {id:'ship', label:'ספינה עתיקה', bg:'#BFD9E0', ico:'⛵'},
+  {id:'tomb', label:'קבר עתיק', bg:'#D8CBB4', ico:'⛩'},
+  {id:'building', label:'מבנה עתיק', bg:'#E3D9C4', ico:'🏛'}
+];
+const MORE_OPTIONS = [
+  {id:'sun', label:'שמש עתיקה', bg:'#F0DFAE', ico:'☀'},
+  {id:'tree', label:'עץ זית', bg:'#D7E0C4', ico:'🌿'},
+  {id:'amphora', label:'אגרטל חרס', bg:'#E6D2B8', ico:'🏺'},
+  {id:'scroll', label:'מגילה עתיקה', bg:'#EDE1C2', ico:'📜'}
+];
+
+function allSideOptions(){ return SIDE_OPTIONS.concat(MORE_OPTIONS); }
+function sideById(id){ return allSideOptions().find(o=>o.id===id); }
+
+function sideIllustration(opt, size){
+  return `<div style="width:100%;height:100%;background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:${size||70}px;">${opt.ico}</div>`;
+}
+
+function render(){
+  const phone = document.getElementById('phone');
+  phone.innerHTML = screens[state.step]();
+  bindEvents();
+}
+
+function topbar(title, opts){
+  opts = opts || {};
+  const left = opts.back ? `<div class="icon-btn" data-action="back">‹</div>` : (opts.home ? `<div class="icon-btn" data-action="gotoIntro">⌂</div>` : `<div class="spacer"></div>`);
+  const right = opts.home2 ? `<div class="icon-btn" data-action="gotoIntro">⌂</div>` : (opts.menu ? `<div class="icon-btn" data-action="gotoMyCoins">≡</div>` : `<div class="spacer"></div>`);
+  return `<div class="topbar">${left}<span>${title}</span>${right}</div>`;
+}
+
+const screens = {
+
+intro(){
+  return `
+  ${topbar('', {})}
+  <div class="screen" style="justify-content:center;">
+    <h1>צור מטבע אישי</h1>
+    <p class="sub">מטבע שמספר את הסיפור שלך</p>
+    <div class="medallion-frame dashed">
+      <div class="placeholder">＋</div>
+    </div>
+    <button class="btn btn-primary" data-action="startCreate">התחל יצירה</button>
+    ${state.myCoins.length ? `<button class="btn btn-ghost" data-action="gotoMyCoins">המטבעות שלי</button>` : ''}
+  </div>`;
+},
+
+takePhoto(){
+  return `
+  ${topbar('צילום הדמות שלך', {back:true})}
+  <div class="screen" style="justify-content:center;">
+    <h1 style="font-size:19px;">צלם את עצמך</h1>
+    <p class="sub">זה יהיה רק אתה בתמונה</p>
+    <div class="medallion-frame dashed" style="position:relative;">
+      <div class="corner-marks"><span></span><span></span><span></span><span></span></div>
+      <div class="placeholder">🙂</div>
+    </div>
+    <input type="file" accept="image/*" capture="user" class="hidden-input" id="photoInput">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div class="icon-btn" style="width:88px;height:88px;font-size:38px;" data-action="triggerPhoto">📷</div>
+      <span style="font-weight:700;color:var(--bronze-dark);font-size:18px;">צלם</span>
+    </div>
+  </div>`;
+},
+
+confirmPhoto(){
+  return `
+  ${topbar('אישור התמונה', {back:true})}
+  <div class="screen" style="justify-content:center;">
+    <h1 style="font-size:19px;">האם זו תמונה טובה?</h1>
+    <div class="medallion-frame">
+      <img src="${state.photo}">
+    </div>
+    <div class="btn-row" style="justify-content:center;">
+      <div class="btn-circle no" data-action="retakePhoto">✕</div>
+      <div class="btn-circle yes" data-action="confirmPhoto">✓</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" data-action="retakePhoto">צלם שוב</button>
+      <button class="btn btn-primary" data-action="confirmPhoto">זה טוב</button>
+    </div>
+  </div>`;
+},
+
+chooseSide(){
+  const opts = state.showMoreOptions ? allSideOptions() : SIDE_OPTIONS;
+  return `
+  ${topbar('בחירת הצד השני', {back:true})}
+  <div class="screen">
+    <h1 style="font-size:19px;">בחר מה יופיע בצד השני</h1>
+    ${opts.map(o=>`
+      <div class="icon-tile ${state.secondSide===o.id?'selected':''}" data-action="selectSide" data-id="${o.id}">
+        <div class="ico">${sideIllustration(o,28)}</div>
+        <span class="label">${o.label}</span>
+      </div>`).join('')}
+    ${!state.showMoreOptions ? `<div class="more-toggle" data-action="toggleMore">עוד אפשרויות ▾</div>` : ''}
+  </div>`;
+},
+
+confirmSide(){
+  const opt = sideById(state.secondSide);
+  return `
+  ${topbar('אישור הצד השני', {back:true})}
+  <div class="screen" style="justify-content:center;">
+    <h1 style="font-size:19px;">האם זה מתאים?</h1>
+    <div class="big-illustration">${sideIllustration(opt,90)}</div>
+    <div class="btn-row" style="justify-content:center;">
+      <div class="btn-circle no" data-action="backToChooseSide">✕</div>
+      <div class="btn-circle yes" data-action="confirmSide">✓</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" data-action="backToChooseSide">בחר שוב</button>
+      <button class="btn btn-primary" data-action="confirmSide">זה מתאים</button>
+    </div>
+  </div>`;
+},
+
+previewCombined(){
+  const opt = sideById(state.secondSide);
+  return `
+  ${topbar('תצוגה מקדימה', {back:true})}
+  <div class="screen" style="justify-content:center;">
+    <h1 style="font-size:19px;">ככה יראה המטבע שלך</h1>
+    <div class="split-coin">
+      <div class="half left" style="background-image:url('${state.photo}')"></div>
+      <div class="half right" style="background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:60px;">${opt.ico}</div>
+      <div class="divider"></div>
+    </div>
+    <p class="sub">יפה! בוא נשמור</p>
+    <button class="btn btn-primary" data-action="gotoName">שמור מטבע</button>
+    <button class="btn btn-ghost" data-action="backToConfirmSide">שנה משהו</button>
+  </div>`;
+},
+
+nameCoin(){
+  return `
+  ${topbar('שם המטבע', {back:true})}
+  <div class="screen" style="justify-content:center;">
+    <h1 style="font-size:19px;">תן שם למטבע שלך</h1>
+    <div class="medallion-frame" style="border-style:solid;">
+      <div class="placeholder" style="font-size:34px;">✎</div>
+    </div>
+    <input class="name-input" id="coinNameInput" placeholder="המטבע שלי" value="${state.coinName}">
+    <button class="btn btn-primary" data-action="submitName">המשך</button>
+  </div>`;
+},
+
+reveal(){
+  const opt = sideById(state.secondSide);
+  return `
+  ${topbar('הצגת המטבע', {back:true})}
+  <div class="screen" style="justify-content:center;position:relative;">
+    <span class="sparkle" style="top:70px;left:26px;">✦</span>
+    <span class="sparkle" style="top:60px;right:30px;">✦</span>
+    <h1 style="font-size:20px;">המטבע שלך מוכן!</h1>
+    <div class="split-coin">
+      <div class="half left" style="background-image:url('${state.photo}')"></div>
+      <div class="half right" style="background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:60px;">${opt.ico}</div>
+      <div class="divider"></div>
+    </div>
+    <button class="btn btn-primary" data-action="saveToMyCoins">שמור למטבעות שלי ♥</button>
+    <button class="btn btn-outline" data-action="viewFinalCoin">צפה במטבע</button>
+  </div>`;
+},
+
+myCoins(){
+  return `
+  ${topbar('המטבעות שלי', {menu:true, home2:true})}
+  <div class="screen">
+    <h1 style="font-size:19px;">המטבע האישי שלי</h1>
+    <div class="grid2">
+      ${state.myCoins.map((c,i)=>`
+        <div class="coin-card" data-action="openCoin" data-i="${i}">
+          <div class="mini-coin">
+            <div class="half" style="left:0;background-image:url('${c.photo}')"></div>
+            <div class="half" style="right:0;background:${sideById(c.secondSide).bg};display:flex;align-items:center;justify-content:center;font-size:26px;">${sideById(c.secondSide).ico}</div>
+          </div>
+          <span class="cname">${c.name}</span>
+        </div>`).join('')}
+      <div class="add-card" data-action="startCreate">
+        <span class="plus">＋</span>
+        <span>צור מטבע חדש</span>
+      </div>
+    </div>
+  </div>`;
+},
+
+viewCoin(){
+  const c = state.myCoins[state.activeCoinIndex];
+  const opt = sideById(c.secondSide);
+  return `
+  ${topbar('המטבע שלי', {back:true})}
+  <div class="screen" style="justify-content:center;">
+    <h1 style="font-size:19px;">${c.name}</h1>
+    <p class="sub">החלק כדי לראות את שני הצדדים</p>
+    <div class="split-coin" id="viewSplit">
+      <div class="half left" style="background-image:url('${c.photo}')"></div>
+      <div class="half right" style="background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:60px;">${opt.ico}</div>
+      <div class="divider" id="viewDivider" style="left:${state.splitPos}%;"></div>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" min="5" max="95" value="${state.splitPos}" id="splitSlider">
+    </div>
+    <div class="share-row">
+      <button class="btn btn-ghost" data-action="none">🔊 האזנה</button>
+      <button class="btn btn-primary" id="shareBtn" data-action="shareCoin">⇧ שתף בוואטסאפ</button>
+    </div>
+    <p class="sub" id="shareStatus" style="min-height:16px;"></p>
+  </div>`;
+}
+
+};
+
+function loadImage(src){
+  return new Promise((resolve, reject)=>{
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = ()=>resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+async function renderCoinToBlob(coin){
+  const opt = sideById(coin.secondSide);
+  const size = 600;
+  const canvas = document.createElement('canvas');
+  canvas.width = size; canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#EFE3C8';
+  ctx.fillRect(0,0,size,size);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size/2 - 14, 0, Math.PI*2);
+  ctx.clip();
+
+  const photoImg = await loadImage(coin.photo);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0,0,size/2,size);
+  ctx.clip();
+  const iw = photoImg.width, ih = photoImg.height;
+  const scale = Math.max(size/iw, size/ih);
+  const dw = iw*scale, dh = ih*scale;
+  ctx.drawImage(photoImg, size/2-dw/2, size/2-dh/2, dw, dh);
+  ctx.restore();
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(size/2,0,size/2,size);
+  ctx.clip();
+  ctx.fillStyle = opt.bg;
+  ctx.fillRect(size/2,0,size/2,size);
+  ctx.font = '220px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(opt.ico, size/2 + size/4, size/2 + 10);
+  ctx.restore();
+
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size/2 - 14, 0, Math.PI*2);
+  ctx.lineWidth = 22;
+  ctx.strokeStyle = '#A8763E';
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size/2 - 3, 0, Math.PI*2);
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = '#7C5426';
+  ctx.stroke();
+
+  return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+}
+
+async function shareCoin(coin){
+  const statusEl = document.getElementById('shareStatus');
+  if(statusEl) statusEl.textContent = 'מכין תמונה לשיתוף...';
+  try{
+    const blob = await renderCoinToBlob(coin);
+    const file = new File([blob], (coin.name || 'המטבע-שלי') + '.png', {type:'image/png'});
+    const shareText = 'הנה המטבע האישי שלי: ' + coin.name;
+
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], title:coin.name, text:shareText});
+      if(statusEl) statusEl.textContent = '';
+    } else {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = file.name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      if(statusEl) statusEl.textContent = 'התמונה הורדה. פותח וואטסאפ - צרף אותה בשיחה.';
+      setTimeout(()=>{
+        window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
+      }, 600);
+    }
+  }catch(err){
+    if(err && err.name === 'AbortError') { if(statusEl) statusEl.textContent=''; return; }
+    if(statusEl) statusEl.textContent = 'לא הצלחנו לשתף אוטומטית, ננסה דרך קישור טקסט.';
+    window.open('https://wa.me/?text=' + encodeURIComponent('הנה המטבע האישי שלי: ' + coin.name), '_blank');
+  }
+}
+
+function bindEvents(){
+  const phone = document.getElementById('phone');
+  phone.querySelectorAll('[data-action]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      const action = el.getAttribute('data-action');
+      const i = el.getAttribute('data-i');
+      const id = el.getAttribute('data-id');
+      handleAction(action, {i, id});
+    });
+  });
+  const photoInput = document.getElementById('photoInput');
+  if(photoInput){
+    photoInput.addEventListener('change', (e)=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev)=>{
+        state.photo = ev.target.result;
+        state.step = 'confirmPhoto';
+        render();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  const nameInput = document.getElementById('coinNameInput');
+  if(nameInput){
+    nameInput.addEventListener('input', (e)=>{ state.coinName = e.target.value; });
+  }
+  const slider = document.getElementById('splitSlider');
+  if(slider){
+    slider.addEventListener('input', (e)=>{
+      state.splitPos = e.target.value;
+      document.getElementById('viewDivider').style.left = state.splitPos + '%';
+      document.querySelector('#viewSplit .half.left').style.width = state.splitPos + '%';
+      document.querySelector('#viewSplit .half.right').style.width = (100-state.splitPos) + '%';
+    });
+  }
+}
+
+function handleAction(action, data){
+  switch(action){
+    case 'startCreate':
+      state.photo=null; state.secondSide=null; state.coinName=''; state.showMoreOptions=false;
+      state.step='takePhoto'; break;
+    case 'triggerPhoto':
+      document.getElementById('photoInput').click(); return;
+    case 'retakePhoto':
+      state.step='takePhoto'; break;
+    case 'confirmPhoto':
+      state.step='chooseSide'; break;
+    case 'toggleMore':
+      state.showMoreOptions=true; break;
+    case 'selectSide':
+      state.secondSide=data.id; state.step='confirmSide'; break;
+    case 'backToChooseSide':
+      state.step='chooseSide'; break;
+    case 'confirmSide':
+      state.step='previewCombined'; break;
+    case 'backToConfirmSide':
+      state.step='chooseSide'; break;
+    case 'gotoName':
+      state.step='nameCoin'; break;
+    case 'submitName':
+      const val = document.getElementById('coinNameInput').value.trim();
+      state.coinName = val || 'המטבע שלי';
+      state.step='reveal'; break;
+    case 'saveToMyCoins':
+      state.myCoins.push({photo:state.photo, secondSide:state.secondSide, name:state.coinName});
+      state.step='myCoins'; break;
+    case 'viewFinalCoin':
+      state.myCoins.push({photo:state.photo, secondSide:state.secondSide, name:state.coinName});
+      state.activeCoinIndex = state.myCoins.length-1;
+      state.splitPos=50;
+      state.step='viewCoin'; break;
+    case 'openCoin':
+      state.activeCoinIndex = parseInt(data.i);
+      state.splitPos=50;
+      state.step='viewCoin'; break;
+    case 'gotoMyCoins':
+      state.step='myCoins'; break;
+    case 'gotoIntro':
+      state.step='intro'; break;
+    case 'back':
+      goBack(); break;
+    case 'shareCoin':
+      shareCoin(state.myCoins[state.activeCoinIndex]);
+      return;
+    case 'none':
+      return;
+  }
+  render();
+}
+
+function goBack(){
+  const map = {
+    takePhoto:'intro', confirmPhoto:'takePhoto', chooseSide:'confirmPhoto',
+    confirmSide:'chooseSide', previewCombined:'confirmSide', nameCoin:'previewCombined',
+    reveal:'nameCoin', myCoins:'intro', viewCoin:'myCoins'
+  };
+  state.step = map[state.step] || 'intro';
+}
+
+render();
+</script>
+</body>
+</html>
