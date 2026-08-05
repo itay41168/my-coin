@@ -141,44 +141,14 @@
         }
 
         /* ==========================================
-           סגנונות מסך 2: צילום / סריקה (מותאם נייד ללא גלילה)
+           סגנונות מסך 2 ו-3: תצוגת הוויטרינה והסריקה
            ========================================== */
-        #screen-2 {
-            position: absolute;
-        }
-
         .camera-feed {
             width: 100%;
             height: 100%;
-            object-fit: cover;
             position: absolute;
             top: 0;
             left: 0;
-        }
-
-        .reticle {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(120px, 30vw);
-            height: min(120px, 30vw);
-            border: 3px solid rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        .reticle-dot {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background-color: white;
-            border-radius: 50%;
         }
 
         .bottom-bar {
@@ -228,7 +198,7 @@
         }
 
         /* ==========================================
-           סגנונות מסך 3: בחירת מטבע
+           סגנונות מסך 3: בחירת מטבע (מסגרות מדויקות)
            ========================================== */
         #screen-3 {
             background-color: #121212;
@@ -238,7 +208,7 @@
 
         .instruction-header-screen3 {
             position: absolute;
-            top: 20px;
+            top: 15px;
             width: 100%;
             padding: 0 10px;
             box-sizing: border-box;
@@ -246,7 +216,9 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            z-index: 10;
+            z-index: 20;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+            padding-bottom: 15px;
         }
 
         .instruction-text-screen3 {
@@ -256,67 +228,43 @@
             margin: 0;
             text-align: center;
             line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
         }
 
-        .coin-box {
-            position: absolute;
-            border: 3px solid #3B82F6;
-            border-radius: 16px;
+        /* מסגרות זיהוי כחולות בתוך ה-SVG עצמו לרמת דיוק פיקסלית */
+        .svg-coin-selector {
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
-            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.4s ease,
-                        top 1.3s cubic-bezier(0.25, 1, 0.5, 1), left 1.3s cubic-bezier(0.25, 1, 0.5, 1),
-                        width 1.3s ease, height 1.3s ease;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 4px;
-            background-color: rgba(59, 130, 246, 0.1);
-            box-sizing: border-box;
+            pointer-events: all;
         }
 
-        .coin-element {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #d4af37, #8a6d1d);
-            border: 2px solid #f3e5ab;
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #4a3b0f;
-            font-weight: bold;
-            font-size: clamp(14px, 3.5vw, 20px);
+        .svg-coin-selector rect {
+            fill: rgba(59, 130, 246, 0.12);
+            stroke: #3B82F6;
+            stroke-width: 4;
+            rx: 16;
+            ry: 16;
+            filter: drop-shadow(0px 0px 10px rgba(59, 130, 246, 0.8));
+            transition: transform 0.2s, stroke 0.2s, fill 0.2s;
+            transform-origin: center;
         }
 
-        .coin-box-main {
-            top: 40%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(100px, 22vw);
-            height: min(100px, 22vw);
+        .svg-coin-selector:hover rect {
+            stroke: #60A5FA;
+            fill: rgba(96, 165, 250, 0.25);
+            filter: drop-shadow(0px 0px 18px rgba(96, 165, 250, 1));
         }
 
-        .coin-box-left {
-            top: 60%;
-            left: 15%;
-            width: min(75px, 18vw);
-            height: min(75px, 18vw);
-        }
-
-        .coin-box-right {
-            top: 60%;
-            right: 15%;
-            width: min(75px, 18vw);
-            height: min(75px, 18vw);
-        }
-
-        .coin-box.flying-to-right {
+        .flying-animated-coin {
+            position: absolute;
             z-index: 60;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(212, 175, 55, 0.8);
-            transform: none !important;
+            border: 4px solid #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+            background-color: rgba(212, 175, 55, 0.25);
+            transition: top 1.3s cubic-bezier(0.25, 1, 0.5, 1), left 1.3s cubic-bezier(0.25, 1, 0.5, 1),
+                        width 1.3s ease, height 1.3s ease, opacity 0.4s ease;
+            box-sizing: border-box;
+            pointer-events: none;
         }
 
         .sliding-white-panel {
@@ -337,7 +285,7 @@
         }
 
         /* ==========================================
-           סגנונות מסך 5: מולטימדיה ותוכן (ללא גלילה)
+           סגנונות מסך 5 (מסך 4 למשתמש): תוכן ומולטימדיה
            ========================================== */
         #screen-5 {
             background-color: #dbeafe;
@@ -346,7 +294,7 @@
 
         @media (max-width: 650px) {
             #screen-5 {
-                flex-direction: column-reverse; /* הפוך: כותרת ומטבע למעלה, בקרות וטקסט למטה */
+                flex-direction: column-reverse;
             }
             .panel-right, .panel-left {
                 width: 100% !important;
@@ -362,9 +310,8 @@
                 justify-content: space-evenly !important;
             }
             .large-coin-display {
-                width: min(90px, 20vw) !important;
-                height: min(90px, 20vw) !important;
-                font-size: clamp(35px, 8vw, 50px) !important;
+                width: min(100px, 22vw) !important;
+                height: min(100px, 22vw) !important;
                 border-width: 3px !important;
             }
             .coin-title {
@@ -418,16 +365,21 @@
         }
 
         .large-coin-display {
-            width: min(200px, 30vw);
-            height: min(200px, 30vw);
+            width: min(210px, 32vw);
+            height: min(210px, 32vw);
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #e2e8f0, #64748b);
-            border: 5px solid #94a3b8;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.7);
+            background-color: #2b2320;
+            border: 5px solid #d4af37;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: clamp(50px, 8vw, 100px);
+            overflow: hidden;
+        }
+
+        .large-coin-display svg {
+            width: 100%;
+            height: 100%;
         }
 
         .panel-left {
@@ -638,9 +590,99 @@
 </head>
 <body>
 
+    <!-- הגדרת תמונת הויטרינה המוזיאונית המשותפת (תצוגת עץ, זכוכית ומטבעות רומיים/עתיקים) -->
+    <svg style="display: none;">
+        <defs>
+            <radialGradient id="bgGrad" cx="50%" cy="30%">
+                <stop offset="0%" stop-color="#3d2c1e"/>
+                <stop offset="100%" stop-color="#140d08"/>
+            </radialGradient>
+            <linearGradient id="woodTable" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#9a6e42"/>
+                <stop offset="100%" stop-color="#4e351c"/>
+            </linearGradient>
+            <linearGradient id="glassEdge" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
+                <stop offset="8%" stop-color="rgba(120,210,255,0.35)"/>
+                <stop offset="92%" stop-color="rgba(120,210,255,0.15)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.5)"/>
+            </linearGradient>
+
+            <!-- פלטת צבעים למטבעות כסף וברונזה עתיקים (רומיים) -->
+            <radialGradient id="coinGradSilverMain" cx="30%" cy="30%">
+                <stop offset="0%" stop-color="#f1f5f9"/>
+                <stop offset="55%" stop-color="#94a3b8"/>
+                <stop offset="85%" stop-color="#475569"/>
+                <stop offset="100%" stop-color="#1e293b"/>
+            </radialGradient>
+            
+            <radialGradient id="coinGradBronze" cx="30%" cy="30%">
+                <stop offset="0%" stop-color="#e2c87c"/>
+                <stop offset="60%" stop-color="#9e7b30"/>
+                <stop offset="100%" stop-color="#42310c"/>
+            </radialGradient>
+
+            <!-- תמונת הויטרינה הקבועה והמלאה -->
+            <g id="museum-vitrine-content">
+                <!-- רקע מוזיאון ותאורה עמוקה -->
+                <rect width="1024" height="768" fill="url(#bgGrad)"/>
+                
+                <!-- בסיס עץ של הויטרינה + משטח תצוגה בהיר -->
+                <polygon points="40,200 984,200 1024,768 0,768" fill="url(#woodTable)"/>
+                <polygon points="110,230 914,230 960,700 64,700" fill="#f5eedc"/>
+                <polygon points="110,230 914,230 960,700 64,700" fill="rgba(0,0,0,0.07)"/>
+
+                <!-- זכוכית הוויטרינה (משתקפת) -->
+                <polygon points="70,140 954,140 996,720 28,720" fill="none" stroke="url(#glassEdge)" stroke-width="4"/>
+                <line x1="70" y1="140" x2="28" y2="720" stroke="rgba(255,255,255,0.45)" stroke-width="6"/>
+
+                <!-- מטבעות רקע משניים ברקע המוזיאון -->
+                <ellipse cx="180" cy="570" rx="26" ry="15" fill="url(#coinGradBronze)" stroke="#2b1807" stroke-width="1.5"/>
+                <ellipse cx="230" cy="620" rx="22" ry="12" fill="url(#coinGradSilverMain)" stroke="#1e293b" stroke-width="1.5"/>
+                <ellipse cx="250" cy="460" rx="28" ry="16" fill="url(#coinGradBronze)" stroke="#2b1807" stroke-width="1.5"/>
+                <ellipse cx="780" cy="540" rx="30" ry="17" fill="url(#coinGradSilverMain)" stroke="#1e293b" stroke-width="1.5"/>
+                <ellipse cx="830" cy="600" rx="25" ry="14" fill="url(#coinGradBronze)" stroke="#2b1807" stroke-width="1.5"/>
+
+                <!-- ==================== 3 המטבעות המרכזיים ==================== -->
+
+                <!-- מטבע 1 (מרכזי עליון): דיוקן קיסר רומי מפורט (כמו בתמונה ששלחת) -->
+                <g id="coin-main-group">
+                    <!-- גוף המטבע -->
+                    <ellipse cx="512" cy="380" rx="68" ry="48" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2" filter="drop-shadow(0px 8px 12px rgba(0,0,0,0.5))"/>
+                    <!-- היקף פנימי מחורר (נקודות עתיקות) -->
+                    <ellipse cx="512" cy="380" rx="58" ry="40" fill="none" stroke="#334155" stroke-dasharray="4,3" stroke-width="1.5"/>
+                    <!-- דיוקן קיסר רומי עם זר עלי דפנה וסרט רופף -->
+                    <path d="M 502 355 C 522 353 528 368 526 382 C 516 394 506 404 494 408 C 484 402 488 382 494 372 Z" fill="#1e293b"/>
+                    <!-- ענף / זר דפנה על ראשה -->
+                    <path d="M 495 360 Q 508 350 520 353" fill="none" stroke="#475569" stroke-width="3"/>
+                    <path d="M 488 375 Q 482 385 476 392" fill="none" stroke="#1e293b" stroke-width="2.5"/> <!-- סרט -->
+                    <!-- כתוביות לטיניות עתיקות סביב השוליים -->
+                    <path d="M 462 375 A 54 36 0 0 1 562 375" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="2,6"/>
+                </g>
+
+                <!-- מטבע 2 (שמאל למטה): מטבע רומי עתיק קטן יותר -->
+                <g id="coin-left-group">
+                    <ellipse cx="380" cy="580" rx="46" ry="30" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="1.5" filter="drop-shadow(0px 6px 10px rgba(0,0,0,0.4))"/>
+                    <ellipse cx="380" cy="580" rx="38" ry="24" fill="none" stroke="#334155" stroke-dasharray="3,2"/>
+                    <path d="M 374 565 C 390 565 394 576 392 586 C 384 594 376 600 368 602 C 362 596 364 582 368 575 Z" fill="#1e293b"/>
+                </g>
+
+                <!-- מטבע 3 (ימין למטה): מטבע ברונזה עתיק -->
+                <g id="coin-right-group">
+                    <ellipse cx="640" cy="565" rx="48" ry="31" fill="url(#coinGradBronze)" stroke="#fef08a" stroke-width="1.5" filter="drop-shadow(0px 6px 10px rgba(0,0,0,0.4))"/>
+                    <ellipse cx="640" cy="565" rx="40" ry="24" fill="none" stroke="#42310c" stroke-dasharray="3,2"/>
+                    <path d="M 634 550 C 650 550 654 561 652 571 C 644 579 636 585 628 587 C 622 581 624 567 628 560 Z" fill="#2d1f05"/>
+                </g>
+
+                <!-- תאורת מיקוד רכה במרכז הויטרינה -->
+                <ellipse cx="512" cy="420" rx="280" ry="170" fill="rgba(255,255,255,0.035)"/>
+            </g>
+        </defs>
+    </svg>
+
     <div class="tablet-frame">
 
-        <!-- מסך 1 -->
+        <!-- מסך 1: ברוכים הבאים -->
         <div id="screen-1" class="screen active">
             <div class="overlay-screen1"></div>
             <div class="content-container-screen1">
@@ -654,7 +696,7 @@
                     לחצו על המצלמה כדי להתחיל.
                 </div>
 
-                <button class="start-button" onclick="startExperience()" title="לחץ כדי להתחיל">>
+                <button class="start-button" onclick="goToScreen(2)" title="לחץ כדי להתחיל">
                     <svg class="camera-icon" viewBox="0 0 24 24">
                         <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                     </svg>
@@ -668,29 +710,11 @@
             </button>
         </div>
 
-        <!-- מסך 2 -->
+        <!-- מסך 2: סריקת ויטרינת המוזיאון (ללא כפתור מיקוד) -->
         <div id="screen-2" class="screen">
-            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img" aria-label="תצוגת מצלמה">
-                <defs>
-                    <radialGradient id="coinGradCamera" cx="30%" cy="30%">
-                        <stop offset="0%" stop-color="#e6ca65"/>
-                        <stop offset="100%" stop-color="#8a6d1d"/>
-                    </radialGradient>
-                    <linearGradient id="tableGradCamera" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#2b2320"/>
-                        <stop offset="100%" stop-color="#4a3728"/>
-                    </linearGradient>
-                </defs>
-                <rect width="1024" height="768" fill="#1c1917"/>
-                <rect x="0" y="430" width="1024" height="338" fill="url(#tableGradCamera)"/>
-                <circle cx="360" cy="470" r="70" fill="url(#coinGradCamera)" stroke="#f3e5ab" stroke-width="3"/>
-                <circle cx="512" cy="430" r="95" fill="url(#coinGradCamera)" stroke="#f3e5ab" stroke-width="4"/>
-                <circle cx="665" cy="465" r="65" fill="url(#coinGradCamera)" stroke="#f3e5ab" stroke-width="3"/>
+            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img" aria-label="תצוגת מצלמה במוזיאון">
+                <use href="#museum-vitrine-content" />
             </svg>
-
-            <div class="reticle">
-                <div class="reticle-dot"></div>
-            </div>
 
             <div class="bottom-bar">
                 <button class="audio-icon-right icon-audio-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
@@ -711,8 +735,28 @@
             </div>
         </div>
 
-        <!-- מסך 3 -->
+        <!-- מסך 3: בחירת המטבע מתוך אותה תמונה בדיוק (עם מסגרות כחולות מוגדרות ב-SVG במדויק על המטבעות) -->
         <div id="screen-3" class="screen">
+            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img">
+                <!-- רקע הוויטרינה הזהה לחלוטין -->
+                <use href="#museum-vitrine-content" />
+
+                <!-- מסגרת זיהוי 1: ממוקמת פיקסל-לפיקסל סביב המטבע המרכזי העליון -->
+                <g class="svg-coin-selector" id="box-main" onclick="selectSvgCoin('main', 512, 380, 156, 116)" title="לחץ לבחירת המטבע המרכזי">
+                    <rect x="434" y="322" width="156" height="116" />
+                </g>
+
+                <!-- מסגרת זיהוי 2: ממוקמת פיקסל-לפיקסל סביב המטבע השמאלי -->
+                <g class="svg-coin-selector" id="box-left" onclick="selectSvgCoin('left', 380, 580, 112, 80)" title="לחץ לבחירת המטבע השמאלי">
+                    <rect x="324" y="540" width="112" height="80" />
+                </g>
+
+                <!-- מסגרת זיהוי 3: ממוקמת פיקסל-לפיקסל סביב המטבע הימני -->
+                <g class="svg-coin-selector" id="box-right" onclick="selectSvgCoin('right', 640, 565, 116, 82)" title="לחץ לבחירת המטבע הימני">
+                    <rect x="582" y="524" width="116" height="82" />
+                </g>
+            </svg>
+
             <div class="instruction-header-screen3" id="header-text-screen3">
                 <button class="audio-icon-large icon-audio-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
                     <svg viewBox="0 0 24 24" fill="white">
@@ -724,20 +768,13 @@
                 </p>
             </div>
 
-            <div class="coin-box coin-box-main" onclick="selectCoin(this)" title="לחץ לבחירת המטבע">
-                <div class="coin-element">🪙</div>
-            </div>
-            <div class="coin-box coin-box-left" onclick="selectCoin(this)" title="לחץ לבחירת המטבע">
-                <div class="coin-element">🪙</div>
-            </div>
-            <div class="coin-box coin-box-right" onclick="selectCoin(this)" title="לחץ לבחירת המטבע">
-                <div class="coin-element">🪙</div>
-            </div>
+            <!-- אלמנט אנימציה למטבע המרחף בעת בחירה -->
+            <div id="flyingCoin" class="flying-animated-coin" style="display:none;"></div>
 
             <div class="sliding-white-panel" id="whitePanel"></div>
         </div>
 
-        <!-- מסך 5 -->
+        <!-- מסך 5 (מוצג למשתמש כ"מסך 4"): תצוגת המטבע שנבחר + מולטימדיה -->
         <div id="screen-5" class="screen">
 
             <!-- צד שמאל / תחתון בנייד -->
@@ -785,14 +822,18 @@
                 </div>
             </div>
 
-            <!-- צד ימין / עליון בנייד -->
+            <!-- צד ימין / עליון בנייד: מציג בהגדלה את המטבע שנבחר -->
             <div class="panel-right">
-                <div class="coin-title">
+                <div class="coin-title" id="display-coin-title">
                     מטבע כסף של<br>
-                    המלך אגריפס
+                    הקיסר הרומי
                 </div>
-                <div class="large-coin-display" title="דיוקן המלך אגריפס על המטבע">
-                    🪙
+                <div class="large-coin-display" id="display-coin-img" title="המטבע שנבחר">
+                    <svg viewBox="0 0 140 140">
+                        <circle cx="70" cy="70" r="62" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2"/>
+                        <circle cx="70" cy="70" r="52" fill="none" stroke="#334155" stroke-dasharray="4,3"/>
+                        <path d="M 60 45 C 80 43 86 58 84 72 C 74 84 64 94 52 98 C 42 92 46 72 52 62 Z" fill="#1e293b"/>
+                    </svg>
                 </div>
             </div>
 
@@ -813,17 +854,29 @@
     </div>
 
     <script>
-                // החלף את פונקציית attemptInitialAudio בלחיצה יזומה במידת הצורך:
-        function startExperience() {
-            // שחרור חסימת שמע על ידי הפעלה מתוך מחווה של המשתמש
-            speak(screenAudioTexts[1]);
-            goToScreen(2);
-        }
         const screenAudioTexts = {
             1: "ברוכים הבאים למוזיאון הכט. לחצו על סמל המצלמה כדי להתחיל בסיור.",
             2: "כוונו את המצלמה אל המטבע ולחצו על כפתור הצילום.",
             3: "בחרו את אחד המטבעות המסומנים על ידי לחיצה עליו.",
             5: "זהו מטבע כסף שנטבע על ידי המלך אגריפס הראשון."
+        };
+
+        const coinDetailsMap = {
+            main: {
+                title: "מטבע כסף של<br>הקיסר הרומי",
+                desc: "זהו מטבע כסף רומי עתיק<br>הנושא את דיוקנו של<br>הקיסר עם זר ענפים...",
+                svg: '<svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="62" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2"/><circle cx="70" cy="70" r="52" fill="none" stroke="#334155" stroke-dasharray="4,3"/><path d="M 60 45 C 80 43 86 58 84 72 C 74 84 64 94 52 98 C 42 92 46 72 52 62 Z" fill="#1e293b"/></svg>'
+            },
+            left: {
+                title: "מטבע כסף עתיק<br>ממוזיאון הכט",
+                desc: "מטבע כסף עתיק נוסף<br>שנתגלה בחפירות<br>בארץ ישראל...",
+                svg: '<svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="62" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2"/><circle cx="70" cy="70" r="52" fill="none" stroke="#334155" stroke-dasharray="4,3"/><path d="M 60 48 C 76 48 80 59 78 69 C 70 77 62 83 54 85 C 48 79 50 65 54 58 Z" fill="#1e293b"/></svg>'
+            },
+            right: {
+                title: "מטבע ברונזה<br>עתיק",
+                desc: "מטבע ברונזה עתיק<br>בעל גוון מוזהב<br>מהתקופה הרומית...",
+                svg: '<svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="62" fill="url(#coinGradBronze)" stroke="#fef08a" stroke-width="2"/><circle cx="70" cy="70" r="52" fill="none" stroke="#42310c" stroke-dasharray="4,3"/><path d="M 60 48 C 76 48 80 59 78 69 C 70 77 62 83 54 85 C 48 79 50 65 54 58 Z" fill="#2d1f05"/></svg>'
+            }
         };
 
         function speak(text, onEndCallback) {
@@ -862,33 +915,48 @@
             }
         }
 
-        function selectCoin(el) {
+        /* בחירת מטבע דרך ה-SVG ואנימציית מעבר למסך הבא */
+        function selectSvgCoin(coinKey, svgX, svgY, svgW, svgH) {
+            const details = coinDetailsMap[coinKey] || coinDetailsMap['main'];
+            document.getElementById('display-coin-title').innerHTML = details.title;
+            document.getElementById('artifact-description').innerHTML = details.desc;
+            document.getElementById('display-coin-img').innerHTML = details.svg;
+            screenAudioTexts[5] = details.desc.replace(/<br>/g, ' ');
+
             const textElement = document.getElementById('main-instruction');
             textElement.innerHTML = 'מעבד... המטבע הנבחר<br>עובר להצגה.';
 
+            // העלמת מסגרות הזיהוי האחרות
+            document.querySelectorAll('.svg-coin-selector').forEach(el => {
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
+            });
+
+            // חישוב מיקום האנימציה המרחפת
             const screenEl = document.getElementById('screen-3');
             const screenRect = screenEl.getBoundingClientRect();
-            const elRect = el.getBoundingClientRect();
+            
+            const scaleX = screenRect.width / 1024;
+            const scaleY = screenRect.height / 768;
 
-            el.style.top = (elRect.top - screenRect.top) + 'px';
-            el.style.left = (elRect.left - screenRect.left) + 'px';
-            el.style.right = 'auto';
-            el.style.margin = '0';
+            const flyEl = document.getElementById('flyingCoin');
+            const startLeft = (svgX * scaleX) - ((svgW * scaleX) / 2);
+            const startTop = (svgY * scaleY) - ((svgH * scaleY) / 2);
+            const startW = svgW * scaleX;
+            const startH = svgH * scaleY;
 
-            document.querySelectorAll('.coin-box').forEach(box => {
-                if (box !== el) {
-                    box.style.opacity = '0';
-                    box.style.pointerEvents = 'none';
-                }
-            });
+            flyEl.style.display = 'block';
+            flyEl.style.left = startLeft + 'px';
+            flyEl.style.top = startTop + 'px';
+            flyEl.style.width = startW + 'px';
+            flyEl.style.height = startH + 'px';
 
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
-                    el.classList.add('flying-to-right');
-                    el.style.top = '15px';
-                    el.style.left = (screenRect.width - 70) + 'px';
-                    el.style.width = '55px';
-                    el.style.height = '55px';
+                    flyEl.style.top = '15px';
+                    flyEl.style.left = (screenRect.width - 75) + 'px';
+                    flyEl.style.width = '55px';
+                    flyEl.style.height = '55px';
                 });
             });
 
@@ -955,10 +1023,16 @@
                 textElement.innerHTML = 'בחרו את אחד המטבעות<br>המסומנים על ידי לחיצה עליו.';
             }
 
-            document.querySelectorAll('.coin-box').forEach(box => {
-                box.classList.remove('flying-to-right');
-                box.removeAttribute('style');
+            document.querySelectorAll('.svg-coin-selector').forEach(el => {
+                el.style.opacity = '1';
+                el.style.pointerEvents = 'all';
             });
+
+            const flyEl = document.getElementById('flyingCoin');
+            if (flyEl) {
+                flyEl.style.display = 'none';
+                flyEl.removeAttribute('style');
+            }
 
             const whitePanel = document.getElementById('whitePanel');
             if (whitePanel) {
