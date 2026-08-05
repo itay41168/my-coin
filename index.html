@@ -2,32 +2,36 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>אב-טיפוס מוזיאון הכט - הנגשה קוגניטיבית</title>
     <style>
-        /* הגדרות כלליות */
-        body {
+        /* הגדרות כלליות - ביטול גלילה מוחלט */
+        html, body {
             margin: 0;
             padding: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            touch-action: manipulation;
         }
 
-        /* דימוי מכשיר - מותאם רספונסיבית */
+        /* דימוי מכשיר - מותאם בדיוק למסך ללא גלילה */
         .tablet-frame {
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             max-width: 1024px;
             max-height: 768px;
             border: none;
             border-radius: 0;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             background-color: #1a1a1a;
             box-sizing: border-box;
         }
@@ -48,6 +52,7 @@
             position: absolute;
             top: 0;
             left: 0;
+            overflow: hidden;
             box-sizing: border-box;
         }
 
@@ -84,7 +89,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 24px;
+            padding: 20px;
             box-sizing: border-box;
         }
 
@@ -95,32 +100,31 @@
         }
 
         .museum-name-he {
-            font-size: clamp(22px, 5vw, 32px);
+            font-size: clamp(20px, 4.5vw, 32px);
             font-weight: bold;
             margin: 0;
         }
 
         .museum-name-en {
-            font-size: clamp(14px, 3.5vw, 18px);
+            font-size: clamp(13px, 3vw, 18px);
             margin: 0;
             opacity: 0.8;
         }
 
         .welcome-text {
             color: #000;
-            font-size: clamp(24px, 5.5vw, 40px);
+            font-size: clamp(20px, 5vw, 40px);
             font-weight: bold;
-            line-height: 1.4;
+            line-height: 1.3;
             text-align: center;
             max-width: 700px;
-            margin-top: 10px;
         }
 
         .start-button {
-            width: min(220px, 60vw);
-            height: min(130px, 18vh);
+            width: min(180px, 45vw);
+            height: min(100px, 14vh);
             background-color: #3B82F6;
-            border-radius: 24px;
+            border-radius: 20px;
             border: none;
             cursor: pointer;
             display: flex;
@@ -128,7 +132,7 @@
             align-items: center;
             box-shadow: 0 8px 16px rgba(0,0,0,0.25);
             transition: transform 0.2s, background-color 0.2s;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .start-button:hover {
@@ -137,7 +141,7 @@
         }
 
         /* ==========================================
-           סגנונות מסך 2: צילום / סריקה
+           סגנונות מסך 2: צילום / סריקה (מותאם נייד ללא גלילה)
            ========================================== */
         #screen-2 {
             position: absolute;
@@ -154,13 +158,13 @@
 
         .reticle {
             position: absolute;
-            top: 45%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: min(140px, 35vw);
-            height: min(140px, 35vw);
-            border: 4px solid rgba(255, 255, 255, 0.9);
-            border-radius: 24px;
+            width: min(120px, 30vw);
+            height: min(120px, 30vw);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
             z-index: 5;
             pointer-events: none;
@@ -182,40 +186,39 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+            height: clamp(80px, 16vh, 120px);
+            padding: 5px 10px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 80%, transparent 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             z-index: 10;
             box-sizing: border-box;
-            flex-wrap: wrap;
         }
 
         .instruction-text {
             color: #ffffff;
-            font-size: clamp(16px, 4vw, 32px);
+            font-size: clamp(14px, 3.5vw, 24px);
             font-weight: 600;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             margin: 0;
             text-align: center;
+            line-height: 1.2;
         }
 
         .shutter-button {
-            width: min(90px, 20vw);
-            height: min(90px, 20vw);
-            min-width: 60px;
-            min-height: 60px;
+            width: clamp(55px, 14vw, 80px);
+            height: clamp(55px, 14vw, 80px);
             background-color: #3B82F6;
-            border: 4px solid #ffffff;
+            border: 3px solid #ffffff;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            transition: transform 0.15s ease, background-color 0.15s ease;
+            transition: transform 0.15s ease;
             flex-shrink: 0;
         }
 
@@ -235,32 +238,32 @@
 
         .instruction-header-screen3 {
             position: absolute;
-            top: 30px;
+            top: 20px;
             width: 100%;
-            padding: 0 15px;
+            padding: 0 10px;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             z-index: 10;
         }
 
         .instruction-text-screen3 {
             color: #ffffff;
-            font-size: clamp(20px, 5vw, 40px);
+            font-size: clamp(16px, 4.5vw, 32px);
             font-weight: bold;
             margin: 0;
             text-align: center;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .coin-box {
             position: absolute;
-            border: 4px solid #3B82F6;
-            border-radius: 20px;
+            border: 3px solid #3B82F6;
+            border-radius: 16px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
             transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.4s ease,
                         top 1.3s cubic-bezier(0.25, 1, 0.5, 1), left 1.3s cubic-bezier(0.25, 1, 0.5, 1),
                         width 1.3s ease, height 1.3s ease;
@@ -268,15 +271,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 6px;
+            padding: 4px;
             background-color: rgba(59, 130, 246, 0.1);
             box-sizing: border-box;
-        }
-
-        .coin-box:hover {
-            border-color: #60A5FA;
-            box-shadow: 0 0 30px rgba(96, 165, 250, 0.9);
-            transform: scale(1.08);
         }
 
         .coin-element {
@@ -285,36 +282,35 @@
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #d4af37, #8a6d1d);
             border: 2px solid #f3e5ab;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
             display: flex;
             justify-content: center;
             align-items: center;
             color: #4a3b0f;
             font-weight: bold;
-            font-size: clamp(16px, 4vw, 20px);
-            position: relative;
+            font-size: clamp(14px, 3.5vw, 20px);
         }
 
         .coin-box-main {
             top: 40%;
             left: 50%;
             transform: translateX(-50%);
-            width: min(120px, 25vw);
-            height: min(120px, 25vw);
+            width: min(100px, 22vw);
+            height: min(100px, 22vw);
         }
 
         .coin-box-left {
             top: 60%;
-            left: 20%;
-            width: min(90px, 20vw);
-            height: min(90px, 20vw);
+            left: 15%;
+            width: min(75px, 18vw);
+            height: min(75px, 18vw);
         }
 
         .coin-box-right {
             top: 60%;
-            right: 20%;
-            width: min(85px, 19vw);
-            height: min(85px, 19vw);
+            right: 15%;
+            width: min(75px, 18vw);
+            height: min(75px, 18vw);
         }
 
         .coin-box.flying-to-right {
@@ -330,7 +326,7 @@
             width: 90%;
             height: 70%;
             background-color: #ffffff;
-            border-radius: 35px 35px 0 0;
+            border-radius: 25px 25px 0 0;
             box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
             z-index: 30;
             transition: bottom 1.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -341,51 +337,61 @@
         }
 
         /* ==========================================
-           סגנונות מסך 5: מולטימדיה ותוכן
+           סגנונות מסך 5: מולטימדיה ותוכן (ללא גלילה)
            ========================================== */
         #screen-5 {
             background-color: #dbeafe;
             flex-direction: row;
-            overflow-y: auto;
         }
 
-        /* התאמת פריסה לנייד: במכשיר צר המסך יעבור לטור (Column) */
         @media (max-width: 650px) {
             #screen-5 {
-                flex-direction: column;
+                flex-direction: column-reverse; /* הפוך: כותרת ומטבע למעלה, בקרות וטקסט למטה */
             }
             .panel-right, .panel-left {
                 width: 100% !important;
-                height: auto !important;
             }
             .panel-right {
-                padding: 20px 15px !important;
+                height: 35% !important;
+                padding: 10px !important;
+                box-shadow: none !important;
+            }
+            .panel-left {
+                height: 65% !important;
+                padding: 10px !important;
+                justify-content: space-evenly !important;
             }
             .large-coin-display {
-                width: 150px !important;
-                height: 150px !important;
-                font-size: 60px !important;
+                width: min(90px, 20vw) !important;
+                height: min(90px, 20vw) !important;
+                font-size: clamp(35px, 8vw, 50px) !important;
+                border-width: 3px !important;
             }
             .coin-title {
-                font-size: 24px !important;
-                margin-bottom: 15px !important;
+                font-size: clamp(16px, 4vw, 22px) !important;
+                margin-bottom: 5px !important;
             }
             .ctrl-btn {
-                width: 65px !important;
-                height: 65px !important;
-                border-radius: 16px !important;
+                width: clamp(48px, 12vw, 65px) !important;
+                height: clamp(48px, 12vw, 65px) !important;
+                border-radius: 14px !important;
             }
             .ctrl-icon {
-                width: 32px !important;
-                height: 32px !important;
+                width: clamp(24px, 6vw, 32px) !important;
+                height: clamp(24px, 6vw, 32px) !important;
+            }
+            .accessible-text-card {
+                padding: 12px 10px !important;
+                border-radius: 16px !important;
             }
             .accessible-text-card p {
-                font-size: 20px !important;
+                font-size: clamp(15px, 4vw, 22px) !important;
+                line-height: 1.3 !important;
             }
             .controls-row {
-                margin-top: 10px !important;
-                margin-bottom: 20px !important;
-                gap: 10px !important;
+                margin-top: 0 !important;
+                margin-bottom: 5px !important;
+                gap: 8px !important;
             }
         }
 
@@ -398,30 +404,30 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 30px 20px;
+            padding: 20px;
             box-sizing: border-box;
             box-shadow: -5px 0 15px rgba(0,0,0,0.3);
         }
 
         .coin-title {
-            font-size: clamp(24px, 4vw, 38px);
+            font-size: clamp(20px, 3.5vw, 38px);
             font-weight: bold;
             text-align: center;
-            margin-bottom: 25px;
-            line-height: 1.3;
+            margin-bottom: 15px;
+            line-height: 1.2;
         }
 
         .large-coin-display {
-            width: min(260px, 40vw);
-            height: min(260px, 40vw);
+            width: min(200px, 30vw);
+            height: min(200px, 30vw);
             border-radius: 50%;
             background: radial-gradient(circle at 35% 35%, #e2e8f0, #64748b);
-            border: 6px solid #94a3b8;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.7);
+            border: 5px solid #94a3b8;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.7);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: clamp(60px, 10vw, 110px);
+            font-size: clamp(50px, 8vw, 100px);
         }
 
         .panel-left {
@@ -430,19 +436,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 20px;
+            justify-content: center;
+            padding: 15px;
             box-sizing: border-box;
             position: relative;
         }
 
         .controls-row {
             display: flex;
-            gap: 16px;
-            margin-top: 20px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 15px;
             position: relative;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
         }
 
@@ -453,24 +458,17 @@
         }
 
         .ctrl-btn {
-            width: min(105px, 18vw);
-            height: min(105px, 18vw);
-            min-width: 55px;
-            min-height: 55px;
+            width: min(85px, 15vw);
+            height: min(85px, 15vw);
             background-color: #3B82F6;
             border: none;
-            border-radius: 20px;
+            border-radius: 16px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 6px 14px rgba(59, 130, 246, 0.4);
-            transition: transform 0.15s, background-color 0.15s;
-        }
-
-        .ctrl-btn:hover {
-            background-color: #2563EB;
-            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+            transition: transform 0.15s;
         }
 
         .ctrl-btn:active {
@@ -482,55 +480,48 @@
         }
 
         .ctrl-icon {
-            width: min(50px, 8vw);
-            height: min(50px, 8vw);
-            min-width: 28px;
-            min-height: 28px;
+            width: min(40px, 7vw);
+            height: min(40px, 7vw);
             fill: white;
         }
 
         .accessible-text-card {
-            width: 95%;
+            width: 100%;
+            max-width: 500px;
             background-color: #ffffff;
-            border-radius: 24px;
-            padding: 20px 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            padding: 18px 15px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
             box-sizing: border-box;
             text-align: center;
         }
 
         .accessible-text-card p {
             margin: 0;
-            font-size: clamp(18px, 4vw, 34px);
+            font-size: clamp(16px, 3.5vw, 28px);
             font-weight: bold;
             color: #1e293b;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
-        /* סגנונות אייקונים משותפים */
+        /* אייקונים וכפתורי עזר */
         .camera-icon {
-            width: min(70px, 12vw);
-            height: min(70px, 12vw);
+            width: clamp(32px, 8vw, 60px);
+            height: clamp(32px, 8vw, 60px);
             fill: white;
-        }
-
-        .shutter-button .camera-icon {
-            width: min(44px, 8vw);
-            height: min(44px, 8vw);
         }
 
         .audio-icon-right {
             position: absolute;
-            right: 15px;
-            width: 32px;
-            height: 32px;
+            right: 10px;
+            width: 26px;
+            height: 26px;
             opacity: 0.9;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
 
         .audio-icon-large {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             flex-shrink: 0;
         }
 
@@ -551,10 +542,10 @@
 
         .replay-instruction-btn {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 48px;
-            height: 48px;
+            top: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: rgba(59, 130, 246, 0.95);
             border: none;
@@ -562,19 +553,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             z-index: 20;
-            transition: transform 0.15s, background-color 0.15s;
-        }
-
-        .replay-instruction-btn:hover {
-            background-color: #2563EB;
-            transform: scale(1.06);
         }
 
         .replay-instruction-btn svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: #ffffff;
         }
 
@@ -600,31 +585,30 @@
 
         .video-overlay-content {
             width: 100%;
-            max-width: 640px;
+            max-width: 500px;
             background-color: #000;
-            border-radius: 24px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 15px;
             box-sizing: border-box;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         .video-placeholder {
             width: 100%;
-            height: 200px;
+            height: 160px;
             background: repeating-linear-gradient(45deg, #1f2937, #1f2937 10px, #111827 10px, #111827 20px);
-            border-radius: 16px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .video-spin-icon {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             fill: #ffffff;
             animation: spinVideoIcon 2.2s linear infinite;
         }
@@ -636,24 +620,19 @@
 
         .video-overlay-content p {
             color: #ffffff;
-            font-size: 18px;
-            margin: 0 0 15px 0;
+            font-size: 16px;
+            margin: 0 0 12px 0;
         }
 
         .video-close-btn {
             background-color: #3B82F6;
             color: #fff;
             border: none;
-            border-radius: 14px;
-            padding: 12px 24px;
-            font-size: 18px;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.15s;
-        }
-
-        .video-close-btn:hover {
-            background-color: #2563EB;
         }
     </style>
 </head>
@@ -691,7 +670,7 @@
 
         <!-- מסך 2 -->
         <div id="screen-2" class="screen">
-            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img" aria-label="תצוגת מצלמה עם מטבעות לדוגמה">
+            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img" aria-label="תצוגת מצלמה">
                 <defs>
                     <radialGradient id="coinGradCamera" cx="30%" cy="30%">
                         <stop offset="0%" stop-color="#e6ca65"/>
@@ -761,7 +740,7 @@
         <!-- מסך 5 -->
         <div id="screen-5" class="screen">
 
-            <!-- צד שמאל / עליון בנייד -->
+            <!-- צד שמאל / תחתון בנייד -->
             <div class="panel-left">
                 <div class="controls-row">
                     <div class="control-wrapper">
@@ -806,7 +785,7 @@
                 </div>
             </div>
 
-            <!-- צד ימין / תחתון בנייד -->
+            <!-- צד ימין / עליון בנייד -->
             <div class="panel-right">
                 <div class="coin-title">
                     מטבע כסף של<br>
@@ -900,10 +879,10 @@
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     el.classList.add('flying-to-right');
-                    el.style.top = '20px';
-                    el.style.left = (screenRect.width - 90) + 'px';
-                    el.style.width = '70px';
-                    el.style.height = '70px';
+                    el.style.top = '15px';
+                    el.style.left = (screenRect.width - 70) + 'px';
+                    el.style.width = '55px';
+                    el.style.height = '55px';
                 });
             });
 
