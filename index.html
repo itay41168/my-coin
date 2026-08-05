@@ -14,22 +14,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
-        /* דימוי מכשיר הטאבלט */
+        /* דימוי מכשיר - מותאם רספונסיבית */
         .tablet-frame {
-            width: 1024px;
-            height: 768px;
-            border: 20px solid #222;
-            border-radius: 30px;
+            width: 100vw;
+            height: 100vh;
+            max-width: 1024px;
+            max-height: 768px;
+            border: none;
+            border-radius: 0;
             overflow: hidden;
             position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             background-color: #1a1a1a;
+            box-sizing: border-box;
         }
 
-        /* ניהול תצוגת מסכים - הסתרה ברירת מחדל */
+        @media (min-width: 768px) and (min-height: 600px) {
+            .tablet-frame {
+                height: 90vh;
+                border: 12px solid #222;
+                border-radius: 24px;
+            }
+        }
+
+        /* ניהול תצוגת מסכים */
         .screen {
             display: none !important;
             width: 100%;
@@ -37,9 +48,9 @@
             position: absolute;
             top: 0;
             left: 0;
+            box-sizing: border-box;
         }
 
-        /* הצגת המסך הפעיל בלבד */
         .screen.active {
             display: flex !important;
         }
@@ -73,7 +84,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 40px;
+            padding: 24px;
             box-sizing: border-box;
         }
 
@@ -84,30 +95,30 @@
         }
 
         .museum-name-he {
-            font-size: 32px;
+            font-size: clamp(22px, 5vw, 32px);
             font-weight: bold;
             margin: 0;
         }
 
         .museum-name-en {
-            font-size: 18px;
+            font-size: clamp(14px, 3.5vw, 18px);
             margin: 0;
             opacity: 0.8;
         }
 
         .welcome-text {
             color: #000;
-            font-size: 40px;
+            font-size: clamp(24px, 5.5vw, 40px);
             font-weight: bold;
             line-height: 1.4;
             text-align: center;
             max-width: 700px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .start-button {
-            width: 220px;
-            height: 130px;
+            width: min(220px, 60vw);
+            height: min(130px, 18vh);
             background-color: #3B82F6;
             border-radius: 24px;
             border: none;
@@ -146,8 +157,8 @@
             top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 140px;
-            height: 140px;
+            width: min(140px, 35vw);
+            height: min(140px, 35vw);
             border: 4px solid rgba(255, 255, 255, 0.9);
             border-radius: 24px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
@@ -171,28 +182,31 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 140px;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 12px;
             z-index: 10;
-            padding: 0 30px;
             box-sizing: border-box;
+            flex-wrap: wrap;
         }
 
         .instruction-text {
             color: #ffffff;
-            font-size: 32px;
+            font-size: clamp(16px, 4vw, 32px);
             font-weight: 600;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             margin: 0;
+            text-align: center;
         }
 
         .shutter-button {
-            width: 90px;
-            height: 90px;
+            width: min(90px, 20vw);
+            height: min(90px, 20vw);
+            min-width: 60px;
+            min-height: 60px;
             background-color: #3B82F6;
             border: 4px solid #ffffff;
             border-radius: 50%;
@@ -202,6 +216,7 @@
             align-items: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             transition: transform 0.15s ease, background-color 0.15s ease;
+            flex-shrink: 0;
         }
 
         .shutter-button:active {
@@ -210,7 +225,7 @@
         }
 
         /* ==========================================
-           סגנונות מסך 3: בחירת מטבע + אנימציית מעבר
+           סגנונות מסך 3: בחירת מטבע
            ========================================== */
         #screen-3 {
             background-color: #121212;
@@ -220,19 +235,20 @@
 
         .instruction-header-screen3 {
             position: absolute;
-            top: 60px;
+            top: 30px;
             width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 15px;
             z-index: 10;
-            transition: opacity 0.3s ease;
         }
 
         .instruction-text-screen3 {
             color: #ffffff;
-            font-size: 40px;
+            font-size: clamp(20px, 5vw, 40px);
             font-weight: bold;
             margin: 0;
             text-align: center;
@@ -254,6 +270,7 @@
             align-items: center;
             padding: 6px;
             background-color: rgba(59, 130, 246, 0.1);
+            box-sizing: border-box;
         }
 
         .coin-box:hover {
@@ -274,37 +291,36 @@
             align-items: center;
             color: #4a3b0f;
             font-weight: bold;
-            font-size: 20px;
+            font-size: clamp(16px, 4vw, 20px);
             position: relative;
         }
 
         .coin-box-main {
-            top: 38%;
-            left: 44%;
-            width: 120px;
-            height: 120px;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(120px, 25vw);
+            height: min(120px, 25vw);
         }
 
         .coin-box-left {
-            top: 55%;
-            left: 32%;
-            width: 90px;
-            height: 90px;
+            top: 60%;
+            left: 20%;
+            width: min(90px, 20vw);
+            height: min(90px, 20vw);
         }
 
         .coin-box-right {
-            top: 53%;
-            left: 60%;
-            width: 85px;
-            height: 85px;
+            top: 60%;
+            right: 20%;
+            width: min(85px, 19vw);
+            height: min(85px, 19vw);
         }
 
-        /* מחלקה זו מופעלת ישירות על תיבת המטבע שהמשתמש לחץ עליה (ולא על
-           אלמנט נפרד), כך שהמטבע שבאמת נבחר הוא זה שזז וממחיש בבירור
-           למשתמש אילו מטבע יוצג בהמשך במסך הפרטים. */
         .coin-box.flying-to-right {
             z-index: 60;
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(212, 175, 55, 0.8);
+            transform: none !important;
         }
 
         .sliding-white-panel {
@@ -325,11 +341,52 @@
         }
 
         /* ==========================================
-           סגנונות מסך 5: תצוגת תוכן מפורטת ומולטימדיה
+           סגנונות מסך 5: מולטימדיה ותוכן
            ========================================== */
         #screen-5 {
             background-color: #dbeafe;
             flex-direction: row;
+            overflow-y: auto;
+        }
+
+        /* התאמת פריסה לנייד: במכשיר צר המסך יעבור לטור (Column) */
+        @media (max-width: 650px) {
+            #screen-5 {
+                flex-direction: column;
+            }
+            .panel-right, .panel-left {
+                width: 100% !important;
+                height: auto !important;
+            }
+            .panel-right {
+                padding: 20px 15px !important;
+            }
+            .large-coin-display {
+                width: 150px !important;
+                height: 150px !important;
+                font-size: 60px !important;
+            }
+            .coin-title {
+                font-size: 24px !important;
+                margin-bottom: 15px !important;
+            }
+            .ctrl-btn {
+                width: 65px !important;
+                height: 65px !important;
+                border-radius: 16px !important;
+            }
+            .ctrl-icon {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            .accessible-text-card p {
+                font-size: 20px !important;
+            }
+            .controls-row {
+                margin-top: 10px !important;
+                margin-bottom: 20px !important;
+                gap: 10px !important;
+            }
         }
 
         .panel-right {
@@ -340,23 +397,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 40px 20px;
+            justify-content: center;
+            padding: 30px 20px;
             box-sizing: border-box;
             box-shadow: -5px 0 15px rgba(0,0,0,0.3);
         }
 
         .coin-title {
-            font-size: 38px;
+            font-size: clamp(24px, 4vw, 38px);
             font-weight: bold;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             line-height: 1.3;
         }
 
         .large-coin-display {
-            width: 260px;
-            height: 260px;
+            width: min(260px, 40vw);
+            height: min(260px, 40vw);
             border-radius: 50%;
             background: radial-gradient(circle at 35% 35%, #e2e8f0, #64748b);
             border: 6px solid #94a3b8;
@@ -364,7 +421,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 110px;
+            font-size: clamp(60px, 10vw, 110px);
         }
 
         .panel-left {
@@ -374,7 +431,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 30px;
+            padding: 20px;
             box-sizing: border-box;
             position: relative;
         }
@@ -383,8 +440,10 @@
             display: flex;
             gap: 16px;
             margin-top: 20px;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
             position: relative;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .control-wrapper {
@@ -394,11 +453,13 @@
         }
 
         .ctrl-btn {
-            width: 105px;
-            height: 105px;
+            width: min(105px, 18vw);
+            height: min(105px, 18vw);
+            min-width: 55px;
+            min-height: 55px;
             background-color: #3B82F6;
             border: none;
-            border-radius: 24px;
+            border-radius: 20px;
             cursor: pointer;
             display: flex;
             justify-content: center;
@@ -421,16 +482,18 @@
         }
 
         .ctrl-icon {
-            width: 50px;
-            height: 50px;
+            width: min(50px, 8vw);
+            height: min(50px, 8vw);
+            min-width: 28px;
+            min-height: 28px;
             fill: white;
         }
 
         .accessible-text-card {
-            width: 90%;
+            width: 95%;
             background-color: #ffffff;
-            border-radius: 28px;
-            padding: 35px 30px;
+            border-radius: 24px;
+            padding: 20px 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             box-sizing: border-box;
             text-align: center;
@@ -438,7 +501,7 @@
 
         .accessible-text-card p {
             margin: 0;
-            font-size: 34px;
+            font-size: clamp(18px, 4vw, 34px);
             font-weight: bold;
             color: #1e293b;
             line-height: 1.5;
@@ -446,25 +509,19 @@
 
         /* סגנונות אייקונים משותפים */
         .camera-icon {
-            width: 70px;
-            height: 70px;
+            width: min(70px, 12vw);
+            height: min(70px, 12vw);
             fill: white;
         }
 
         .shutter-button .camera-icon {
-            width: 44px;
-            height: 44px;
-        }
-
-        .audio-icon {
-            width: 30px;
-            height: 30px;
-            opacity: 0.8;
+            width: min(44px, 8vw);
+            height: min(44px, 8vw);
         }
 
         .audio-icon-right {
             position: absolute;
-            right: 40px;
+            right: 15px;
             width: 32px;
             height: 32px;
             opacity: 0.9;
@@ -472,12 +529,11 @@
         }
 
         .audio-icon-large {
-            width: 45px;
-            height: 45px;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
         }
 
-        /* כפתור אייקון "שקוף" - עוטף אייקוני שמע קיימים (מסכים 2 ו-3)
-           והופך אותם ללחיצים בפועל, כדי לאפשר השמעה חוזרת של ההוראה */
         .icon-audio-btn {
             background: none;
             border: none;
@@ -493,14 +549,12 @@
             height: 100%;
         }
 
-        /* כפתור "השמע שוב את ההוראה" - עיגול כחול קבוע בפינת המסך,
-           מיועד למסכים שאין בהם כרגע אייקון שמע קיים (מסך 1) */
         .replay-instruction-btn {
             position: absolute;
-            top: 30px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
+            top: 20px;
+            left: 20px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background-color: rgba(59, 130, 246, 0.95);
             border: none;
@@ -519,17 +573,12 @@
         }
 
         .replay-instruction-btn svg {
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
             fill: #ffffff;
         }
 
-        /* ==========================================
-           סגנונות: שכבת דמו-וידאו (מסך 5, כפתור הווידאו)
-           הערה: זוהי סימולציה בלבד לצורך אב-הטיפוס.
-           בפרויקט הסופי יש להחליף את התוכן בנגן <video> אמיתי
-           עם קובץ הווידאו הרלוונטי למוצג שנסרק.
-           ========================================== */
+        /* שכבת דמו-וידאו */
         .video-overlay {
             display: none;
             position: absolute;
@@ -541,6 +590,8 @@
             z-index: 100;
             justify-content: center;
             align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
         }
 
         .video-overlay.active {
@@ -548,11 +599,11 @@
         }
 
         .video-overlay-content {
-            width: 80%;
+            width: 100%;
             max-width: 640px;
             background-color: #000;
             border-radius: 24px;
-            padding: 30px;
+            padding: 20px;
             box-sizing: border-box;
             text-align: center;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
@@ -560,7 +611,7 @@
 
         .video-placeholder {
             width: 100%;
-            height: 280px;
+            height: 200px;
             background: repeating-linear-gradient(45deg, #1f2937, #1f2937 10px, #111827 10px, #111827 20px);
             border-radius: 16px;
             display: flex;
@@ -572,8 +623,8 @@
         }
 
         .video-spin-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             fill: #ffffff;
             animation: spinVideoIcon 2.2s linear infinite;
         }
@@ -585,8 +636,8 @@
 
         .video-overlay-content p {
             color: #ffffff;
-            font-size: 22px;
-            margin: 0 0 20px 0;
+            font-size: 18px;
+            margin: 0 0 15px 0;
         }
 
         .video-close-btn {
@@ -594,8 +645,8 @@
             color: #fff;
             border: none;
             border-radius: 14px;
-            padding: 14px 30px;
-            font-size: 20px;
+            padding: 12px 24px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.15s;
@@ -610,27 +661,7 @@
 
     <div class="tablet-frame">
 
-        <!--
-            ===========================================================
-            מסך 1: מסך פתיחה / ברוכים הבאים
-            ===========================================================
-            מטרת המסך: קבלת פני המבקר והנעה להתחלת הסיור.
-
-            התנהגות נדרשת (מומשה בקוד למטה ב-<script>):
-            1. עם הכניסה למסך (בטעינת הדף) מופעל אוטומטית קטע שמע
-               המקריא למשתמש את טקסט הברכה + ההנחיה "לחצו על המצלמה".
-               ראו את אובייקט screenAudioTexts ופונקציית attemptInitialAudio.
-            2. לחיצה על כפתור המצלמה הכחול (start-button) מפעילה
-               את הפונקציה goToScreen(2) ומעבירה למסך הסריקה.
-            3. כפתור הרמקול העגול (replay-instruction-btn) מאפשר למבקר
-               להשמיע את ההוראה הקולית שוב בכל רגע, בלחיצה אחת -
-               ראו replayCurrentScreenAudio().
-
-            הערת נגישות: חלק מהדפדפנים חוסמים השמעת שמע אוטומטית
-            לפני אינטראקציה של המשתמש עם הדף. משום כך נוסף גם כפתור
-            הרמקול הידני, וגם מנגנון גיבוי שמנסה להשמיע את ההוראה
-            במגע הראשון של המשתמש בעמוד אם ההשמעה האוטומטית נחסמה.
-        -->
+        <!-- מסך 1 -->
         <div id="screen-1" class="screen active">
             <div class="overlay-screen1"></div>
             <div class="content-container-screen1">
@@ -651,7 +682,6 @@
                 </button>
             </div>
 
-            <!-- כפתור השמעה חוזרת של הוראת המסך -->
             <button class="replay-instruction-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
                 <svg viewBox="0 0 24 24">
                     <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z"/>
@@ -659,27 +689,8 @@
             </button>
         </div>
 
-        <!--
-            ===========================================================
-            מסך 2: צילום / סריקת המטבע
-            ===========================================================
-            מטרת המסך: הנחיית המבקר לכוון את מצלמת הטאבלט לעבר המטבע
-            הפיזי בתצוגה ולצלם אותו.
-
-            התנהגות נדרשת:
-            1. עם הכניסה למסך (קריאה ל-goToScreen(2)) מופעל אוטומטית
-               שמע המקריא: "כוונו את המצלמה ולחצו על הכפתור."
-            2. תצוגת camera-feed מוצגת כאן כתמונת דמה (SVG) של מטבעות
-               על שולחן, כדי לדמות מה שהמצלמה "רואה". בפרויקט האמיתי
-               יש להחליף זאת בזרם וידאו חי ממצלמת המכשיר (getUserMedia).
-            3. לחיצה על כפתור התריס (shutter-button) מבצעת את הצילום
-               בפועל (בפרויקט הסופי - שליחה לזיהוי תמונה) ומעבירה
-               למסך 3 לבחירת המטבע שזוהה.
-            4. כפתור הרמקול (audio-icon-right, כעת כפתור לחיץ אמיתי)
-               משמיע שוב את הוראת המסך - replayCurrentScreenAudio().
-        -->
+        <!-- מסך 2 -->
         <div id="screen-2" class="screen">
-            <!-- תמונת דמה (SVG) של מטבעות על שולחן, לדימוי מה שהמצלמה "רואה" -->
             <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img" aria-label="תצוגת מצלמה עם מטבעות לדוגמה">
                 <defs>
                     <radialGradient id="coinGradCamera" cx="30%" cy="30%">
@@ -721,29 +732,7 @@
             </div>
         </div>
 
-        <!--
-            ===========================================================
-            מסך 3: בחירת מטבע מבין מספר תוצאות + אנימציית מעבר
-            ===========================================================
-            מטרת המסך: לאחר הצילום, המערכת זיהתה כמה מטבעות אפשריים
-            (main / left / right) והמבקר בוחר את המטבע הרלוונטי.
-
-            התנהגות נדרשת:
-            1. עם הכניסה למסך (קריאה ל-goToScreen(3)) מופעל אוטומטית
-               שמע המקריא: "בחרו את אחד המטבעות המסומנים על ידי
-               לחיצה עליו."
-            2. כל שלוש תיבות המטבע (coin-box) מסומנות במסגרת כחולה,
-               כפי שהיה עד כה. לחיצה על אחת מהן מפעילה את selectCoin(this):
-               - שתי התיבות האחרות נעלמות (opacity 0).
-               - התיבה שנבחרה (ורק היא) זזה בעצמה - לא אלמנט נפרד -
-                 ימינה לעבר פינת המסך, כדי שיהיה ברור למשתמש איזה
-                 מטבע בדיוק נבחר.
-               - פאנל לבן גולש מלמטה, ולבסוף המערכת עוברת למסך 5
-                 (המוצג למשתמש כ"מסך 4") עם פרטי המטבע שנבחר.
-            3. בפרויקט האמיתי יש להעביר ל-selectCoin גם מזהה מטבע כדי
-               שמסך הפרטים יציג את התוכן הנכון (טקסט, שמע, וידאו)
-               בהתאם למטבע שנבחר, ולא תוכן קבוע כפי שמוצג כאן באב-הטיפוס.
-        -->
+        <!-- מסך 3 -->
         <div id="screen-3" class="screen">
             <div class="instruction-header-screen3" id="header-text-screen3">
                 <button class="audio-icon-large icon-audio-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
@@ -769,40 +758,12 @@
             <div class="sliding-white-panel" id="whitePanel"></div>
         </div>
 
-        <!--
-            ===========================================================
-            מסך 5 בקוד (מוצג למשתמש כ"מסך 4"): פאנל הסבר מפורט ומולטימדיה
-            ===========================================================
-            מטרת המסך: הצגת ההסבר המלא (טקסטואלי, קולי וויזואלי)
-            על המטבע שהמבקר בחר במסך הקודם.
-
-            פריסה: צד שמאל (panel-right במחלקה, בגלל כיווניות RTL)
-            מציג את המטבע הנבחר בהגדלה + כותרת. צד ימין (panel-left)
-            מציג את 4 כפתורי הבקרה ואת כרטיס הטקסט הנגיש.
-
-            התנהגות נדרשת:
-            1. עם הכניסה למסך (קריאה ל-goToScreen(5)) מופעל אוטומטית
-               שמע המקריא את טקסט ההסבר הנגיש (accessible-text-card).
-            2. פאנל הבקרה (controls-row) כולל 4 כפתורים נקיים (ללא
-               טקסט מעליהם):
-               - כפתור 1 (משולש הפעלה - playArtifactAudio):
-                 מפעיל/משהה את ההקראה הקולית של ההסבר על המוצג.
-               - כפתור 2 (חץ מעגלי - replayArtifactAudio):
-                 מנגן את ההסבר הקולי מההתחלה.
-               - כפתור 3 (מסך + משולש - playArtifactVideo):
-                 פותח נגן וידאו/הדגמה חזותית של המוצג. באב-הטיפוס
-                 זוהי סימולציה בלבד (שכבת video-overlay); בפרויקט
-                 הסופי יש להחליף בנגן <video> עם קובץ אמיתי.
-               - כפתור 4 (חץ אחורה - resetPrototype):
-                 מאפס את אב-הטיפוס וחוזר למסך 1.
-        -->
+        <!-- מסך 5 -->
         <div id="screen-5" class="screen">
 
-            <!-- צד שמאל: נגן וטקסט -->
+            <!-- צד שמאל / עליון בנייד -->
             <div class="panel-left">
-
                 <div class="controls-row">
-                    <!-- כפתור 1: הפעלת/השהיית הקראה קולית על המוצג (משולש הפעלה) -->
                     <div class="control-wrapper">
                         <button class="ctrl-btn" id="playBtn" onclick="playArtifactAudio()" title="נגן / השהה הסבר קולי">
                             <svg class="ctrl-icon" id="playIcon" viewBox="0 0 24 24">
@@ -811,7 +772,6 @@
                         </button>
                     </div>
 
-                    <!-- כפתור 2: ניגון ההסבר הקולי מחדש מההתחלה -->
                     <div class="control-wrapper">
                         <button class="ctrl-btn" onclick="replayArtifactAudio()" title="נגן שוב מההתחלה">
                             <svg class="ctrl-icon" viewBox="0 0 24 24">
@@ -820,7 +780,6 @@
                         </button>
                     </div>
 
-                    <!-- כפתור 3: פתיחת סרטון/הדגמה חזותית על המוצג (מסך + משולש) -->
                     <div class="control-wrapper">
                         <button class="ctrl-btn" onclick="playArtifactVideo()" title="הצג סרטון הסבר">
                             <svg class="ctrl-icon" viewBox="0 0 24 24">
@@ -829,7 +788,6 @@
                         </button>
                     </div>
 
-                    <!-- כפתור 4: איפוס אב-הטיפוס וחזרה למסך הפתיחה -->
                     <div class="control-wrapper">
                         <button class="ctrl-btn" onclick="resetPrototype()" title="חזור להתחלה">
                             <svg class="ctrl-icon" viewBox="0 0 24 24">
@@ -846,10 +804,9 @@
                         הראשון...
                     </p>
                 </div>
-
             </div>
 
-            <!-- צד ימין: כותרת ומטבע -->
+            <!-- צד ימין / תחתון בנייד -->
             <div class="panel-right">
                 <div class="coin-title">
                     מטבע כסף של<br>
@@ -860,11 +817,6 @@
                 </div>
             </div>
 
-            <!--
-                שכבת דמו-וידאו: נפתחת בלחיצה על כפתור 3 (playArtifactVideo).
-                זוהי סימולציית "מקרין סרטון" בלבד - יש להחליף בפרויקט
-                הסופי בתגית <video> אמיתית עם קובץ ההדגמה של המוצג.
-            -->
             <div class="video-overlay" id="videoOverlay">
                 <div class="video-overlay-content">
                     <div class="video-placeholder">
@@ -882,12 +834,6 @@
     </div>
 
     <script>
-        /* ==========================================================
-           מפת טקסטים להקראה קולית אוטומטית עבור כל מסך.
-           בכל כניסה למסך מוקרא הטקסט המתאים למבקר.
-           בפרויקט הסופי מומלץ להחליף את ה-Web Speech API בקובצי
-           שמע מוקלטים מראש (איכות והתאמה קוגניטיבית טובה יותר).
-           ========================================================== */
         const screenAudioTexts = {
             1: "ברוכים הבאים למוזיאון הכט. לחצו על סמל המצלמה כדי להתחיל בסיור.",
             2: "כוונו את המצלמה אל המטבע ולחצו על כפתור הצילום.",
@@ -895,9 +841,6 @@
             5: "זהו מטבע כסף שנטבע על ידי המלך אגריפס הראשון."
         };
 
-        /* פונקציית הקראה כללית - מבוססת על Web Speech API (דפדפן).
-           עוצרת כל הקראה קודמת לפני שמתחילה הקראה חדשה, כדי שלא
-           ישמעו שתי הקראות יחד. */
         function speak(text, onEndCallback) {
             if (!window.speechSynthesis) return;
             window.speechSynthesis.cancel();
@@ -910,12 +853,8 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // מזהה המסך הפעיל כרגע - משמש את כפתורי ה"השמע שוב" בכל מסך
         let currentScreenNumber = 1;
 
-        /* מעבר בין מסכי אב-הטיפוס.
-           בכל מעבר: (1) מוסתרים כל המסכים, (2) מוצג המסך היעד,
-           (3) מופעל אוטומטית קטע השמע המתאים למסך היעד. */
         function goToScreen(screenNumber) {
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
@@ -927,25 +866,17 @@
 
             currentScreenNumber = screenNumber;
 
-            // === הפעלת שמע אוטומטית עם הכניסה למסך ===
             if (screenAudioTexts[screenNumber]) {
                 speak(screenAudioTexts[screenNumber]);
             }
         }
 
-        /* השמעה חוזרת של הוראת המסך הפעיל כרגע.
-           כפתור הרמקול בכל מסך (1, 2, 3) קורא לפונקציה הזו, כדי
-           שהמבקר יוכל לשמוע את ההוראה שוב בכל רגע, גם אם ההשמעה
-           האוטומטית לא נשמעה (למשל עקב חסימת דפדפן). */
         function replayCurrentScreenAudio() {
             if (screenAudioTexts[currentScreenNumber]) {
                 speak(screenAudioTexts[currentScreenNumber]);
             }
         }
 
-        /* selectCoin(el): מופעלת בלחיצה על אחת מתיבות המטבע במסך 3.
-           el הוא בדיוק האלמנט שנלחץ - כך שהתיבה שבאמת "עפה" ימינה
-           היא תמיד המטבע שהמשתמש בחר, ולא אלמנט קבוע-מיקום נפרד. */
         function selectCoin(el) {
             const textElement = document.getElementById('main-instruction');
             textElement.innerHTML = 'מעבד... המטבע הנבחר<br>עובר להצגה.';
@@ -954,14 +885,11 @@
             const screenRect = screenEl.getBoundingClientRect();
             const elRect = el.getBoundingClientRect();
 
-            // קיבוע המיקום הנוכחי של התיבה שנבחרה בפיקסלים (יחסית למסך),
-            // כדי שיהיה מיקום התחלתי ברור לפני מעבר ליעד החדש
             el.style.top = (elRect.top - screenRect.top) + 'px';
             el.style.left = (elRect.left - screenRect.left) + 'px';
             el.style.right = 'auto';
             el.style.margin = '0';
 
-            // הסתרת שתי תיבות המטבע האחרות שלא נבחרו
             document.querySelectorAll('.coin-box').forEach(box => {
                 if (box !== el) {
                     box.style.opacity = '0';
@@ -969,15 +897,13 @@
                 }
             });
 
-            // מעבר לפריים הבא כדי שהדפדפן "יתפוס" את המיקום ההתחלתי
-            // לפני שמגדירים את יעד התנועה - כדי שהמעבר יהיה אנימציה חלקה
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     el.classList.add('flying-to-right');
-                    el.style.top = '30px';
-                    el.style.left = (screenRect.width - 150) + 'px';
-                    el.style.width = '110px';
-                    el.style.height = '110px';
+                    el.style.top = '20px';
+                    el.style.left = (screenRect.width - 90) + 'px';
+                    el.style.width = '70px';
+                    el.style.height = '70px';
                 });
             });
 
@@ -985,18 +911,11 @@
                 document.getElementById('whitePanel').classList.add('slide-up');
             }, 300);
 
-            // מעבר למסך 5 (מוצג למשתמש כ"מסך 4") רק בסיום מלא של האנימציות
             setTimeout(() => {
                 goToScreen(5);
             }, 1900);
         }
 
-        /* ==========================================================
-           מסך 5 - כפתור 1: הפעלה/השהיה של ההקראה הקולית על המוצג.
-           לוחצים בפעם הראשונה -> הקראה מתחילה, האייקון והצבע
-           משתנים למצב "מושמע". בסיום ההקראה, האייקון חוזר למצב "נגן".
-           לחיצה נוספת בזמן שההקראה פועלת עוצרת אותה.
-           ========================================================== */
         let isArtifactAudioPlaying = false;
 
         function setPlayButtonState(playing) {
@@ -1006,17 +925,16 @@
             if (playing) {
                 btn.classList.add('is-playing');
                 btn.title = 'השהה הקראה';
-                icon.innerHTML = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'; // אייקון "השהה"
+                icon.innerHTML = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>';
             } else {
                 btn.classList.remove('is-playing');
                 btn.title = 'נגן / השהה הסבר קולי';
-                icon.innerHTML = '<path d="M8 5v14l11-7z"/>'; // אייקון "נגן"
+                icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
             }
         }
 
         function playArtifactAudio() {
             if (isArtifactAudioPlaying) {
-                // לחיצה נוספת בזמן ניגון - עוצרת את ההקראה
                 window.speechSynthesis.cancel();
                 setPlayButtonState(false);
                 return;
@@ -1026,21 +944,13 @@
             speak(text, () => setPlayButtonState(false));
         }
 
-        /* מסך 5 - כפתור 2: ניגון ההסבר הקולי מחדש מההתחלה */
         function replayArtifactAudio() {
             const text = document.getElementById('artifact-description').innerText.trim();
             setPlayButtonState(true);
             speak(text, () => setPlayButtonState(false));
         }
 
-        /* ==========================================================
-           מסך 5 - כפתור 3: פתיחת שכבת ה"וידאו" (סימולציה לאב-הטיפוס).
-           בפרויקט הסופי: להחליף את שכבת video-placeholder בתגית
-           <video controls autoplay src="קובץ_הדגמה.mp4"></video>
-           עם קובץ הווידאו האמיתי של המוצג שנבחר.
-           ========================================================== */
         function playArtifactVideo() {
-            // עוצרים הקראה קולית פעילה (אם יש) כדי שלא תתנגש עם הווידאו
             window.speechSynthesis.cancel();
             setPlayButtonState(false);
             document.getElementById('videoOverlay').classList.add('active');
@@ -1050,20 +960,16 @@
             document.getElementById('videoOverlay').classList.remove('active');
         }
 
-        /* מסך 5 - כפתור 4: איפוס אב-הטיפוס וחזרה למסך 1 */
         function resetPrototype() {
             window.speechSynthesis.cancel();
             setPlayButtonState(false);
             document.getElementById('videoOverlay').classList.remove('active');
 
-            // איפוס מצב האנימציות במסך 3
             const textElement = document.getElementById('main-instruction');
             if (textElement) {
                 textElement.innerHTML = 'בחרו את אחד המטבעות<br>המסומנים על ידי לחיצה עליו.';
             }
 
-            // איפוס כל תיבות המטבע: הסרת המחלקה וכל הסגנון שהוגדר דינמית
-            // ב-selectCoin, כדי שכל תיבה תחזור למיקום המקורי שלה מה-CSS
             document.querySelectorAll('.coin-box').forEach(box => {
                 box.classList.remove('flying-to-right');
                 box.removeAttribute('style');
@@ -1074,22 +980,9 @@
                 whitePanel.classList.remove('slide-up');
             }
 
-            // חזרה למסך 1 (כולל הפעלת השמע המתאים דרך goToScreen)
             goToScreen(1);
         }
 
-        /* ==========================================================
-           הפעלת ההקראה הראשונית עם טעינת הדף, שכן מסך 1 פעיל
-           כברירת מחדל ולא עובר דרך goToScreen().
-
-           הערה חשובה: רוב הדפדפנים חוסמים השמעת שמע אוטומטית לפני
-           שהמשתמש ביצע אינטראקציה כלשהי עם הדף (מדיניות autoplay).
-           לכן, בנוסף לניסיון ההשמעה המיידי, נוסף כאן מנגנון גיבוי:
-           אם בתוך זמן קצר מתברר שההשמעה לא התחילה בפועל, המערכת
-           תמתין למגע הראשון של המשתמש בעמוד (לחיצה או מגע) ותשמיע
-           את ההוראה של המסך הפעיל באותו רגע. כמו כן, כפתור הרמקול
-           (replay-instruction-btn) מאפשר בכל מקרה השמעה חוזרת ידנית.
-           ========================================================== */
         function attemptInitialAudio() {
             speak(screenAudioTexts[1]);
 
