@@ -654,7 +654,7 @@
                     לחצו על המצלמה כדי להתחיל.
                 </div>
 
-                <button class="start-button" onclick="goToScreen(2)" title="לחץ כדי להתחיל">
+                <button class="start-button" onclick="startExperience()" title="לחץ כדי להתחיל">>
                     <svg class="camera-icon" viewBox="0 0 24 24">
                         <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                     </svg>
@@ -813,6 +813,12 @@
     </div>
 
     <script>
+                // החלף את פונקציית attemptInitialAudio בלחיצה יזומה במידת הצורך:
+        function startExperience() {
+            // שחרור חסימת שמע על ידי הפעלה מתוך מחווה של המשתמש
+            speak(screenAudioTexts[1]);
+            goToScreen(2);
+        }
         const screenAudioTexts = {
             1: "ברוכים הבאים למוזיאון הכט. לחצו על סמל המצלמה כדי להתחיל בסיור.",
             2: "כוונו את המצלמה אל המטבע ולחצו על כפתור הצילום.",
