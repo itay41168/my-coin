@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>אב-טיפוס מוזיאון הכט - הנגשה קוגניטיבית</title>
     <style>
-        /* הגדרות כלליות - ביטול גלילה מוחלט */
+        /* הגדרות כלליות */
         html, body {
             margin: 0;
             padding: 0;
@@ -14,14 +14,14 @@
             height: 100dvh;
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #000;
+            background-color: #050505;
             display: flex;
             justify-content: center;
             align-items: center;
             touch-action: manipulation;
+            user-select: none;
         }
 
-        /* דימוי מכשיר - מותאם בדיוק למסך ללא גלילה */
         .tablet-frame {
             width: 100vw;
             height: 100vh;
@@ -29,7 +29,6 @@
             max-width: 1024px;
             max-height: 768px;
             border: none;
-            border-radius: 0;
             overflow: hidden;
             position: relative;
             background-color: #1a1a1a;
@@ -39,12 +38,12 @@
         @media (min-width: 768px) and (min-height: 600px) {
             .tablet-frame {
                 height: 90vh;
-                border: 12px solid #222;
+                border: 10px solid #222;
                 border-radius: 24px;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             }
         }
 
-        /* ניהול תצוגת מסכים */
         .screen {
             display: none !important;
             width: 100%;
@@ -60,36 +59,28 @@
             display: flex !important;
         }
 
-        /* ==========================================
-           סגנונות מסך 1: ברוכים הבאים
-           ========================================== */
+        /* מסך 1: ברוכים הבאים */
         #screen-1 {
-            background-image: url('image_26220d.png');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             flex-direction: column;
         }
 
         .overlay-screen1 {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(230, 240, 255, 0.9) 0%, rgba(200, 220, 255, 0.7) 100%);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0.6) 100%);
             z-index: 1;
         }
 
         .content-container-screen1 {
             position: relative;
             z-index: 2;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 30px;
             box-sizing: border-box;
         }
 
@@ -100,252 +91,168 @@
         }
 
         .museum-name-he {
-            font-size: clamp(20px, 4.5vw, 32px);
-            font-weight: bold;
+            font-size: clamp(22px, 4.5vw, 34px);
+            font-weight: 800;
             margin: 0;
+            color: #f8fafc;
+            letter-spacing: 0.5px;
         }
 
         .museum-name-en {
-            font-size: clamp(13px, 3vw, 18px);
-            margin: 0;
-            opacity: 0.8;
+            font-size: clamp(14px, 3vw, 18px);
+            margin: 2px 0 0 0;
+            color: #94a3b8;
         }
 
         .welcome-text {
-            color: #000;
-            font-size: clamp(20px, 5vw, 40px);
-            font-weight: bold;
-            line-height: 1.3;
+            color: #ffffff;
+            font-size: clamp(22px, 4.5vw, 38px);
+            font-weight: 700;
+            line-height: 1.4;
             text-align: center;
-            max-width: 700px;
+            max-width: 650px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .start-button {
-            width: min(180px, 45vw);
-            height: min(100px, 14vh);
-            background-color: #3B82F6;
-            border-radius: 20px;
-            border: none;
+            width: clamp(140px, 30vw, 180px);
+            height: clamp(80px, 15vh, 100px);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 24px;
+            border: 2px solid rgba(255,255,255,0.2);
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-            transition: transform 0.2s, background-color 0.2s;
-            margin-bottom: 10px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s ease;
+            margin-bottom: 20px;
         }
 
-        .start-button:hover {
-            background-color: #2563EB;
-            transform: scale(1.04);
+        .start-button:active {
+            transform: scale(0.95);
         }
 
-        /* ==========================================
-           סגנונות מסך 2 ו-3: תצוגת הוויטרינה והסריקה
-           ========================================== */
+        /* מסך 2 ו-3: תצוגה וויטרינה */
         .camera-feed {
             width: 100%;
             height: 100%;
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
         }
 
         .bottom-bar {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: clamp(80px, 16vh, 120px);
-            padding: 5px 10px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 80%, transparent 100%);
+            bottom: 0; left: 0; width: 100%;
+            height: clamp(90px, 16vh, 120px);
+            padding: 10px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 15px;
             z-index: 10;
             box-sizing: border-box;
         }
 
         .instruction-text {
             color: #ffffff;
-            font-size: clamp(14px, 3.5vw, 24px);
-            font-weight: 600;
+            font-size: clamp(16px, 3.5vw, 24px);
+            font-weight: 700;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             margin: 0;
             text-align: center;
-            line-height: 1.2;
         }
 
         .shutter-button {
-            width: clamp(55px, 14vw, 80px);
-            height: clamp(55px, 14vw, 80px);
-            background-color: #3B82F6;
-            border: 3px solid #ffffff;
+            width: clamp(60px, 14vw, 75px);
+            height: clamp(60px, 14vw, 75px);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border: 4px solid #ffffff;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
             transition: transform 0.15s ease;
             flex-shrink: 0;
         }
 
         .shutter-button:active {
-            transform: scale(0.92);
-            background-color: #2563EB;
+            transform: scale(0.9);
         }
 
-        /* ==========================================
-           סגנונות מסך 3: בחירת מטבע (מסגרות מדויקות)
-           ========================================== */
+        /* מסגרות זיהוי מרהיבות למסך 3 */
         #screen-3 {
-            background-color: #121212;
-            overflow: hidden;
-            position: absolute;
+            background-color: #09090b;
         }
 
         .instruction-header-screen3 {
             position: absolute;
-            top: 15px;
-            width: 100%;
-            padding: 0 10px;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 15px 30px 15px;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             z-index: 20;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
-            padding-bottom: 15px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
         }
 
         .instruction-text-screen3 {
             color: #ffffff;
-            font-size: clamp(16px, 4.5vw, 32px);
-            font-weight: bold;
+            font-size: clamp(18px, 4vw, 28px);
+            font-weight: 800;
             margin: 0;
             text-align: center;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
         }
 
-        /* מסגרות זיהוי כחולות בתוך ה-SVG עצמו לרמת דיוק פיקסלית */
         .svg-coin-selector {
             cursor: pointer;
-            pointer-events: all;
         }
 
         .svg-coin-selector rect {
-            fill: rgba(59, 130, 246, 0.12);
-            stroke: #3B82F6;
-            stroke-width: 4;
+            fill: rgba(59, 130, 246, 0.15);
+            stroke: #60a5fa;
+            stroke-width: 3.5;
             rx: 16;
-            ry: 16;
-            filter: drop-shadow(0px 0px 10px rgba(59, 130, 246, 0.8));
-            transition: transform 0.2s, stroke 0.2s, fill 0.2s;
-            transform-origin: center;
+            stroke-dasharray: 8;
+            animation: dash 20s linear infinite;
+            filter: drop-shadow(0px 0px 12px rgba(59, 130, 246, 0.9));
+            transition: all 0.3s ease;
         }
 
-        .svg-coin-selector:hover rect {
-            stroke: #60A5FA;
-            fill: rgba(96, 165, 250, 0.25);
-            filter: drop-shadow(0px 0px 18px rgba(96, 165, 250, 1));
+        @keyframes dash {
+            to { stroke-dashoffset: 1000; }
         }
 
-        .flying-animated-coin {
-            position: absolute;
-            z-index: 60;
-            border: 4px solid #FFD700;
-            border-radius: 50%;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
-            background-color: rgba(212, 175, 55, 0.25);
-            transition: top 1.3s cubic-bezier(0.25, 1, 0.5, 1), left 1.3s cubic-bezier(0.25, 1, 0.5, 1),
-                        width 1.3s ease, height 1.3s ease, opacity 0.4s ease;
-            box-sizing: border-box;
-            pointer-events: none;
+        .svg-coin-selector:hover rect, .svg-coin-selector.selected rect {
+            fill: rgba(255, 215, 0, 0.25);
+            stroke: #ffd700;
+            stroke-width: 5;
+            filter: drop-shadow(0px 0px 20px rgba(255, 215, 0, 1));
         }
 
-        .sliding-white-panel {
-            position: absolute;
-            bottom: -100%;
-            left: 5%;
-            width: 90%;
-            height: 70%;
-            background-color: #ffffff;
-            border-radius: 25px 25px 0 0;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
-            z-index: 30;
-            transition: bottom 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .sliding-white-panel.slide-up {
-            bottom: 0;
-        }
-
-        /* ==========================================
-           סגנונות מסך 5 (מסך 4 למשתמש): תוכן ומולטימדיה
-           ========================================== */
+        /* מסך 4 (המטבע שנבחר + מולטימדיה) */
         #screen-5 {
-            background-color: #dbeafe;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             flex-direction: row;
         }
 
         @media (max-width: 650px) {
-            #screen-5 {
-                flex-direction: column-reverse;
-            }
-            .panel-right, .panel-left {
-                width: 100% !important;
-            }
-            .panel-right {
-                height: 35% !important;
-                padding: 10px !important;
-                box-shadow: none !important;
-            }
-            .panel-left {
-                height: 65% !important;
-                padding: 10px !important;
-                justify-content: space-evenly !important;
-            }
-            .large-coin-display {
-                width: min(100px, 22vw) !important;
-                height: min(100px, 22vw) !important;
-                border-width: 3px !important;
-            }
-            .coin-title {
-                font-size: clamp(16px, 4vw, 22px) !important;
-                margin-bottom: 5px !important;
-            }
-            .ctrl-btn {
-                width: clamp(48px, 12vw, 65px) !important;
-                height: clamp(48px, 12vw, 65px) !important;
-                border-radius: 14px !important;
-            }
-            .ctrl-icon {
-                width: clamp(24px, 6vw, 32px) !important;
-                height: clamp(24px, 6vw, 32px) !important;
-            }
-            .accessible-text-card {
-                padding: 12px 10px !important;
-                border-radius: 16px !important;
-            }
-            .accessible-text-card p {
-                font-size: clamp(15px, 4vw, 22px) !important;
-                line-height: 1.3 !important;
-            }
-            .controls-row {
-                margin-top: 0 !important;
-                margin-bottom: 5px !important;
-                gap: 8px !important;
-            }
+            #screen-5, #screen-quiz { flex-direction: column-reverse !important; }
+            .panel-right, .panel-left, .quiz-left, .quiz-right { width: 100% !important; }
+            .panel-right, .quiz-right { height: 40% !important; }
+            .panel-left, .quiz-left { height: 60% !important; }
         }
 
         .panel-right {
-            width: 42%;
-            height: 100%;
-            background-color: #1c1c1e;
+            width: 45%; height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            border-left: 1px solid rgba(255,255,255,0.1);
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -353,329 +260,347 @@
             justify-content: center;
             padding: 20px;
             box-sizing: border-box;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
         }
 
         .coin-title {
-            font-size: clamp(20px, 3.5vw, 38px);
-            font-weight: bold;
+            font-size: clamp(20px, 3.5vw, 32px);
+            font-weight: 800;
             text-align: center;
-            margin-bottom: 15px;
-            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #f1f5f9;
         }
 
         .large-coin-display {
-            width: min(210px, 32vw);
-            height: min(210px, 32vw);
+            width: min(240px, 35vw);
+            height: min(240px, 35vw);
             border-radius: 50%;
-            background-color: #2b2320;
-            border: 5px solid #d4af37;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-        }
-
-        .large-coin-display svg {
-            width: 100%;
-            height: 100%;
+            background: #1e293b;
         }
 
         .panel-left {
-            width: 58%;
-            height: 100%;
+            width: 55%; height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 20px;
             box-sizing: border-box;
-            position: relative;
         }
 
         .controls-row {
             display: flex;
             gap: 12px;
-            margin-bottom: 15px;
-            position: relative;
-            flex-wrap: nowrap;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
             justify-content: center;
         }
 
-        .control-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         .ctrl-btn {
-            width: min(85px, 15vw);
-            height: min(85px, 15vw);
-            background-color: #3B82F6;
+            width: min(68px, 13vw);
+            height: min(68px, 13vw);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             border: none;
-            border-radius: 16px;
+            border-radius: 18px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
             transition: transform 0.15s;
         }
 
-        .ctrl-btn:active {
-            transform: scale(0.95);
-        }
+        .ctrl-btn:active { transform: scale(0.92); }
+        .ctrl-btn.is-playing { background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); }
+        .ctrl-btn.quiz-btn-accent { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4); }
 
-        .ctrl-btn.is-playing {
-            background-color: #16A34A;
-        }
-
-        .ctrl-icon {
-            width: min(40px, 7vw);
-            height: min(40px, 7vw);
-            fill: white;
-        }
+        .ctrl-icon { width: 30px; height: 30px; fill: white; }
 
         .accessible-text-card {
             width: 100%;
-            max-width: 500px;
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 18px 15px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             box-sizing: border-box;
             text-align: center;
         }
 
         .accessible-text-card p {
             margin: 0;
-            font-size: clamp(16px, 3.5vw, 28px);
-            font-weight: bold;
-            color: #1e293b;
-            line-height: 1.4;
+            font-size: clamp(18px, 3.5vw, 26px);
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.5;
         }
 
-        /* אייקונים וכפתורי עזר */
-        .camera-icon {
-            width: clamp(32px, 8vw, 60px);
-            height: clamp(32px, 8vw, 60px);
-            fill: white;
-        }
-
-        .audio-icon-right {
-            position: absolute;
-            right: 10px;
-            width: 26px;
-            height: 26px;
-            opacity: 0.9;
-        }
-
-        .audio-icon-large {
-            width: 30px;
-            height: 30px;
-            flex-shrink: 0;
-        }
-
+        .camera-icon { width: 35px; height: 35px; fill: white; }
+        
         .icon-audio-btn {
-            background: none;
+            background: rgba(255,255,255,0.15);
             border: none;
-            padding: 0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .icon-audio-btn svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .replay-instruction-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 40px;
-            height: 40px;
             border-radius: 50%;
-            background-color: rgba(59, 130, 246, 0.95);
-            border: none;
+            width: 45px; height: 45px;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 20;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        .replay-instruction-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: #ffffff;
+        /* ==========================================
+           סגנונות מסך החידון (מבוסס עיצוב התמונה)
+           ========================================== */
+        #screen-quiz {
+            background-color: #f1f5f9;
+            flex-direction: row;
+            color: #0f172a;
         }
 
-        /* שכבת דמו-וידאו */
-        .video-overlay {
-            display: none;
+        .quiz-header {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 10px;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-
-        .video-overlay.active {
-            display: flex;
-        }
-
-        .video-overlay-content {
-            width: 100%;
-            max-width: 500px;
-            background-color: #000;
-            border-radius: 20px;
-            padding: 15px;
-            box-sizing: border-box;
             text-align: center;
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #0f172a;
+            z-index: 10;
         }
 
-        .video-placeholder {
-            width: 100%;
-            height: 160px;
-            background: repeating-linear-gradient(45deg, #1f2937, #1f2937 10px, #111827 10px, #111827 20px);
-            border-radius: 12px;
+        .quiz-left {
+            width: 50%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            padding: 70px 25px 20px 25px;
+            box-sizing: border-box;
         }
 
-        .video-spin-icon {
-            width: 40px;
-            height: 40px;
-            fill: #ffffff;
-            animation: spinVideoIcon 2.2s linear infinite;
+        .quiz-question-title {
+            font-size: clamp(22px, 4vw, 32px);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #0f172a;
         }
 
-        @keyframes spinVideoIcon {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .quiz-subtitle {
+            font-size: clamp(14px, 2.8vw, 18px);
+            color: #64748b;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
         }
 
-        .video-overlay-content p {
-            color: #ffffff;
-            font-size: 16px;
-            margin: 0 0 12px 0;
+        .quiz-options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
         }
 
-        .video-close-btn {
-            background-color: #3B82F6;
-            color: #fff;
+        .quiz-option-btn {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #2563eb;
+            color: white;
             border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
+            border-radius: 14px;
+            font-size: clamp(18px, 3.5vw, 24px);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .quiz-option-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .quiz-option-btn.correct {
+            background-color: #22c55e !important;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .quiz-option-btn.incorrect {
+            background-color: #ef4444 !important;
+        }
+
+        .quiz-check-mark {
+            position: absolute;
+            left: 15px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .quiz-feedback-box {
+            margin-top: 15px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 12px 15px;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            font-size: clamp(12px, 2.5vw, 15px);
+            color: #334155;
+            line-height: 1.3;
+            text-align: center;
+            display: none;
+        }
+
+        .quiz-feedback-box.active {
+            display: block;
+        }
+
+        .quiz-right {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px 20px 20px;
+            box-sizing: border-box;
+        }
+
+        .quiz-coin-img-frame {
+            width: min(320px, 42vw);
+            height: min(320px, 42vw);
+            border-radius: 50%;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 4px solid #cbd5e1;
+        }
+
+        .back-from-quiz-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #e2e8f0;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
             font-weight: bold;
             cursor: pointer;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        /* מודאל וידאו */
+        .video-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-overlay.active { display: flex; }
+        .video-overlay-content {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 24px;
+            text-align: center;
+            color: white;
+            width: 85%; max-width: 450px;
+        }
+        .video-close-btn {
+            background: #3b82f6; border: none; color: white;
+            padding: 10px 25px; border-radius: 12px; font-weight: bold; cursor: pointer;
+            margin-top: 15px; font-size: 16px;
         }
     </style>
 </head>
 <body>
 
-    <!-- הגדרת תמונת הויטרינה המוזיאונית המשותפת (תצוגת עץ, זכוכית ומטבעות רומיים/עתיקים) -->
+    <!-- הגדרות SVG לגרפיקה ריאליסטית בתלת-ממד של הוויטרינה והמטבעות -->
     <svg style="display: none;">
         <defs>
-            <radialGradient id="bgGrad" cx="50%" cy="30%">
-                <stop offset="0%" stop-color="#3d2c1e"/>
-                <stop offset="100%" stop-color="#140d08"/>
-            </radialGradient>
-            <linearGradient id="woodTable" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#9a6e42"/>
-                <stop offset="100%" stop-color="#4e351c"/>
-            </linearGradient>
-            <linearGradient id="glassEdge" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
-                <stop offset="8%" stop-color="rgba(120,210,255,0.35)"/>
-                <stop offset="92%" stop-color="rgba(120,210,255,0.15)"/>
-                <stop offset="100%" stop-color="rgba(255,255,255,0.5)"/>
-            </linearGradient>
-
-            <!-- פלטת צבעים למטבעות כסף וברונזה עתיקים (רומיים) -->
-            <radialGradient id="coinGradSilverMain" cx="30%" cy="30%">
-                <stop offset="0%" stop-color="#f1f5f9"/>
-                <stop offset="55%" stop-color="#94a3b8"/>
-                <stop offset="85%" stop-color="#475569"/>
-                <stop offset="100%" stop-color="#1e293b"/>
+            <!-- גרדיאנטים עמוקים לטקסטורה עתיקה -->
+            <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#2a1f17"/>
+                <stop offset="100%" stop-color="#080503"/>
             </radialGradient>
             
-            <radialGradient id="coinGradBronze" cx="30%" cy="30%">
-                <stop offset="0%" stop-color="#e2c87c"/>
-                <stop offset="60%" stop-color="#9e7b30"/>
-                <stop offset="100%" stop-color="#42310c"/>
+            <linearGradient id="woodTable" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#85522b"/>
+                <stop offset="50%" stop-color="#543318"/>
+                <stop offset="100%" stop-color="#2c1a0b"/>
+            </linearGradient>
+            
+            <linearGradient id="velvetMat" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#1e293b"/>
+                <stop offset="100%" stop-color="#0f172a"/>
+            </linearGradient>
+
+            <!-- מטבע כסף עתיק תלת ממדי -->
+            <radialGradient id="silverRealistic" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="40%" stop-color="#cbd5e1"/>
+                <stop offset="75%" stop-color="#64748b"/>
+                <stop offset="100%" stop-color="#334155"/>
             </radialGradient>
 
-            <!-- תמונת הויטרינה הקבועה והמלאה -->
+            <!-- מטבע ברונזה/זהב עתיק תלת ממדי -->
+            <radialGradient id="bronzeRealistic" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#fef08a"/>
+                <stop offset="35%" stop-color="#d97706"/>
+                <stop offset="75%" stop-color="#78350f"/>
+                <stop offset="100%" stop-color="#451a03"/>
+            </radialGradient>
+
+            <!-- תכן הוויטרינה -->
             <g id="museum-vitrine-content">
-                <!-- רקע מוזיאון ותאורה עמוקה -->
                 <rect width="1024" height="768" fill="url(#bgGrad)"/>
+                <!-- מדף מוזיאוני בעל נפח -->
+                <polygon points="50,220 974,220 1024,768 0,768" fill="url(#woodTable)"/>
+                <polygon points="100,250 924,250 960,700 64,700" fill="url(#velvetMat)"/>
                 
-                <!-- בסיס עץ של הויטרינה + משטח תצוגה בהיר -->
-                <polygon points="40,200 984,200 1024,768 0,768" fill="url(#woodTable)"/>
-                <polygon points="110,230 914,230 960,700 64,700" fill="#f5eedc"/>
-                <polygon points="110,230 914,230 960,700 64,700" fill="rgba(0,0,0,0.07)"/>
+                <!-- תאורת ספוט מוזיאונית -->
+                <ellipse cx="512" cy="450" rx="350" ry="200" fill="rgba(255,255,255,0.04)"/>
 
-                <!-- זכוכית הוויטרינה (משתקפת) -->
-                <polygon points="70,140 954,140 996,720 28,720" fill="none" stroke="url(#glassEdge)" stroke-width="4"/>
-                <line x1="70" y1="140" x2="28" y2="720" stroke="rgba(255,255,255,0.45)" stroke-width="6"/>
-
-                <!-- מטבעות רקע משניים ברקע המוזיאון -->
-                <ellipse cx="180" cy="570" rx="26" ry="15" fill="url(#coinGradBronze)" stroke="#2b1807" stroke-width="1.5"/>
-                <ellipse cx="230" cy="620" rx="22" ry="12" fill="url(#coinGradSilverMain)" stroke="#1e293b" stroke-width="1.5"/>
-                <ellipse cx="250" cy="460" rx="28" ry="16" fill="url(#coinGradBronze)" stroke="#2b1807" stroke-width="1.5"/>
-                <ellipse cx="780" cy="540" rx="30" ry="17" fill="url(#coinGradSilverMain)" stroke="#1e293b" stroke-width="1.5"/>
-                <ellipse cx="830" cy="600" rx="25" ry="14" fill="url(#coinGradBronze)" stroke="#2b1807" stroke-width="1.5"/>
-
-                <!-- ==================== 3 המטבעות המרכזיים ==================== -->
-
-                <!-- מטבע 1 (מרכזי עליון): דיוקן קיסר רומי מפורט (כמו בתמונה ששלחת) -->
-                <g id="coin-main-group">
-                    <!-- גוף המטבע -->
-                    <ellipse cx="512" cy="380" rx="68" ry="48" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2" filter="drop-shadow(0px 8px 12px rgba(0,0,0,0.5))"/>
-                    <!-- היקף פנימי מחורר (נקודות עתיקות) -->
-                    <ellipse cx="512" cy="380" rx="58" ry="40" fill="none" stroke="#334155" stroke-dasharray="4,3" stroke-width="1.5"/>
-                    <!-- דיוקן קיסר רומי עם זר עלי דפנה וסרט רופף -->
-                    <path d="M 502 355 C 522 353 528 368 526 382 C 516 394 506 404 494 408 C 484 402 488 382 494 372 Z" fill="#1e293b"/>
-                    <!-- ענף / זר דפנה על ראשה -->
-                    <path d="M 495 360 Q 508 350 520 353" fill="none" stroke="#475569" stroke-width="3"/>
-                    <path d="M 488 375 Q 482 385 476 392" fill="none" stroke="#1e293b" stroke-width="2.5"/> <!-- סרט -->
-                    <!-- כתוביות לטיניות עתיקות סביב השוליים -->
-                    <path d="M 462 375 A 54 36 0 0 1 562 375" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="2,6"/>
+                <!-- מטבע מרכזי 1 (קיסר רומי - כסף) -->
+                <g id="coin-1-group">
+                    <ellipse cx="512" cy="380" rx="72" ry="52" fill="#1e293b" opacity="0.6" filter="blur(4px)"/>
+                    <ellipse cx="512" cy="376" rx="70" ry="50" fill="url(#silverRealistic)" stroke="#94a3b8" stroke-width="2"/>
+                    <ellipse cx="512" cy="376" rx="60" ry="42" fill="none" stroke="#475569" stroke-dasharray="3,3" stroke-width="1.5"/>
+                    <!-- פרופיל רומי חרוט -->
+                    <path d="M 500 350 C 525 348 532 365 530 380 C 518 393 505 402 492 405 C 482 398 486 378 492 368 Z" fill="#334155"/>
                 </g>
 
-                <!-- מטבע 2 (שמאל למטה): מטבע רומי עתיק קטן יותר -->
-                <g id="coin-left-group">
-                    <ellipse cx="380" cy="580" rx="46" ry="30" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="1.5" filter="drop-shadow(0px 6px 10px rgba(0,0,0,0.4))"/>
-                    <ellipse cx="380" cy="580" rx="38" ry="24" fill="none" stroke="#334155" stroke-dasharray="3,2"/>
-                    <path d="M 374 565 C 390 565 394 576 392 586 C 384 594 376 600 368 602 C 362 596 364 582 368 575 Z" fill="#1e293b"/>
+                <!-- מטבע 2 (שמאלי - מטבע עתיק קטן) -->
+                <g id="coin-2-group">
+                    <ellipse cx="360" cy="560" rx="50" ry="35" fill="#000" opacity="0.5" filter="blur(3px)"/>
+                    <ellipse cx="360" cy="556" rx="48" ry="33" fill="url(#silverRealistic)" stroke="#94a3b8" stroke-width="1.5"/>
+                    <ellipse cx="360" cy="556" rx="40" ry="26" fill="none" stroke="#475569" stroke-dasharray="2,2"/>
+                    <path d="M 353 540 C 370 540 374 552 372 563 C 363 571 354 577 345 579 Z" fill="#334155"/>
                 </g>
 
-                <!-- מטבע 3 (ימין למטה): מטבע ברונזה עתיק -->
-                <g id="coin-right-group">
-                    <ellipse cx="640" cy="565" rx="48" ry="31" fill="url(#coinGradBronze)" stroke="#fef08a" stroke-width="1.5" filter="drop-shadow(0px 6px 10px rgba(0,0,0,0.4))"/>
-                    <ellipse cx="640" cy="565" rx="40" ry="24" fill="none" stroke="#42310c" stroke-dasharray="3,2"/>
-                    <path d="M 634 550 C 650 550 654 561 652 571 C 644 579 636 585 628 587 C 622 581 624 567 628 560 Z" fill="#2d1f05"/>
+                <!-- מטבע 3 (ימני - ברונזה עתיקה) -->
+                <g id="coin-3-group">
+                    <ellipse cx="660" cy="550" rx="52" ry="36" fill="#000" opacity="0.5" filter="blur(3px)"/>
+                    <ellipse cx="660" cy="546" rx="50" ry="34" fill="url(#bronzeRealistic)" stroke="#f59e0b" stroke-width="1.5"/>
+                    <ellipse cx="660" cy="546" rx="42" ry="27" fill="none" stroke="#78350f" stroke-dasharray="3,2"/>
+                    <circle cx="660" cy="546" r="14" fill="none" stroke="#78350f" stroke-width="2"/>
                 </g>
-
-                <!-- תאורת מיקוד רכה במרכז הויטרינה -->
-                <ellipse cx="512" cy="420" rx="280" ry="170" fill="rgba(255,255,255,0.035)"/>
             </g>
         </defs>
     </svg>
@@ -696,372 +621,354 @@
                     לחצו על המצלמה כדי להתחיל.
                 </div>
 
-                <button class="start-button" onclick="goToScreen(2)" title="לחץ כדי להתחיל">
+                <button class="start-button" onclick="startApp()" title="לחץ כדי להתחיל">
                     <svg class="camera-icon" viewBox="0 0 24 24">
                         <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                     </svg>
                 </button>
             </div>
-
-            <button class="replay-instruction-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z"/>
-                </svg>
-            </button>
         </div>
 
-        <!-- מסך 2: סריקת ויטרינת המוזיאון (ללא כפתור מיקוד) -->
+        <!-- מסך 2: סריקת הויטרינה -->
         <div id="screen-2" class="screen">
-            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img" aria-label="תצוגת מצלמה במוזיאון">
+            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice">
                 <use href="#museum-vitrine-content" />
             </svg>
 
             <div class="bottom-bar">
-                <button class="audio-icon-right icon-audio-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
-                    <svg viewBox="0 0 24 24" fill="white">
-                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z"/>
+                <button class="icon-audio-btn" onclick="speakCurrentInstruction()" title="השמע הוראה">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="white">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/>
                     </svg>
                 </button>
 
-                <p class="instruction-text">כוונו את המצלמה</p>
+                <p class="instruction-text">כוונו את המצלמה ולחצו על הכפתור.</p>
 
-                <button class="shutter-button" onclick="goToScreen(3)" title="צלם ועבור לבחירה">
+                <button class="shutter-button" onclick="goToScreen(3)" title="צלם">
                     <svg class="camera-icon" viewBox="0 0 24 24">
                         <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                     </svg>
                 </button>
-
-                <p class="instruction-text">ולחצו על הכפתור.</p>
             </div>
         </div>
 
-        <!-- מסך 3: בחירת המטבע מתוך אותה תמונה בדיוק (עם מסגרות כחולות מוגדרות ב-SVG במדויק על המטבעות) -->
+        <!-- מסך 3: בחירת המטבע שנחשף -->
         <div id="screen-3" class="screen">
-            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img">
-                <!-- רקע הוויטרינה הזהה לחלוטין -->
+            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice">
                 <use href="#museum-vitrine-content" />
 
-                <!-- מסגרת זיהוי 1: ממוקמת פיקסל-לפיקסל סביב המטבע המרכזי העליון -->
-                <g class="svg-coin-selector" id="box-main" onclick="selectSvgCoin('main', 512, 380, 156, 116)" title="לחץ לבחירת המטבע המרכזי">
-                    <rect x="434" y="322" width="156" height="116" />
+                <!-- מסגרות מזהות מונפשות -->
+                <g class="svg-coin-selector" onclick="selectCoin('main')">
+                    <rect x="420" y="310" width="184" height="132" />
                 </g>
-
-                <!-- מסגרת זיהוי 2: ממוקמת פיקסל-לפיקסל סביב המטבע השמאלי -->
-                <g class="svg-coin-selector" id="box-left" onclick="selectSvgCoin('left', 380, 580, 112, 80)" title="לחץ לבחירת המטבע השמאלי">
-                    <rect x="324" y="540" width="112" height="80" />
+                <g class="svg-coin-selector" onclick="selectCoin('left')">
+                    <rect x="295" y="505" width="130" height="100" />
                 </g>
-
-                <!-- מסגרת זיהוי 3: ממוקמת פיקסל-לפיקסל סביב המטבע הימני -->
-                <g class="svg-coin-selector" id="box-right" onclick="selectSvgCoin('right', 640, 565, 116, 82)" title="לחץ לבחירת המטבע הימני">
-                    <rect x="582" y="524" width="116" height="82" />
+                <g class="svg-coin-selector" onclick="selectCoin('right')">
+                    <rect x="595" y="495" width="130" height="100" />
                 </g>
             </svg>
 
-            <div class="instruction-header-screen3" id="header-text-screen3">
-                <button class="audio-icon-large icon-audio-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
-                    <svg viewBox="0 0 24 24" fill="white">
-                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z"/>
+            <div class="instruction-header-screen3">
+                <button class="icon-audio-btn" onclick="speakCurrentInstruction()" title="השמע הוראה">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="white">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/>
                     </svg>
                 </button>
-                <p class="instruction-text-screen3" id="main-instruction">
-                    בחרו את אחד המטבעות<br>המסומנים על ידי לחיצה עליו.
-                </p>
+                <p class="instruction-text-screen3">בחרו את אחד המטבעות המסומנים</p>
             </div>
-
-            <!-- אלמנט אנימציה למטבע המרחף בעת בחירה -->
-            <div id="flyingCoin" class="flying-animated-coin" style="display:none;"></div>
-
-            <div class="sliding-white-panel" id="whitePanel"></div>
         </div>
 
-        <!-- מסך 5 (מוצג למשתמש כ"מסך 4"): תצוגת המטבע שנבחר + מולטימדיה -->
+        <!-- מסך 4 (המטבע שנבחר + מולטימדיה + כפתור מעבר לחידון) -->
         <div id="screen-5" class="screen">
-
-            <!-- צד שמאל / תחתון בנייד -->
             <div class="panel-left">
                 <div class="controls-row">
-                    <div class="control-wrapper">
-                        <button class="ctrl-btn" id="playBtn" onclick="playArtifactAudio()" title="נגן / השהה הסבר קולי">
-                            <svg class="ctrl-icon" id="playIcon" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="control-wrapper">
-                        <button class="ctrl-btn" onclick="replayArtifactAudio()" title="נגן שוב מההתחלה">
-                            <svg class="ctrl-icon" viewBox="0 0 24 24">
-                                <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="control-wrapper">
-                        <button class="ctrl-btn" onclick="playArtifactVideo()" title="הצג סרטון הסבר">
-                            <svg class="ctrl-icon" viewBox="0 0 24 24">
-                                <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-1l6-4-6-4v8z"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="control-wrapper">
-                        <button class="ctrl-btn" onclick="resetPrototype()" title="חזור להתחלה">
-                            <svg class="ctrl-icon" viewBox="0 0 24 24">
-                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                            </svg>
-                        </button>
-                    </div>
+                    <button class="ctrl-btn" id="playAudioBtn" onclick="toggleAudio()" title="השמע הסבר">
+                        <svg class="ctrl-icon" id="playIcon" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                    <button class="ctrl-btn" onclick="restartAudio()" title="התחל מחדש">
+                        <svg class="ctrl-icon" viewBox="0 0 24 24">
+                            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                        </svg>
+                    </button>
+                    <button class="ctrl-btn" onclick="openVideo()" title="סרטון">
+                        <svg class="ctrl-icon" viewBox="0 0 24 24">
+                            <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-1l6-4-6-4v8z"/>
+                        </svg>
+                    </button>
+                    <!-- כפתור החידון החדש -->
+                    <button class="ctrl-btn quiz-btn-accent" onclick="goToScreen('quiz')" title="עבור לחידון">
+                        <svg class="ctrl-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
+                        </svg>
+                    </button>
+                    <button class="ctrl-btn" onclick="goToScreen(1)" title="חזור להתחלה">
+                        <svg class="ctrl-icon" viewBox="0 0 24 24">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                    </button>
                 </div>
 
                 <div class="accessible-text-card">
-                    <p id="artifact-description">
-                        זהו מטבע כסף שנטבע<br>
-                        על ידי המלך אגריפס<br>
-                        הראשון...
-                    </p>
+                    <p id="coin-description">טוען נתונים...</p>
                 </div>
             </div>
 
-            <!-- צד ימין / עליון בנייד: מציג בהגדלה את המטבע שנבחר -->
             <div class="panel-right">
-                <div class="coin-title" id="display-coin-title">
-                    מטבע כסף של<br>
-                    הקיסר הרומי
+                <div class="coin-title" id="coin-title-text">מטבע כסף</div>
+                <div class="large-coin-display" id="large-coin-container">
+                    <!-- ייטען דינמית לפי הבחירה -->
                 </div>
-                <div class="large-coin-display" id="display-coin-img" title="המטבע שנבחר">
-                    <svg viewBox="0 0 140 140">
-                        <circle cx="70" cy="70" r="62" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2"/>
-                        <circle cx="70" cy="70" r="52" fill="none" stroke="#334155" stroke-dasharray="4,3"/>
-                        <path d="M 60 45 C 80 43 86 58 84 72 C 74 84 64 94 52 98 C 42 92 46 72 52 62 Z" fill="#1e293b"/>
+            </div>
+        </div>
+
+        <!-- מסך 6: החידון האינטראקטיבי (מותאם במדויק לעיצוב שבתמונה) -->
+        <div id="screen-quiz" class="screen">
+            <button class="back-from-quiz-btn" onclick="goToScreen(5)">
+                ➔ חזרה למטבע
+            </button>
+
+            <div class="quiz-header">חידון</div>
+
+            <div class="quiz-left">
+                <div class="quiz-question-title">איך נראית האישה על המטבע?</div>
+                <div class="quiz-subtitle">הסתכל היטב על הבעת פניה</div>
+
+                <div class="quiz-options-container">
+                    <button class="quiz-option-btn" onclick="checkQuizAnswer(this, false)">שמחה</button>
+                    <button class="quiz-option-btn" onclick="checkQuizAnswer(this, true)">עצובה</button>
+                    <button class="quiz-option-btn" onclick="checkQuizAnswer(this, false)">כועסת</button>
+                </div>
+
+                <div class="quiz-feedback-box" id="quizFeedback">
+                    <b>נכון מאוד!</b> האישה על המטבע נראית עצובה ומדוכאת, המטבע מתאר את יהודה הכבושה.
+                </div>
+            </div>
+
+            <div class="quiz-right">
+                <div class="quiz-coin-img-frame">
+                    <!-- תקריב מטבע יהודה הכבושה (Judaea Capta) -->
+                    <svg viewBox="0 0 200 200" width="100%" height="100%">
+                        <circle cx="100" cy="100" r="95" fill="url(#bronzeRealistic)" stroke="#78350f" stroke-width="4"/>
+                        <!-- עץ תמר במרכז -->
+                        <path d="M 100 160 L 100 60 M 90 70 C 70 50 60 40 50 45 M 110 70 C 130 50 140 40 150 45 M 92 90 C 70 75 60 70 50 78 M 108 90 C 130 75 140 70 150 78" stroke="#451a03" stroke-width="5" fill="none"/>
+                        <!-- דמות האישה האבלה (יהודה הכבושה) יושבת מתחת לעץ -->
+                        <path d="M 120 145 C 115 125 125 110 135 115 C 145 120 145 140 140 150 Z" fill="#451a03"/>
+                        <circle cx="130" cy="108" r="8" fill="#451a03"/> <!-- ראש רכון -->
+                        <!-- כיתוב לטיני עתיק JUDAEA CAPTA -->
+                        <path d="M 30 110 A 75 75 0 0 1 170 110" fill="none" stroke="#451a03" stroke-width="3" stroke-dasharray="4,6"/>
                     </svg>
                 </div>
             </div>
-
-            <div class="video-overlay" id="videoOverlay">
-                <div class="video-overlay-content">
-                    <div class="video-placeholder">
-                        <svg class="video-spin-icon" viewBox="0 0 24 24">
-                            <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
-                        </svg>
-                        <p>מציג סרטון הדגמה על המטבע...</p>
-                    </div>
-                    <button class="video-close-btn" onclick="closeVideoOverlay()">סגור</button>
-                </div>
-            </div>
-
         </div>
 
     </div>
 
-    <script>
-        const screenAudioTexts = {
-            1: "ברוכים הבאים למוזיאון הכט. לחצו על סמל המצלמה כדי להתחיל בסיור.",
-            2: "כוונו את המצלמה אל המטבע ולחצו על כפתור הצילום.",
-            3: "בחרו את אחד המטבעות המסומנים על ידי לחיצה עליו.",
-            5: "זהו מטבע כסף שנטבע על ידי המלך אגריפס הראשון."
-        };
+    <!-- מודאל סרטון -->
+    <div class="video-overlay" id="videoModal">
+        <div class="video-overlay-content">
+            <h3>סרטון הסבר על המטבע</h3>
+            <p>מציג סרטון הדגמה על היסטוריית המטבע...</p>
+            <button class="video-close-btn" onclick="closeVideo()">סגור</button>
+        </div>
+    </div>
 
-        const coinDetailsMap = {
+    <script>
+        // נתוני המטבעות
+        const coinData = {
             main: {
-                title: "מטבע כסף של<br>הקיסר הרומי",
-                desc: "זהו מטבע כסף רומי עתיק<br>הנושא את דיוקנו של<br>הקיסר עם זר ענפים...",
-                svg: '<svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="62" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2"/><circle cx="70" cy="70" r="52" fill="none" stroke="#334155" stroke-dasharray="4,3"/><path d="M 60 45 C 80 43 86 58 84 72 C 74 84 64 94 52 98 C 42 92 46 72 52 62 Z" fill="#1e293b"/></svg>'
+                title: "מטבע כסף של הקיסר הרומי",
+                desc: "זהו מטבע כסף שנטבע בקיסריה, ונושא את דיוקנו של הקיסר הרומי. המטבע שימש למסחר ברחבי האימפריה.",
+                type: "silver"
             },
             left: {
-                title: "מטבע כסף עתיק<br>ממוזיאון הכט",
-                desc: "מטבע כסף עתיק נוסף<br>שנתגלה בחפירות<br>בארץ ישראל...",
-                svg: '<svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="62" fill="url(#coinGradSilverMain)" stroke="#cbd5e1" stroke-width="2"/><circle cx="70" cy="70" r="52" fill="none" stroke="#334155" stroke-dasharray="4,3"/><path d="M 60 48 C 76 48 80 59 78 69 C 70 77 62 83 54 85 C 48 79 50 65 54 58 Z" fill="#1e293b"/></svg>'
+                title: "מטבע כסף יווני עתיק",
+                desc: "מטבע כסף קטן מן התקופה ההלניסטית, אשר שימש כסף קטן לעסקאות יומיות בשוק.",
+                type: "silver"
             },
             right: {
-                title: "מטבע ברונזה<br>עתיק",
-                desc: "מטבע ברונזה עתיק<br>בעל גוון מוזהב<br>מהתקופה הרומית...",
-                svg: '<svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="62" fill="url(#coinGradBronze)" stroke="#fef08a" stroke-width="2"/><circle cx="70" cy="70" r="52" fill="none" stroke="#42310c" stroke-dasharray="4,3"/><path d="M 60 48 C 76 48 80 59 78 69 C 70 77 62 83 54 85 C 48 79 50 65 54 58 Z" fill="#2d1f05"/></svg>'
+                title: "מטבע ברונזה של המלך אגריפס",
+                desc: "זהו מטבע ברונזה שנטבע על ידי המלך אגריפס הראשון, ונושא עליו עיטורי גפן וענפי זית.",
+                type: "bronze"
             }
         };
 
-        function speak(text, onEndCallback) {
-            if (!window.speechSynthesis) return;
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'he-IL';
-            utterance.rate = 0.95;
-            if (typeof onEndCallback === 'function') {
-                utterance.onend = onEndCallback;
-            }
-            window.speechSynthesis.speak(utterance);
-        }
+        let currentScreen = 1;
+        let selectedCoinKey = 'main';
+        let isAudioPlaying = false;
+        let speechSynth = window.speechSynthesis;
+        let currentUtterance = null;
 
-        let currentScreenNumber = 1;
-
-        function goToScreen(screenNumber) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            const targetScreen = document.getElementById('screen-' + screenNumber);
-            if (targetScreen) {
-                targetScreen.classList.add('active');
-            }
-
-            currentScreenNumber = screenNumber;
-
-            if (screenAudioTexts[screenNumber]) {
-                speak(screenAudioTexts[screenNumber]);
+        function unlockAudioEngine() {
+            if ('speechSynthesis' in window) {
+                let silentUtterance = new SpeechSynthesisUtterance("");
+                speechSynth.speak(silentUtterance);
             }
         }
 
-        function replayCurrentScreenAudio() {
-            if (screenAudioTexts[currentScreenNumber]) {
-                speak(screenAudioTexts[currentScreenNumber]);
-            }
+        function startApp() {
+            unlockAudioEngine();
+            goToScreen(2);
         }
 
-        /* בחירת מטבע דרך ה-SVG ואנימציית מעבר למסך הבא */
-        function selectSvgCoin(coinKey, svgX, svgY, svgW, svgH) {
-            const details = coinDetailsMap[coinKey] || coinDetailsMap['main'];
-            document.getElementById('display-coin-title').innerHTML = details.title;
-            document.getElementById('artifact-description').innerHTML = details.desc;
-            document.getElementById('display-coin-img').innerHTML = details.svg;
-            screenAudioTexts[5] = details.desc.replace(/<br>/g, ' ');
-
-            const textElement = document.getElementById('main-instruction');
-            textElement.innerHTML = 'מעבד... המטבע הנבחר<br>עובר להצגה.';
-
-            // העלמת מסגרות הזיהוי האחרות
-            document.querySelectorAll('.svg-coin-selector').forEach(el => {
-                el.style.opacity = '0';
-                el.style.pointerEvents = 'none';
-            });
-
-            // חישוב מיקום האנימציה המרחפת
-            const screenEl = document.getElementById('screen-3');
-            const screenRect = screenEl.getBoundingClientRect();
+        function goToScreen(screenNum) {
+            stopAudio();
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             
-            const scaleX = screenRect.width / 1024;
-            const scaleY = screenRect.height / 768;
+            const targetScreen = typeof screenNum === 'number' ? `screen-${screenNum}` : `screen-${screenNum}`;
+            document.getElementById(targetScreen).classList.add('active');
+            currentScreen = screenNum;
 
-            const flyEl = document.getElementById('flyingCoin');
-            const startLeft = (svgX * scaleX) - ((svgW * scaleX) / 2);
-            const startTop = (svgY * scaleY) - ((svgH * scaleY) / 2);
-            const startW = svgW * scaleX;
-            const startH = svgH * scaleY;
-
-            flyEl.style.display = 'block';
-            flyEl.style.left = startLeft + 'px';
-            flyEl.style.top = startTop + 'px';
-            flyEl.style.width = startW + 'px';
-            flyEl.style.height = startH + 'px';
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    flyEl.style.top = '15px';
-                    flyEl.style.left = (screenRect.width - 75) + 'px';
-                    flyEl.style.width = '55px';
-                    flyEl.style.height = '55px';
-                });
-            });
+            // איפוס מצב חידון במעבר
+            if (screenNum === 'quiz') {
+                resetQuizState();
+            }
 
             setTimeout(() => {
-                document.getElementById('whitePanel').classList.add('slide-up');
+                speakCurrentInstruction();
             }, 300);
-
-            setTimeout(() => {
-                goToScreen(5);
-            }, 1900);
         }
 
-        let isArtifactAudioPlaying = false;
+        function speakCurrentInstruction() {
+            stopAudio();
+            let textToSpeak = "";
+            if (currentScreen === 1) textToSpeak = "ברוכים הבאים לתצוגת המטבעות. לחצו על המצלמה כדי להתחיל.";
+            else if (currentScreen === 2) textToSpeak = "כוונו את המצלמה ולחצו על הכפתור.";
+            else if (currentScreen === 3) textToSpeak = "בחרו את אחד המטבעות המסומנים על ידי לחיצה עליו.";
+            else if (currentScreen === 5) {
+                textToSpeak = `${coinData[selectedCoinKey].title}. ${coinData[selectedCoinKey].desc}`;
+            } else if (currentScreen === 'quiz') {
+                textToSpeak = "חידון. איך נראית האישה על המטבע? הסתכל היטב על הבעת פניה.";
+            }
 
-        function setPlayButtonState(playing) {
-            isArtifactAudioPlaying = playing;
-            const btn = document.getElementById('playBtn');
+            if (textToSpeak && 'speechSynthesis' in window) {
+                currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
+                currentUtterance.lang = 'he-IL';
+                currentUtterance.rate = 0.9;
+                
+                currentUtterance.onend = () => {
+                    isAudioPlaying = false;
+                    updateAudioButtonState();
+                };
+
+                isAudioPlaying = true;
+                updateAudioButtonState();
+                speechSynth.speak(currentUtterance);
+            }
+        }
+
+        function selectCoin(key) {
+            selectedCoinKey = key;
+            const data = coinData[key];
+
+            document.getElementById('coin-title-text').innerText = data.title;
+            document.getElementById('coin-description').innerText = data.desc;
+
+            const largeDisplay = document.getElementById('large-coin-container');
+            const grad = data.type === 'silver' ? 'url(#silverRealistic)' : 'url(#bronzeRealistic)';
+            const stroke = data.type === 'silver' ? '#cbd5e1' : '#f59e0b';
+
+            largeDisplay.innerHTML = `
+                <svg viewBox="0 0 140 140" width="100%" height="100%">
+                    <circle cx="70" cy="70" r="62" fill="${grad}" stroke="${stroke}" stroke-width="3"/>
+                    <circle cx="70" cy="70" r="50" fill="none" stroke="rgba(0,0,0,0.3)" stroke-dasharray="4,3"/>
+                    <circle cx="70" cy="70" r="25" fill="rgba(0,0,0,0.15)"/>
+                </svg>
+            `;
+
+            goToScreen(5);
+        }
+
+        /* מנגנון בדיקת חידון */
+        function checkQuizAnswer(btnElement, isCorrect) {
+            const allBtns = document.querySelectorAll('.quiz-option-btn');
+            allBtns.forEach(btn => {
+                btn.classList.remove('correct', 'incorrect');
+                const check = btn.querySelector('.quiz-check-mark');
+                if (check) check.remove();
+            });
+
+            const feedback = document.getElementById('quizFeedback');
+
+            if (isCorrect) {
+                btnElement.classList.add('correct');
+                btnElement.innerHTML += `<span class="quiz-check-mark">✓</span>`;
+                feedback.classList.add('active');
+
+                // הקראת המשוב החיובי
+                if ('speechSynthesis' in window) {
+                    stopAudio();
+                    let feedbackUtterance = new SpeechSynthesisUtterance("נכון מאוד! האישה על המטבע נראית עצובה ומדוכאת, המטבע מתאר את יהודה הכבושה.");
+                    feedbackUtterance.lang = 'he-IL';
+                    speechSynth.speak(feedbackUtterance);
+                }
+            } else {
+                btnElement.classList.add('incorrect');
+                feedback.classList.remove('active');
+            }
+        }
+
+        function resetQuizState() {
+            const allBtns = document.querySelectorAll('.quiz-option-btn');
+            allBtns.forEach(btn => {
+                btn.classList.remove('correct', 'incorrect');
+                const check = btn.querySelector('.quiz-check-mark');
+                if (check) check.remove();
+            });
+            document.getElementById('quizFeedback').classList.remove('active');
+        }
+
+        function toggleAudio() {
+            if (isAudioPlaying) {
+                speechSynth.pause();
+                isAudioPlaying = false;
+            } else {
+                if (speechSynth.paused) {
+                    speechSynth.resume();
+                    isAudioPlaying = true;
+                } else {
+                    speakCurrentInstruction();
+                }
+            }
+            updateAudioButtonState();
+        }
+
+        function stopAudio() {
+            if ('speechSynthesis' in window) {
+                speechSynth.cancel();
+            }
+            isAudioPlaying = false;
+            updateAudioButtonState();
+        }
+
+        function restartAudio() {
+            speakCurrentInstruction();
+        }
+
+        function updateAudioButtonState() {
+            const btn = document.getElementById('playAudioBtn');
             const icon = document.getElementById('playIcon');
-            if (playing) {
+            if (!btn || !icon) return;
+
+            if (isAudioPlaying) {
                 btn.classList.add('is-playing');
-                btn.title = 'השהה הקראה';
-                icon.innerHTML = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>';
+                icon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
             } else {
                 btn.classList.remove('is-playing');
-                btn.title = 'נגן / השהה הסבר קולי';
-                icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+                icon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
             }
         }
 
-        function playArtifactAudio() {
-            if (isArtifactAudioPlaying) {
-                window.speechSynthesis.cancel();
-                setPlayButtonState(false);
-                return;
-            }
-            const text = document.getElementById('artifact-description').innerText.trim();
-            setPlayButtonState(true);
-            speak(text, () => setPlayButtonState(false));
+        function openVideo() {
+            stopAudio();
+            document.getElementById('videoModal').classList.add('active');
         }
 
-        function replayArtifactAudio() {
-            const text = document.getElementById('artifact-description').innerText.trim();
-            setPlayButtonState(true);
-            speak(text, () => setPlayButtonState(false));
+        function closeVideo() {
+            document.getElementById('videoModal').classList.remove('active');
         }
-
-        function playArtifactVideo() {
-            window.speechSynthesis.cancel();
-            setPlayButtonState(false);
-            document.getElementById('videoOverlay').classList.add('active');
-        }
-
-        function closeVideoOverlay() {
-            document.getElementById('videoOverlay').classList.remove('active');
-        }
-
-        function resetPrototype() {
-            window.speechSynthesis.cancel();
-            setPlayButtonState(false);
-            document.getElementById('videoOverlay').classList.remove('active');
-
-            const textElement = document.getElementById('main-instruction');
-            if (textElement) {
-                textElement.innerHTML = 'בחרו את אחד המטבעות<br>המסומנים על ידי לחיצה עליו.';
-            }
-
-            document.querySelectorAll('.svg-coin-selector').forEach(el => {
-                el.style.opacity = '1';
-                el.style.pointerEvents = 'all';
-            });
-
-            const flyEl = document.getElementById('flyingCoin');
-            if (flyEl) {
-                flyEl.style.display = 'none';
-                flyEl.removeAttribute('style');
-            }
-
-            const whitePanel = document.getElementById('whitePanel');
-            if (whitePanel) {
-                whitePanel.classList.remove('slide-up');
-            }
-
-            goToScreen(1);
-        }
-
-        function attemptInitialAudio() {
-            speak(screenAudioTexts[1]);
-
-            setTimeout(() => {
-                const autoplayBlocked = !window.speechSynthesis || !window.speechSynthesis.speaking;
-                if (autoplayBlocked) {
-                    const unlockAudioOnce = () => {
-                        if (!window.speechSynthesis.speaking) {
-                            replayCurrentScreenAudio();
-                        }
-                        document.removeEventListener('click', unlockAudioOnce);
-                        document.removeEventListener('touchstart', unlockAudioOnce);
-                    };
-                    document.addEventListener('click', unlockAudioOnce, { once: true });
-                    document.addEventListener('touchstart', unlockAudioOnce, { once: true });
-                }
-            }, 300);
-        }
-
-        window.addEventListener('DOMContentLoaded', attemptInitialAudio);
     </script>
 </body>
 </html>
