@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>אב-טיפוס מוזיאון הכט - הנגשה קוגניטיבית</title>
+    <title>אב-טיפוס מוזיאון הכט - כוונון מיקום ויטרינה</title>
     <style>
         /* הגדרות כלליות */
         html, body {
@@ -14,7 +14,7 @@
             height: 100dvh;
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #050505;
+            background-color: #cbd5e1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,16 +31,16 @@
             border: none;
             overflow: hidden;
             position: relative;
-            background-color: #1a1a1a;
+            background-color: #ffffff;
             box-sizing: border-box;
         }
 
         @media (min-width: 768px) and (min-height: 600px) {
             .tablet-frame {
                 height: 90vh;
-                border: 10px solid #222;
+                border: 8px solid #94a3b8;
                 border-radius: 24px;
-                box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             }
         }
 
@@ -59,16 +59,42 @@
             display: flex !important;
         }
 
+        /* כפתור חזור גלובלי למסכים */
+        .global-back-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #ffffff;
+            color: #0f172a;
+            border: 2px solid #0284c7;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .global-back-btn:active {
+            transform: scale(0.95);
+            background-color: #e0f2fe;
+        }
+
         /* מסך 1: ברוכים הבאים */
         #screen-1 {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             flex-direction: column;
         }
 
         .overlay-screen1 {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0.6) 100%);
+            background: radial-gradient(circle at center, rgba(2, 132, 199, 0.08) 0%, rgba(255,255,255,0.4) 100%);
             z-index: 1;
         }
 
@@ -86,7 +112,7 @@
 
         .header-container {
             align-self: flex-start;
-            color: #fff;
+            color: #0f172a;
             text-align: right;
         }
 
@@ -94,37 +120,36 @@
             font-size: clamp(22px, 4.5vw, 34px);
             font-weight: 800;
             margin: 0;
-            color: #f8fafc;
+            color: #0f172a;
             letter-spacing: 0.5px;
         }
 
         .museum-name-en {
             font-size: clamp(14px, 3vw, 18px);
             margin: 2px 0 0 0;
-            color: #94a3b8;
+            color: #475569;
         }
 
         .welcome-text {
-            color: #ffffff;
+            color: #0f172a;
             font-size: clamp(22px, 4.5vw, 38px);
-            font-weight: 700;
+            font-weight: 800;
             line-height: 1.4;
             text-align: center;
             max-width: 650px;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .start-button {
             width: clamp(140px, 30vw, 180px);
             height: clamp(80px, 15vh, 100px);
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             border-radius: 24px;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 3px solid #ffffff;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.35);
             transition: all 0.2s ease;
             margin-bottom: 20px;
         }
@@ -133,10 +158,10 @@
             transform: scale(0.95);
         }
 
-        /* מסך 2 ו-3: תצוגה וויטרינה */
+        /* מסך 2 ו-3: תצוגה ומצלמה - התאמת גובה למניעת חפיפה עם הפס התחתון */
         .camera-feed {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 100px);
             position: absolute;
             top: 0; left: 0;
         }
@@ -144,22 +169,23 @@
         .bottom-bar {
             position: absolute;
             bottom: 0; left: 0; width: 100%;
-            height: clamp(90px, 16vh, 120px);
+            height: clamp(90px, 16vh, 110px);
             padding: 10px 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
+            background: #ffffff;
+            border-top: 3px solid #0284c7;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 15px;
             z-index: 10;
             box-sizing: border-box;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
         }
 
         .instruction-text {
-            color: #ffffff;
+            color: #0f172a;
             font-size: clamp(16px, 3.5vw, 24px);
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-weight: 800;
             margin: 0;
             text-align: center;
         }
@@ -167,14 +193,14 @@
         .shutter-button {
             width: clamp(60px, 14vw, 75px);
             height: clamp(60px, 14vw, 75px);
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
             border: 4px solid #ffffff;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
             transition: transform 0.15s ease;
             flex-shrink: 0;
         }
@@ -183,31 +209,32 @@
             transform: scale(0.9);
         }
 
-        /* מסגרות זיהוי מרהיבות למסך 3 */
+        /* מסגרות זיהוי למסך 3 */
         #screen-3 {
-            background-color: #09090b;
+            background-color: #f8fafc;
         }
 
         .instruction-header-screen3 {
             position: absolute;
             top: 0; left: 0; width: 100%;
-            padding: 20px 15px 30px 15px;
+            padding: 15px;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 12px;
             z-index: 20;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+            background: #ffffff;
+            border-bottom: 3px solid #0284c7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
         .instruction-text-screen3 {
-            color: #ffffff;
+            color: #0f172a;
             font-size: clamp(18px, 4vw, 28px);
             font-weight: 800;
             margin: 0;
             text-align: center;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
         }
 
         .svg-coin-selector {
@@ -215,13 +242,13 @@
         }
 
         .svg-coin-selector rect {
-            fill: rgba(59, 130, 246, 0.15);
-            stroke: #60a5fa;
-            stroke-width: 3.5;
+            fill: rgba(2, 132, 199, 0.18);
+            stroke: #0284c7;
+            stroke-width: 4;
             rx: 16;
             stroke-dasharray: 8;
             animation: dash 20s linear infinite;
-            filter: drop-shadow(0px 0px 12px rgba(59, 130, 246, 0.9));
+            filter: drop-shadow(0px 0px 8px rgba(2, 132, 199, 0.5));
             transition: all 0.3s ease;
         }
 
@@ -230,15 +257,15 @@
         }
 
         .svg-coin-selector:hover rect, .svg-coin-selector.selected rect {
-            fill: rgba(255, 215, 0, 0.25);
-            stroke: #ffd700;
+            fill: rgba(217, 119, 6, 0.25);
+            stroke: #d97706;
             stroke-width: 5;
-            filter: drop-shadow(0px 0px 20px rgba(255, 215, 0, 1));
+            filter: drop-shadow(0px 0px 15px rgba(217, 119, 6, 0.7));
         }
 
-        /* מסך 4 (המטבע שנבחר + מולטימדיה) */
+        /* מסך 4/5: תצוגת המטבע שנבחר */
         #screen-5 {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: #f8fafc;
             flex-direction: row;
         }
 
@@ -251,9 +278,9 @@
 
         .panel-right {
             width: 45%; height: 100%;
-            background: rgba(15, 23, 42, 0.7);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            color: #ffffff;
+            background: #ffffff;
+            border-left: 2px solid #cbd5e1;
+            color: #0f172a;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -267,19 +294,20 @@
             font-weight: 800;
             text-align: center;
             margin-bottom: 20px;
-            color: #f1f5f9;
+            color: #0f172a;
         }
 
         .large-coin-display {
             width: min(240px, 35vw);
             height: min(240px, 35vw);
             border-radius: 50%;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            background: #1e293b;
+            background: #ffffff;
+            border: 4px solid #0284c7;
         }
 
         .panel-left {
@@ -303,30 +331,31 @@
         .ctrl-btn {
             width: min(68px, 13vw);
             height: min(68px, 13vw);
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             border: none;
             border-radius: 18px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 6px 15px rgba(2, 132, 199, 0.3);
             transition: transform 0.15s;
         }
 
         .ctrl-btn:active { transform: scale(0.92); }
-        .ctrl-btn.is-playing { background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); }
-        .ctrl-btn.quiz-btn-accent { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4); }
+        .ctrl-btn.is-playing { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); }
+        .ctrl-btn.quiz-btn-accent { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); box-shadow: 0 6px 15px rgba(217, 119, 6, 0.3); }
 
         .ctrl-icon { width: 30px; height: 30px; fill: white; }
 
         .accessible-text-card {
             width: 100%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.95);
+            background: #ffffff;
+            border: 2px solid #94a3b8;
             border-radius: 24px;
             padding: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
             box-sizing: border-box;
             text-align: center;
         }
@@ -342,17 +371,18 @@
         .camera-icon { width: 35px; height: 35px; fill: white; }
         
         .icon-audio-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
+            background: #ffffff;
+            border: 2px solid #0284c7;
             border-radius: 50%;
             width: 45px; height: 45px;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
-        /* ==========================================
-           סגנונות מסך החידון (מבוסס עיצוב התמונה)
-           ========================================== */
+        .icon-audio-btn svg { fill: #0284c7; }
+
+        /* מסך החידון */
         #screen-quiz {
             background-color: #f1f5f9;
             flex-direction: row;
@@ -361,10 +391,10 @@
 
         .quiz-header {
             position: absolute;
-            top: 10px;
+            top: 15px;
             width: 100%;
             text-align: center;
-            font-size: clamp(32px, 6vw, 48px);
+            font-size: clamp(28px, 5vw, 40px);
             font-weight: 900;
             letter-spacing: 1px;
             color: #0f172a;
@@ -383,7 +413,7 @@
         }
 
         .quiz-question-title {
-            font-size: clamp(22px, 4vw, 32px);
+            font-size: clamp(22px, 4vw, 30px);
             font-weight: 800;
             text-align: center;
             margin-bottom: 5px;
@@ -392,7 +422,7 @@
 
         .quiz-subtitle {
             font-size: clamp(14px, 2.8vw, 18px);
-            color: #64748b;
+            color: #334155;
             margin-bottom: 20px;
             font-weight: 600;
             text-align: center;
@@ -403,38 +433,50 @@
             flex-direction: column;
             gap: 12px;
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
         }
 
         .quiz-option-btn {
             width: 100%;
             padding: 14px 20px;
-            background-color: #2563eb;
-            color: white;
-            border: none;
+            background-color: #ffffff;
+            color: #0f172a;
+            border: 2px solid #0284c7;
             border-radius: 14px;
-            font-size: clamp(18px, 3.5vw, 24px);
-            font-weight: 700;
+            font-size: clamp(18px, 3.5vw, 22px);
+            font-weight: 800;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: all 0.25s ease;
             position: relative;
         }
 
         .quiz-option-btn:hover {
-            background-color: #1d4ed8;
+            background-color: #e0f2fe;
+        }
+
+        .quiz-option-btn.speaking-highlight {
+            background-color: #d97706 !important;
+            color: #ffffff !important;
+            transform: scale(1.04);
+            box-shadow: 0 0 18px rgba(217, 119, 6, 0.6) !important;
+            border-color: #d97706 !important;
         }
 
         .quiz-option-btn.correct {
-            background-color: #22c55e !important;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            background-color: #16a34a !important;
+            color: #ffffff !important;
+            border-color: #16a34a !important;
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
         }
 
         .quiz-option-btn.incorrect {
-            background-color: #ef4444 !important;
+            background-color: #dc2626 !important;
+            color: #ffffff !important;
+            border-color: #dc2626 !important;
         }
 
         .quiz-check-mark {
@@ -447,14 +489,15 @@
         .quiz-feedback-box {
             margin-top: 15px;
             background-color: #ffffff;
+            border: 2px solid #0284c7;
             border-radius: 12px;
             padding: 12px 15px;
             width: 100%;
-            max-width: 320px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            font-size: clamp(12px, 2.5vw, 15px);
-            color: #334155;
-            line-height: 1.3;
+            max-width: 340px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-size: clamp(14px, 2.5vw, 16px);
+            color: #0f172a;
+            line-height: 1.4;
             text-align: center;
             display: none;
         }
@@ -477,30 +520,13 @@
             width: min(320px, 42vw);
             height: min(320px, 42vw);
             border-radius: 50%;
-            background: #000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            border: 4px solid #cbd5e1;
-        }
-
-        .back-from-quiz-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #e2e8f0;
-            border: none;
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 14px;
+            border: 4px solid #0284c7;
         }
 
         /* מודאל וידאו */
@@ -508,22 +534,25 @@
             display: none;
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
             z-index: 100;
             justify-content: center;
             align-items: center;
         }
         .video-overlay.active { display: flex; }
         .video-overlay-content {
-            background: #1e293b;
+            background: #ffffff;
             padding: 25px;
             border-radius: 24px;
             text-align: center;
-            color: white;
+            color: #0f172a;
             width: 85%; max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 2px solid #0284c7;
         }
         .video-close-btn {
-            background: #3b82f6; border: none; color: white;
+            background: #0284c7; border: none; color: white;
             padding: 10px 25px; border-radius: 12px; font-weight: bold; cursor: pointer;
             margin-top: 15px; font-size: 16px;
         }
@@ -531,75 +560,109 @@
 </head>
 <body>
 
-    <!-- הגדרות SVG לגרפיקה ריאליסטית בתלת-ממד של הוויטרינה והמטבעות -->
+    <!-- הגדרת אלמנטי SVG - הויטרינה והמטבעות הוגבהו למעלה לקבלת מרווח מהחלק התחתון -->
     <svg style="display: none;">
         <defs>
-            <!-- גרדיאנטים עמוקים לטקסטורה עתיקה -->
-            <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
-                <stop offset="0%" stop-color="#2a1f17"/>
-                <stop offset="100%" stop-color="#080503"/>
+            <radialGradient id="bgGradVitrine" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="70%" stop-color="#e0f2fe"/>
+                <stop offset="100%" stop-color="#bae6fd"/>
             </radialGradient>
             
-            <linearGradient id="woodTable" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#85522b"/>
-                <stop offset="50%" stop-color="#543318"/>
-                <stop offset="100%" stop-color="#2c1a0b"/>
-            </linearGradient>
-            
-            <linearGradient id="velvetMat" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#1e293b"/>
-                <stop offset="100%" stop-color="#0f172a"/>
+            <linearGradient id="woodTableLight" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#94a3b8"/>
+                <stop offset="100%" stop-color="#475569"/>
             </linearGradient>
 
-            <!-- מטבע כסף עתיק תלת ממדי -->
-            <radialGradient id="silverRealistic" cx="35%" cy="35%" r="65%">
+            <radialGradient id="coinBaseDarkBlue" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="50%" stop-color="#0284c7"/>
+                <stop offset="85%" stop-color="#0369a1"/>
+                <stop offset="100%" stop-color="#075985"/>
+            </radialGradient>
+
+            <radialGradient id="coinBaseSilver" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="40%" stop-color="#cbd5e1"/>
-                <stop offset="75%" stop-color="#64748b"/>
+                <stop offset="45%" stop-color="#cbd5e1"/>
+                <stop offset="80%" stop-color="#64748b"/>
                 <stop offset="100%" stop-color="#334155"/>
             </radialGradient>
 
-            <!-- מטבע ברונזה/זהב עתיק תלת ממדי -->
-            <radialGradient id="bronzeRealistic" cx="35%" cy="35%" r="65%">
+            <radialGradient id="coinBaseGold" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="#fef08a"/>
-                <stop offset="35%" stop-color="#d97706"/>
-                <stop offset="75%" stop-color="#78350f"/>
-                <stop offset="100%" stop-color="#451a03"/>
+                <stop offset="45%" stop-color="#f59e0b"/>
+                <stop offset="80%" stop-color="#b45309"/>
+                <stop offset="100%" stop-color="#78350f"/>
             </radialGradient>
 
-            <!-- תכן הוויטרינה -->
+            <!-- 1. דמות קיסר רומי -->
+            <g id="roman-emperor-character">
+                <path d="M -10,35 C -25,32 -32,15 -30,-5 C -28,-25 -15,-40 5,-40 C 22,-40 32,-28 32,-10 C 32,8 20,22 8,30 C -2,38 -5,35 -10,35 Z" fill="#1e293b"/>
+                <path d="M -22,25 C -20,45 -10,50 15,48 C 18,40 10,32 -5,30 Z" fill="#0f172a"/>
+                <path d="M -20,-22 Q -5,-32 15,-20" stroke="#f8fafc" stroke-width="4" fill="none"/>
+                <circle cx="-15" cy="-24" r="3" fill="#ffffff"/>
+                <circle cx="-5" cy="-28" r="3.5" fill="#ffffff"/>
+                <circle cx="5" cy="-27" r="3.5" fill="#ffffff"/>
+                <circle cx="12" cy="-22" r="3" fill="#ffffff"/>
+                <path d="M 32,-10 L 42,-2 L 30,10 L 28,18 L 18,22" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
+                <ellipse cx="-2" cy="-2" rx="5" ry="7" fill="#ffffff"/>
+                <circle cx="0" cy="0" r="54" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,5"/>
+            </g>
+
+            <!-- 2. דמות פרצוף האבן והכתר הירוק -->
+            <g id="custom-face-character">
+                <ellipse cx="0" cy="5" rx="38" ry="44" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+                <circle cx="-25" cy="5" r="12" fill="#64748b" opacity="0.9"/>
+                <circle cx="25" cy="5" r="12" fill="#64748b" opacity="0.9"/>
+                <circle cx="-14" cy="-8" r="9" fill="#0f172a"/>
+                <circle cx="14" cy="-8" r="9" fill="#0f172a"/>
+                <circle cx="-14" cy="-8" r="4" fill="#ffffff"/>
+                <circle cx="14" cy="-8" r="4" fill="#ffffff"/>
+                <path d="M -26 -22 Q -14 -30 -3 -20" fill="none" stroke="#0f172a" stroke-width="4.5" stroke-linecap="round"/>
+                <path d="M 3 -20 Q 14 -30 26 -22" fill="none" stroke="#0f172a" stroke-width="4.5" stroke-linecap="round"/>
+                <polygon points="-7,-4 7,-4 10,22 -10,22" fill="#1e293b"/>
+                <line x1="-18" y1="34" x2="18" y2="34" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
+                <rect x="-34" y="-45" width="68" height="15" rx="7.5" fill="#16a34a"/>
+                <rect x="-24" y="-41" width="48" height="7" rx="3.5" fill="#4ade80"/>
+            </g>
+
+            <!-- תכן הוויטרינה המוזיאונית (מורמת כלפי מעלה) -->
             <g id="museum-vitrine-content">
-                <rect width="1024" height="768" fill="url(#bgGrad)"/>
-                <!-- מדף מוזיאוני בעל נפח -->
-                <polygon points="50,220 974,220 1024,768 0,768" fill="url(#woodTable)"/>
-                <polygon points="100,250 924,250 960,700 64,700" fill="url(#velvetMat)"/>
+                <rect width="1024" height="768" fill="url(#bgGradVitrine)"/>
                 
-                <!-- תאורת ספוט מוזיאונית -->
-                <ellipse cx="512" cy="450" rx="350" ry="200" fill="rgba(255,255,255,0.04)"/>
+                <rect x="20" y="20" width="984" height="728" fill="none" stroke="#0284c7" stroke-width="8" rx="16"/>
 
-                <!-- מטבע מרכזי 1 (קיסר רומי - כסף) -->
+                <!-- המדף ממוקם גבוה יותר עכשיו -->
+                <polygon points="20,190 1004,190 1024,670 0,670" fill="url(#woodTableLight)"/>
+                <polygon points="80,220 944,220 980,640 44,640" fill="#f8fafc" stroke="#0284c7" stroke-width="3"/>
+                <ellipse cx="512" cy="400" rx="360" ry="190" fill="rgba(2, 132, 199, 0.08)"/>
+
+                <!-- מטבע 1 מרכזי מורם -->
                 <g id="coin-1-group">
-                    <ellipse cx="512" cy="380" rx="72" ry="52" fill="#1e293b" opacity="0.6" filter="blur(4px)"/>
-                    <ellipse cx="512" cy="376" rx="70" ry="50" fill="url(#silverRealistic)" stroke="#94a3b8" stroke-width="2"/>
-                    <ellipse cx="512" cy="376" rx="60" ry="42" fill="none" stroke="#475569" stroke-dasharray="3,3" stroke-width="1.5"/>
-                    <!-- פרופיל רומי חרוט -->
-                    <path d="M 500 350 C 525 348 532 365 530 380 C 518 393 505 402 492 405 C 482 398 486 378 492 368 Z" fill="#334155"/>
+                    <circle cx="512" cy="310" r="78" fill="#334155" opacity="0.25" filter="blur(5px)"/>
+                    <circle cx="512" cy="305" r="74" fill="url(#coinBaseSilver)" stroke="#0284c7" stroke-width="4"/>
+                    <circle cx="512" cy="305" r="65" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="4,4"/>
+                    <g transform="translate(512, 305) scale(1.05)">
+                        <use href="#roman-emperor-character" />
+                    </g>
                 </g>
 
-                <!-- מטבע 2 (שמאלי - מטבע עתיק קטן) -->
+                <!-- מטבע 2 משמאל מורם -->
                 <g id="coin-2-group">
-                    <ellipse cx="360" cy="560" rx="50" ry="35" fill="#000" opacity="0.5" filter="blur(3px)"/>
-                    <ellipse cx="360" cy="556" rx="48" ry="33" fill="url(#silverRealistic)" stroke="#94a3b8" stroke-width="1.5"/>
-                    <ellipse cx="360" cy="556" rx="40" ry="26" fill="none" stroke="#475569" stroke-dasharray="2,2"/>
-                    <path d="M 353 540 C 370 540 374 552 372 563 C 363 571 354 577 345 579 Z" fill="#334155"/>
+                    <circle cx="360" cy="480" r="55" fill="#334155" opacity="0.25" filter="blur(4px)"/>
+                    <circle cx="360" cy="475" r="52" fill="url(#coinBaseDarkBlue)" stroke="#0284c7" stroke-width="3"/>
+                    <g transform="translate(360, 475) scale(0.72)">
+                        <use href="#custom-face-character" />
+                    </g>
                 </g>
 
-                <!-- מטבע 3 (ימני - ברונזה עתיקה) -->
+                <!-- מטבע 3 מימין מורם -->
                 <g id="coin-3-group">
-                    <ellipse cx="660" cy="550" rx="52" ry="36" fill="#000" opacity="0.5" filter="blur(3px)"/>
-                    <ellipse cx="660" cy="546" rx="50" ry="34" fill="url(#bronzeRealistic)" stroke="#f59e0b" stroke-width="1.5"/>
-                    <ellipse cx="660" cy="546" rx="42" ry="27" fill="none" stroke="#78350f" stroke-dasharray="3,2"/>
-                    <circle cx="660" cy="546" r="14" fill="none" stroke="#78350f" stroke-width="2"/>
+                    <circle cx="660" cy="470" r="57" fill="#334155" opacity="0.25" filter="blur(4px)"/>
+                    <circle cx="660" cy="465" r="54" fill="url(#coinBaseGold)" stroke="#d97706" stroke-width="3"/>
+                    <g transform="translate(660, 465) scale(0.75)">
+                        <use href="#custom-face-character" />
+                    </g>
                 </g>
             </g>
         </defs>
@@ -631,13 +694,15 @@
 
         <!-- מסך 2: סריקת הויטרינה -->
         <div id="screen-2" class="screen">
+            <button class="global-back-btn" onclick="goBack()" title="חזור למסך הקודם">➔ חזור</button>
+
             <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice">
                 <use href="#museum-vitrine-content" />
             </svg>
 
             <div class="bottom-bar">
                 <button class="icon-audio-btn" onclick="speakCurrentInstruction()" title="השמע הוראה">
-                    <svg viewBox="0 0 24 24" width="26" height="26" fill="white">
+                    <svg viewBox="0 0 24 24" width="26" height="26">
                         <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/>
                     </svg>
                 </button>
@@ -654,24 +719,26 @@
 
         <!-- מסך 3: בחירת המטבע שנחשף -->
         <div id="screen-3" class="screen">
+            <button class="global-back-btn" onclick="goBack()" title="חזור למסך הקודם">➔ חזור</button>
+
             <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice">
                 <use href="#museum-vitrine-content" />
 
-                <!-- מסגרות מזהות מונפשות -->
+                <!-- מסגרות מזהות מותאמות לגובה החדש של המטבעות -->
                 <g class="svg-coin-selector" onclick="selectCoin('main')">
-                    <rect x="420" y="310" width="184" height="132" />
+                    <rect x="425" y="220" width="174" height="170" />
                 </g>
                 <g class="svg-coin-selector" onclick="selectCoin('left')">
-                    <rect x="295" y="505" width="130" height="100" />
+                    <rect x="295" y="415" width="130" height="120" />
                 </g>
                 <g class="svg-coin-selector" onclick="selectCoin('right')">
-                    <rect x="595" y="495" width="130" height="100" />
+                    <rect x="595" y="405" width="130" height="120" />
                 </g>
             </svg>
 
             <div class="instruction-header-screen3">
                 <button class="icon-audio-btn" onclick="speakCurrentInstruction()" title="השמע הוראה">
-                    <svg viewBox="0 0 24 24" width="26" height="26" fill="white">
+                    <svg viewBox="0 0 24 24" width="26" height="26">
                         <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/>
                     </svg>
                 </button>
@@ -679,8 +746,10 @@
             </div>
         </div>
 
-        <!-- מסך 4 (המטבע שנבחר + מולטימדיה + כפתור מעבר לחידון) -->
+        <!-- מסך 4/5 (המטבע שנבחר + מולטימדיה) -->
         <div id="screen-5" class="screen">
+            <button class="global-back-btn" onclick="goBack()" title="חזור לבחירת מטבע">➔ חזור</button>
+
             <div class="panel-left">
                 <div class="controls-row">
                     <button class="ctrl-btn" id="playAudioBtn" onclick="toggleAudio()" title="השמע הסבר">
@@ -698,15 +767,9 @@
                             <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-1l6-4-6-4v8z"/>
                         </svg>
                     </button>
-                    <!-- כפתור החידון החדש -->
                     <button class="ctrl-btn quiz-btn-accent" onclick="goToScreen('quiz')" title="עבור לחידון">
                         <svg class="ctrl-icon" viewBox="0 0 24 24">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
-                        </svg>
-                    </button>
-                    <button class="ctrl-btn" onclick="goToScreen(1)" title="חזור להתחלה">
-                        <svg class="ctrl-icon" viewBox="0 0 24 24">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                         </svg>
                     </button>
                 </div>
@@ -717,49 +780,35 @@
             </div>
 
             <div class="panel-right">
-                <div class="coin-title" id="coin-title-text">מטבע כסף</div>
+                <div class="coin-title" id="coin-title-text">מטבע כסף קיסרי</div>
                 <div class="large-coin-display" id="large-coin-container">
-                    <!-- ייטען דינמית לפי הבחירה -->
+                    <!-- ייטען דינמית -->
                 </div>
             </div>
         </div>
 
-        <!-- מסך 6: החידון האינטראקטיבי (מותאם במדויק לעיצוב שבתמונה) -->
+        <!-- מסך 6: החידון האינטראקטיבי -->
         <div id="screen-quiz" class="screen">
-            <button class="back-from-quiz-btn" onclick="goToScreen(5)">
-                ➔ חזרה למטבע
-            </button>
+            <button class="global-back-btn" onclick="goBack()" title="חזרה למטבע">➔ חזרה למטבע</button>
 
             <div class="quiz-header">חידון</div>
 
             <div class="quiz-left">
-                <div class="quiz-question-title">איך נראית האישה על המטבע?</div>
-                <div class="quiz-subtitle">הסתכל היטב על הבעת פניה</div>
+                <div class="quiz-question-title" id="quizQuestionTitle">מה מופיע על ראש הקיסר במטבע?</div>
+                <div class="quiz-subtitle" id="quizSubtitle">הסתכל היטב על פרופיל המטבע</div>
 
-                <div class="quiz-options-container">
-                    <button class="quiz-option-btn" onclick="checkQuizAnswer(this, false)">שמחה</button>
-                    <button class="quiz-option-btn" onclick="checkQuizAnswer(this, true)">עצובה</button>
-                    <button class="quiz-option-btn" onclick="checkQuizAnswer(this, false)">כועסת</button>
+                <div class="quiz-options-container" id="quizOptionsContainer">
+                    <!-- ייטען דינמית -->
                 </div>
 
                 <div class="quiz-feedback-box" id="quizFeedback">
-                    <b>נכון מאוד!</b> האישה על המטבע נראית עצובה ומדוכאת, המטבע מתאר את יהודה הכבושה.
+                    <!-- ייטען דינמית -->
                 </div>
             </div>
 
             <div class="quiz-right">
-                <div class="quiz-coin-img-frame">
-                    <!-- תקריב מטבע יהודה הכבושה (Judaea Capta) -->
-                    <svg viewBox="0 0 200 200" width="100%" height="100%">
-                        <circle cx="100" cy="100" r="95" fill="url(#bronzeRealistic)" stroke="#78350f" stroke-width="4"/>
-                        <!-- עץ תמר במרכז -->
-                        <path d="M 100 160 L 100 60 M 90 70 C 70 50 60 40 50 45 M 110 70 C 130 50 140 40 150 45 M 92 90 C 70 75 60 70 50 78 M 108 90 C 130 75 140 70 150 78" stroke="#451a03" stroke-width="5" fill="none"/>
-                        <!-- דמות האישה האבלה (יהודה הכבושה) יושבת מתחת לעץ -->
-                        <path d="M 120 145 C 115 125 125 110 135 115 C 145 120 145 140 140 150 Z" fill="#451a03"/>
-                        <circle cx="130" cy="108" r="8" fill="#451a03"/> <!-- ראש רכון -->
-                        <!-- כיתוב לטיני עתיק JUDAEA CAPTA -->
-                        <path d="M 30 110 A 75 75 0 0 1 170 110" fill="none" stroke="#451a03" stroke-width="3" stroke-dasharray="4,6"/>
-                    </svg>
+                <div class="quiz-coin-img-frame" id="quizCoinFrame">
+                    <!-- ייטען דינמית -->
                 </div>
             </div>
         </div>
@@ -770,31 +819,58 @@
     <div class="video-overlay" id="videoModal">
         <div class="video-overlay-content">
             <h3>סרטון הסבר על המטבע</h3>
-            <p>מציג סרטון הדגמה על היסטוריית המטבע...</p>
+            <p>מציג סרטון הדגמה על היסטוריית דיוקן הקיסר והמטבעות...</p>
             <button class="video-close-btn" onclick="closeVideo()">סגור</button>
         </div>
     </div>
 
     <script>
-        // נתוני המטבעות
         const coinData = {
             main: {
                 title: "מטבע כסף של הקיסר הרומי",
-                desc: "זהו מטבע כסף שנטבע בקיסריה, ונושא את דיוקנו של הקיסר הרומי. המטבע שימש למסחר ברחבי האימפריה.",
-                type: "silver"
+                desc: "זהו מטבע כסף שנטבע בקיסריה. במרכז המטבע מופיע דיוקן הקיסר בפרופיל כשהוא עטור זר עלים רומי.",
+                type: "silver",
+                charId: "#roman-emperor-character",
+                quizQ: "מה מופיע על ראש הקיסר במטבע?",
+                quizSub: "הסתכל היטב על פרופיל דיוקן הקיסר",
+                quizOpts: [
+                    { text: "כובע אבן", correct: false },
+                    { text: "זר עלים רומי", correct: true },
+                    { text: "כתר פרחים", correct: false }
+                ],
+                quizFeedback: "נכון מאוד! על ראש הקיסר מופיע זר עלים רומי מסורתי המעטר את דיוקנו."
             },
             left: {
-                title: "מטבע כסף יווני עתיק",
-                desc: "מטבע כסף קטן מן התקופה ההלניסטית, אשר שימש כסף קטן לעסקאות יומיות בשוק.",
-                type: "silver"
+                title: "מטבע דמות האבן הכחולה",
+                desc: "מטבע כחול מיוחד המציג במרכזו את דמות האבן העתיקה עם הכתר הירוק והעיניים העגולות.",
+                type: "darkBlue",
+                charId: "#custom-face-character",
+                quizQ: "מה מופיע על ראש הדמות במטבע?",
+                quizSub: "הסתכל היטב על כתר האבן המיוחד",
+                quizOpts: [
+                    { text: "כובע זהב", correct: false },
+                    { text: "כתר ירוק", correct: true },
+                    { text: "זר פרחים", correct: false }
+                ],
+                quizFeedback: "נכון מאוד! על ראשה של דמות האבן מופיע כתר ירוק בולט ומיוחד."
             },
             right: {
-                title: "מטבע ברונזה של המלך אגריפס",
-                desc: "זהו מטבע ברונזה שנטבע על ידי המלך אגריפס הראשון, ונושא עליו עיטורי גפן וענפי זית.",
-                type: "bronze"
+                title: "מטבע דמות הברונזה",
+                desc: "מטבע ברונזה מוזהב בעל עיטור דמות האבן והכתר הירוק, שמורה במצב מצוין.",
+                type: "gold",
+                charId: "#custom-face-character",
+                quizQ: "איזה צבע בולט בכתר הדמות?",
+                quizSub: "הסתכל על החלק העליון של הראש",
+                quizOpts: [
+                    { text: "אדום", correct: false },
+                    { text: "ירוק", correct: true },
+                    { text: "כחול", correct: false }
+                ],
+                quizFeedback: "נכון מאוד! הכתר שעל ראש הדמות צבוע בצבע ירוק בולט."
             }
         };
 
+        let screenStack = [1];
         let currentScreen = 1;
         let selectedCoinKey = 'main';
         let isAudioPlaying = false;
@@ -813,34 +889,67 @@
             goToScreen(2);
         }
 
-        function goToScreen(screenNum) {
+        function goToScreen(screenNum, autoSpeak = true) {
             stopAudio();
+
+            if (currentScreen !== screenNum) {
+                screenStack.push(screenNum);
+            }
+            
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             
             const targetScreen = typeof screenNum === 'number' ? `screen-${screenNum}` : `screen-${screenNum}`;
             document.getElementById(targetScreen).classList.add('active');
             currentScreen = screenNum;
 
-            // איפוס מצב חידון במעבר
             if (screenNum === 'quiz') {
-                resetQuizState();
+                setupQuizForSelectedCoin();
+            } else if (autoSpeak) {
+                setTimeout(() => {
+                    speakCurrentInstruction();
+                }, 300);
             }
+        }
 
-            setTimeout(() => {
-                speakCurrentInstruction();
-            }, 300);
+        function goBack() {
+            if (screenStack.length <= 1) return;
+
+            const fromScreen = screenStack.pop();
+            const previousScreen = screenStack[screenStack.length - 1];
+
+            const shouldAutoSpeak = !(fromScreen === 'quiz' && previousScreen === 5);
+
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            
+            const targetScreen = typeof previousScreen === 'number' ? `screen-${previousScreen}` : `screen-${previousScreen}`;
+            document.getElementById(targetScreen).classList.add('active');
+            currentScreen = previousScreen;
+
+            stopAudio();
+
+            if (shouldAutoSpeak) {
+                setTimeout(() => {
+                    speakCurrentInstruction();
+                }, 300);
+            }
         }
 
         function speakCurrentInstruction() {
             stopAudio();
+
+            if (currentScreen === 'quiz') {
+                speakQuizSequence();
+                return;
+            }
+
             let textToSpeak = "";
+            const currentCoin = coinData[selectedCoinKey];
+
             if (currentScreen === 1) textToSpeak = "ברוכים הבאים לתצוגת המטבעות. לחצו על המצלמה כדי להתחיל.";
             else if (currentScreen === 2) textToSpeak = "כוונו את המצלמה ולחצו על הכפתור.";
             else if (currentScreen === 3) textToSpeak = "בחרו את אחד המטבעות המסומנים על ידי לחיצה עליו.";
             else if (currentScreen === 5) {
-                textToSpeak = `${coinData[selectedCoinKey].title}. ${coinData[selectedCoinKey].desc}`;
-            } else if (currentScreen === 'quiz') {
-                textToSpeak = "חידון. איך נראית האישה על המטבע? הסתכל היטב על הבעת פניה.";
+                textToSpeak = `${currentCoin.title}. ${currentCoin.desc}`;
             }
 
             if (textToSpeak && 'speechSynthesis' in window) {
@@ -859,6 +968,60 @@
             }
         }
 
+        function speakQuizSequence() {
+            const data = coinData[selectedCoinKey];
+            const buttons = document.querySelectorAll('.quiz-option-btn');
+            
+            buttons.forEach(b => b.classList.remove('speaking-highlight'));
+
+            if (!('speechSynthesis' in window)) return;
+
+            isAudioPlaying = true;
+            updateAudioButtonState();
+
+            let questionText = `חידון. ${data.quizQ} ${data.quizSub}`;
+            let uQuestion = new SpeechSynthesisUtterance(questionText);
+            uQuestion.lang = 'he-IL';
+            uQuestion.rate = 0.9;
+
+            uQuestion.onend = () => {
+                speakQuizOption(0);
+            };
+
+            speechSynth.speak(uQuestion);
+        }
+
+        function speakQuizOption(index) {
+            const buttons = document.querySelectorAll('.quiz-option-btn');
+            const data = coinData[selectedCoinKey];
+
+            buttons.forEach(b => b.classList.remove('speaking-highlight'));
+
+            if (index >= data.quizOpts.length) {
+                isAudioPlaying = false;
+                updateAudioButtonState();
+                return;
+            }
+
+            if (buttons[index]) {
+                buttons[index].classList.add('speaking-highlight');
+            }
+
+            let optionText = `אפשרות ${index + 1}: ${data.quizOpts[index].text}`;
+            let uOption = new SpeechSynthesisUtterance(optionText);
+            uOption.lang = 'he-IL';
+            uOption.rate = 0.9;
+
+            uOption.onend = () => {
+                if (buttons[index]) {
+                    buttons[index].classList.remove('speaking-highlight');
+                }
+                speakQuizOption(index + 1);
+            };
+
+            speechSynth.speak(uOption);
+        }
+
         function selectCoin(key) {
             selectedCoinKey = key;
             const data = coinData[key];
@@ -867,25 +1030,67 @@
             document.getElementById('coin-description').innerText = data.desc;
 
             const largeDisplay = document.getElementById('large-coin-container');
-            const grad = data.type === 'silver' ? 'url(#silverRealistic)' : 'url(#bronzeRealistic)';
-            const stroke = data.type === 'silver' ? '#cbd5e1' : '#f59e0b';
+            let fillGrad = 'url(#coinBaseSilver)';
+            let strokeColor = '#0284c7';
+            
+            if (data.type === 'darkBlue') { fillGrad = 'url(#coinBaseDarkBlue)'; strokeColor = '#0284c7'; }
+            else if (data.type === 'gold') { fillGrad = 'url(#coinBaseGold)'; strokeColor = '#d97706'; }
 
             largeDisplay.innerHTML = `
-                <svg viewBox="0 0 140 140" width="100%" height="100%">
-                    <circle cx="70" cy="70" r="62" fill="${grad}" stroke="${stroke}" stroke-width="3"/>
-                    <circle cx="70" cy="70" r="50" fill="none" stroke="rgba(0,0,0,0.3)" stroke-dasharray="4,3"/>
-                    <circle cx="70" cy="70" r="25" fill="rgba(0,0,0,0.15)"/>
+                <svg viewBox="0 0 160 160" width="100%" height="100%">
+                    <circle cx="80" cy="80" r="75" fill="${fillGrad}" stroke="${strokeColor}" stroke-width="3"/>
+                    <g transform="translate(80, 80) scale(1.1)">
+                        <use href="${data.charId}" />
+                    </g>
                 </svg>
             `;
 
             goToScreen(5);
         }
 
-        /* מנגנון בדיקת חידון */
-        function checkQuizAnswer(btnElement, isCorrect) {
+        function setupQuizForSelectedCoin() {
+            const data = coinData[selectedCoinKey];
+            document.getElementById('quizQuestionTitle').innerText = data.quizQ;
+            document.getElementById('quizSubtitle').innerText = data.quizSub;
+            document.getElementById('quizFeedback').innerHTML = `<b>נכון מאוד!</b> ${data.quizFeedback}`;
+
+            const container = document.getElementById('quizOptionsContainer');
+            container.innerHTML = '';
+            data.quizOpts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.id = `quiz-opt-btn-${idx}`;
+                btn.innerText = opt.text;
+                btn.onclick = function() { checkQuizAnswer(btn, opt.correct, data.quizFeedback); };
+                container.appendChild(btn);
+            });
+
+            let fillGrad = 'url(#coinBaseSilver)';
+            let strokeColor = '#0284c7';
+            if (data.type === 'darkBlue') { fillGrad = 'url(#coinBaseDarkBlue)'; strokeColor = '#0284c7'; }
+            else if (data.type === 'gold') { fillGrad = 'url(#coinBaseGold)'; strokeColor = '#d97706'; }
+
+            document.getElementById('quizCoinFrame').innerHTML = `
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                    <circle cx="100" cy="100" r="95" fill="${fillGrad}" stroke="${strokeColor}" stroke-width="4"/>
+                    <g transform="translate(100, 100) scale(1.35)">
+                        <use href="${data.charId}" />
+                    </g>
+                </svg>
+            `;
+
+            resetQuizState();
+
+            setTimeout(() => {
+                speakQuizSequence();
+            }, 300);
+        }
+
+        function checkQuizAnswer(btnElement, isCorrect, feedbackText) {
+            stopAudio();
             const allBtns = document.querySelectorAll('.quiz-option-btn');
             allBtns.forEach(btn => {
-                btn.classList.remove('correct', 'incorrect');
+                btn.classList.remove('correct', 'incorrect', 'speaking-highlight');
                 const check = btn.querySelector('.quiz-check-mark');
                 if (check) check.remove();
             });
@@ -897,10 +1102,8 @@
                 btnElement.innerHTML += `<span class="quiz-check-mark">✓</span>`;
                 feedback.classList.add('active');
 
-                // הקראת המשוב החיובי
                 if ('speechSynthesis' in window) {
-                    stopAudio();
-                    let feedbackUtterance = new SpeechSynthesisUtterance("נכון מאוד! האישה על המטבע נראית עצובה ומדוכאת, המטבע מתאר את יהודה הכבושה.");
+                    let feedbackUtterance = new SpeechSynthesisUtterance(`נכון מאוד! ${feedbackText}`);
                     feedbackUtterance.lang = 'he-IL';
                     speechSynth.speak(feedbackUtterance);
                 }
@@ -913,7 +1116,7 @@
         function resetQuizState() {
             const allBtns = document.querySelectorAll('.quiz-option-btn');
             allBtns.forEach(btn => {
-                btn.classList.remove('correct', 'incorrect');
+                btn.classList.remove('correct', 'incorrect', 'speaking-highlight');
                 const check = btn.querySelector('.quiz-check-mark');
                 if (check) check.remove();
             });
@@ -939,6 +1142,8 @@
             if ('speechSynthesis' in window) {
                 speechSynth.cancel();
             }
+            const allBtns = document.querySelectorAll('.quiz-option-btn');
+            allBtns.forEach(btn => btn.classList.remove('speaking-highlight'));
             isAudioPlaying = false;
             updateAudioButtonState();
         }
