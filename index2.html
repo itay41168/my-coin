@@ -1,625 +1,1115 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>מטבע אישי</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;500;600;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אב-טיפוס מוזיאון הכט - הנגשה קוגניטיבית</title>
+    <style>
+        /* הגדרות כלליות */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-:root{
-  --parchment:#EFE3C8;
-  --parchment-deep:#E6D6AF;
-  --ink:#2B2417;
-  --ink-soft:#5A5040;
-  --bronze:#A8763E;
-  --bronze-dark:#7C5426;
-  --bronze-deep:#5C3C1E;
-  --patina:#4F6B57;
-  --patina-dark:#354B3B;
-  --gold:#C7A233;
-  --rust:#9C3A2C;
-  --card:#FBF6E9;
-  --line:rgba(92,60,30,.22);
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html{height:100%;}
-body{margin:0;font-family:'Assistant',sans-serif;background:#DED0AE;background-image:
-  radial-gradient(circle at 20% 20%, rgba(255,255,255,.25), transparent 40%),
-  radial-gradient(circle at 80% 80%, rgba(0,0,0,.05), transparent 40%);
-  color:var(--ink);min-height:100%;display:flex;justify-content:center;
-  font-size:18px;}
+        /* דימוי מכשיר הטאבלט */
+        .tablet-frame {
+            width: 1024px;
+            height: 768px;
+            border: 20px solid #222;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background-color: #1a1a1a;
+        }
 
-.phone{
-  width:100%;max-width:520px;
-  background:var(--parchment);
-  border:none;
-  border-radius:0;
-  box-shadow:none;
-  overflow:hidden;
-  position:relative;
-  min-height:100vh;
-  min-height:100dvh;
-  display:flex;flex-direction:column;
-}
-@media (min-width:560px){
-  body{padding:28px 12px;}
-  .phone{min-height:820px;border-radius:32px;border:1px solid var(--line);
-    box-shadow:0 2px 0 rgba(255,255,255,.5) inset, 0 18px 40px rgba(60,40,10,.25);}
-}
+        /* ניהול תצוגת מסכים - הסתרה ברירת מחדל */
+        .screen {
+            display: none !important;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
 
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:22px 20px 14px;
-  font-family:'Frank Ruhl Libre',serif;
-  font-weight:700;font-size:21px;color:var(--bronze-deep);
-  border-bottom:1px solid var(--line);
-}
-.topbar .icon-btn{
-  width:46px;height:46px;border-radius:50%;
-  border:1px solid var(--line);background:var(--card);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--bronze-dark);
-  font-size:21px;user-select:none;
-}
-.topbar .icon-btn:active{transform:scale(.94);}
-.topbar .spacer{width:46px;}
+        /* הצגת המסך הפעיל בלבד */
+        .screen.active {
+            display: flex !important;
+        }
 
-.screen{flex:1;display:flex;flex-direction:column;padding:26px 22px 34px;gap:20px;overflow-y:auto;}
-.screen h1{font-family:'Frank Ruhl Libre',serif;font-size:28px;margin:0;color:var(--ink);text-align:center;line-height:1.3;}
-.screen p.sub{margin:0;color:var(--ink-soft);text-align:center;font-size:17px;line-height:1.5;}
+        /* ==========================================
+           סגנונות מסך 1: ברוכים הבאים
+           ========================================== */
+        #screen-1 {
+            background-image: url('image_26220d.png');
+            background-size: cover;
+            background-position: center;
+            flex-direction: column;
+        }
 
-.btn{
-  border:none;border-radius:16px;padding:20px 20px;font-family:'Assistant',sans-serif;
-  font-weight:700;font-size:19px;cursor:pointer;transition:transform .12s;
-}
-.btn:active{transform:scale(.97);}
-.btn-primary{background:linear-gradient(180deg,var(--bronze),var(--bronze-dark));color:#FBF3E2;box-shadow:0 3px 0 var(--bronze-deep);}
-.btn-ghost{background:var(--card);color:var(--bronze-dark);border:1px solid var(--line);}
-.btn-outline{background:transparent;color:var(--bronze-dark);border:1.5px solid var(--bronze-dark);}
-.btn-row{display:flex;gap:14px;}
-.btn-row .btn{flex:1;}
-.btn-circle{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;border:none;cursor:pointer;}
-.btn-circle.yes{background:var(--patina);color:#F3F7F0;}
-.btn-circle.no{background:var(--rust);color:#FBEAE6;}
+        .overlay-screen1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(230, 240, 255, 0.9) 0%, rgba(200, 220, 255, 0.7) 100%);
+            z-index: 1;
+        }
 
-.medallion-frame{
-  position:relative;width:min(78vw,300px);height:min(78vw,300px);margin:8px auto;border-radius:50%;
-  background:var(--card);border:8px solid var(--bronze);
-  box-shadow:0 0 0 4px var(--parchment), 0 0 0 5px var(--bronze-dark), inset 0 0 0 2px rgba(255,255,255,.35);
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-}
-.medallion-frame.dashed{border-style:dashed;background:var(--parchment-deep);}
-.medallion-frame img{width:100%;height:100%;object-fit:cover;}
-.medallion-frame .placeholder{color:var(--bronze-dark);font-size:64px;}
-.corner-marks span{position:absolute;width:22px;height:22px;border-color:var(--bronze-dark);}
-.corner-marks span:nth-child(1){top:10px;left:10px;border-top:4px solid;border-right:4px solid;}
-.corner-marks span:nth-child(2){top:10px;right:10px;border-top:4px solid;border-left:4px solid;}
-.corner-marks span:nth-child(3){bottom:10px;left:10px;border-bottom:4px solid;border-right:4px solid;}
-.corner-marks span:nth-child(4){bottom:10px;right:10px;border-bottom:4px solid;border-left:4px solid;}
+        .content-container-screen1 {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
 
-.rope-ring{position:absolute;inset:-11px;border-radius:50%;pointer-events:none;}
+        .header-container {
+            align-self: flex-start;
+            color: #fff;
+            text-align: right;
+        }
 
-.icon-tile{
-  display:flex;align-items:center;gap:16px;background:var(--card);
-  border:1px solid var(--line);border-radius:18px;padding:18px 20px;cursor:pointer;
-}
-.icon-tile:active{transform:scale(.98);}
-.icon-tile .ico{width:68px;height:68px;border-radius:14px;background:var(--parchment-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:36px;}
-.icon-tile span.label{font-weight:600;font-size:18px;}
-.icon-tile.selected{outline:3px solid var(--bronze);background:#F6EAD2;}
+        .museum-name-he {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+        }
 
-.big-illustration{width:min(80vw,300px);height:min(80vw,300px);border-radius:50%;margin:8px auto;overflow:hidden;border:8px solid var(--bronze);box-shadow:0 0 0 4px var(--parchment), 0 0 0 5px var(--bronze-dark);}
+        .museum-name-en {
+            font-size: 18px;
+            margin: 0;
+            opacity: 0.8;
+        }
 
-.split-coin{position:relative;width:min(82vw,320px);height:min(82vw,320px);margin:8px auto;border-radius:50%;overflow:hidden;border:9px solid var(--bronze);box-shadow:0 0 0 4px var(--parchment), 0 0 0 5px var(--bronze-dark);}
-.split-coin .half{position:absolute;top:0;bottom:0;width:50%;background-size:cover;background-position:center;}
-.split-coin .half.left{left:0;}
-.split-coin .half.right{right:0;}
-.split-coin .divider{position:absolute;top:0;bottom:0;left:50%;width:3px;background:rgba(92,60,30,.35);transform:translateX(-1px);}
+        .welcome-text {
+            color: #000;
+            font-size: 40px;
+            font-weight: bold;
+            line-height: 1.4;
+            text-align: center;
+            max-width: 700px;
+            margin-top: 20px;
+        }
 
-.coin3d-wrap{width:min(82vw,320px);height:min(82vw,320px);margin:8px auto;perspective:1200px;}
-.coin3d-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;cursor:grab;touch-action:pan-y;user-select:none;}
-.coin3d-inner.dragging{cursor:grabbing;}
-.coin3d-face{position:absolute;inset:0;border-radius:50%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:9px solid var(--bronze);box-shadow:0 0 0 4px var(--parchment), 0 0 0 5px var(--bronze-dark);background-size:cover;background-position:center;}
-.coin3d-face.back{transform:rotateY(180deg);}
+        .start-button {
+            width: 220px;
+            height: 130px;
+            background-color: #3B82F6;
+            border-radius: 24px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            transition: transform 0.2s, background-color 0.2s;
+            margin-bottom: 20px;
+        }
 
-.name-input{
-  width:100%;padding:20px;border-radius:16px;border:1px solid var(--line);
-  background:var(--card);font-family:'Assistant',sans-serif;font-size:19px;text-align:center;
-  color:var(--ink);
-}
-.name-input:focus{outline:3px solid var(--bronze);}
+        .start-button:hover {
+            background-color: #2563EB;
+            transform: scale(1.04);
+        }
 
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.coin-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;}
-.coin-card .mini-coin{width:110px;height:110px;border-radius:50%;overflow:hidden;border:4px solid var(--bronze);position:relative;}
-.coin-card .mini-coin .half{position:absolute;top:0;bottom:0;width:50%;background-size:cover;background-position:center;}
-.coin-card span.cname{font-weight:600;font-size:16px;}
-.add-card{border:3px dashed var(--bronze);background:transparent;color:var(--bronze-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:18px;padding:28px 16px;cursor:pointer;min-height:180px;}
-.add-card .plus{font-size:38px;}
+        /* ==========================================
+           סגנונות מסך 2: צילום / סריקה
+           ========================================== */
+        #screen-2 {
+            position: absolute;
+        }
 
-.sparkle{position:absolute;font-size:26px;color:var(--gold);}
+        .camera-feed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
 
-.progress-dots{display:flex;gap:6px;justify-content:center;margin-top:auto;padding-top:8px;}
-.progress-dots span{width:7px;height:7px;border-radius:50%;background:var(--line);}
-.progress-dots span.active{background:var(--bronze);}
+        .reticle {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            z-index: 5;
+            pointer-events: none;
+        }
 
-.hidden-input{display:none;}
+        .reticle-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+        }
 
-.more-toggle{text-align:center;font-size:16px;color:var(--bronze-dark);font-weight:600;cursor:pointer;padding:8px;}
+        .bottom-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 10;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
 
-.share-row{display:flex;gap:14px;}
-.share-row .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .instruction-text {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            margin: 0;
+        }
 
-.drag-hint{text-align:center;font-size:15px;color:var(--ink-soft);}
-.slider-wrap{width:100%;padding:0 10px;}
-input[type=range]{width:100%;accent-color:var(--bronze);height:36px;}
-</style>
+        .shutter-button {
+            width: 90px;
+            height: 90px;
+            background-color: #3B82F6;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .shutter-button:active {
+            transform: scale(0.92);
+            background-color: #2563EB;
+        }
+
+        /* ==========================================
+           סגנונות מסך 3: בחירת מטבע + אנימציית מעבר
+           ========================================== */
+        #screen-3 {
+            background-color: #121212;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        .instruction-header-screen3 {
+            position: absolute;
+            top: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+
+        .instruction-text-screen3 {
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .coin-box {
+            position: absolute;
+            border: 4px solid #3B82F6;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.4s ease,
+                        top 1.3s cubic-bezier(0.25, 1, 0.5, 1), left 1.3s cubic-bezier(0.25, 1, 0.5, 1),
+                        width 1.3s ease, height 1.3s ease;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .coin-box:hover {
+            border-color: #60A5FA;
+            box-shadow: 0 0 30px rgba(96, 165, 250, 0.9);
+            transform: scale(1.08);
+        }
+
+        .coin-element {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #d4af37, #8a6d1d);
+            border: 2px solid #f3e5ab;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4a3b0f;
+            font-weight: bold;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .coin-box-main {
+            top: 38%;
+            left: 44%;
+            width: 120px;
+            height: 120px;
+        }
+
+        .coin-box-left {
+            top: 55%;
+            left: 32%;
+            width: 90px;
+            height: 90px;
+        }
+
+        .coin-box-right {
+            top: 53%;
+            left: 60%;
+            width: 85px;
+            height: 85px;
+        }
+
+        /* מחלקה זו מופעלת ישירות על תיבת המטבע שהמשתמש לחץ עליה (ולא על
+           אלמנט נפרד), כך שהמטבע שבאמת נבחר הוא זה שזז וממחיש בבירור
+           למשתמש אילו מטבע יוצג בהמשך במסך הפרטים. */
+        .coin-box.flying-to-right {
+            z-index: 60;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(212, 175, 55, 0.8);
+        }
+
+        .sliding-white-panel {
+            position: absolute;
+            bottom: -100%;
+            left: 5%;
+            width: 90%;
+            height: 70%;
+            background-color: #ffffff;
+            border-radius: 35px 35px 0 0;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            z-index: 30;
+            transition: bottom 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sliding-white-panel.slide-up {
+            bottom: 0;
+        }
+
+        /* ==========================================
+           סגנונות מסך 5: תצוגת תוכן מפורטת ומולטימדיה
+           ========================================== */
+        #screen-5 {
+            background-color: #dbeafe;
+            flex-direction: row;
+        }
+
+        .panel-right {
+            width: 42%;
+            height: 100%;
+            background-color: #1c1c1e;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .coin-title {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.3;
+        }
+
+        .large-coin-display {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #e2e8f0, #64748b);
+            border: 6px solid #94a3b8;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 110px;
+        }
+
+        .panel-left {
+            width: 58%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 30px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .control-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ctrl-btn {
+            width: 105px;
+            height: 105px;
+            background-color: #3B82F6;
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 14px rgba(59, 130, 246, 0.4);
+            transition: transform 0.15s, background-color 0.15s;
+        }
+
+        .ctrl-btn:hover {
+            background-color: #2563EB;
+            transform: scale(1.05);
+        }
+
+        .ctrl-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ctrl-btn.is-playing {
+            background-color: #16A34A;
+        }
+
+        .ctrl-icon {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .accessible-text-card {
+            width: 90%;
+            background-color: #ffffff;
+            border-radius: 28px;
+            padding: 35px 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .accessible-text-card p {
+            margin: 0;
+            font-size: 34px;
+            font-weight: bold;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        /* סגנונות אייקונים משותפים */
+        .camera-icon {
+            width: 70px;
+            height: 70px;
+            fill: white;
+        }
+
+        .shutter-button .camera-icon {
+            width: 44px;
+            height: 44px;
+        }
+
+        .audio-icon {
+            width: 30px;
+            height: 30px;
+            opacity: 0.8;
+        }
+
+        .audio-icon-right {
+            position: absolute;
+            right: 40px;
+            width: 32px;
+            height: 32px;
+            opacity: 0.9;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .audio-icon-large {
+            width: 45px;
+            height: 45px;
+        }
+
+        /* כפתור אייקון "שקוף" - עוטף אייקוני שמע קיימים (מסכים 2 ו-3)
+           והופך אותם ללחיצים בפועל, כדי לאפשר השמעה חוזרת של ההוראה */
+        .icon-audio-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-audio-btn svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* כפתור "השמע שוב את ההוראה" - עיגול כחול קבוע בפינת המסך,
+           מיועד למסכים שאין בהם כרגע אייקון שמע קיים (מסך 1) */
+        .replay-instruction-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(59, 130, 246, 0.95);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 20;
+            transition: transform 0.15s, background-color 0.15s;
+        }
+
+        .replay-instruction-btn:hover {
+            background-color: #2563EB;
+            transform: scale(1.06);
+        }
+
+        .replay-instruction-btn svg {
+            width: 30px;
+            height: 30px;
+            fill: #ffffff;
+        }
+
+        /* ==========================================
+           סגנונות: שכבת דמו-וידאו (מסך 5, כפתור הווידאו)
+           הערה: זוהי סימולציה בלבד לצורך אב-הטיפוס.
+           בפרויקט הסופי יש להחליף את התוכן בנגן <video> אמיתי
+           עם קובץ הווידאו הרלוונטי למוצג שנסרק.
+           ========================================== */
+        .video-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-overlay.active {
+            display: flex;
+        }
+
+        .video-overlay-content {
+            width: 80%;
+            max-width: 640px;
+            background-color: #000;
+            border-radius: 24px;
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 280px;
+            background: repeating-linear-gradient(45deg, #1f2937, #1f2937 10px, #111827 10px, #111827 20px);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .video-spin-icon {
+            width: 60px;
+            height: 60px;
+            fill: #ffffff;
+            animation: spinVideoIcon 2.2s linear infinite;
+        }
+
+        @keyframes spinVideoIcon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .video-overlay-content p {
+            color: #ffffff;
+            font-size: 22px;
+            margin: 0 0 20px 0;
+        }
+
+        .video-close-btn {
+            background-color: #3B82F6;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        .video-close-btn:hover {
+            background-color: #2563EB;
+        }
+    </style>
 </head>
 <body>
 
-<div class="phone" id="phone"></div>
+    <div class="tablet-frame">
 
-<script>
-const state = {
-  step: 'intro',
-  photo: null,
-  secondSide: null,
-  secondSideConfirmed: false,
-  coinName: '',
-  myCoins: [],
-  activeCoinIndex: null,
-  showMoreOptions: false,
-  splitPos: 50
-};
+        <!--
+            ===========================================================
+            מסך 1: מסך פתיחה / ברוכים הבאים
+            ===========================================================
+            מטרת המסך: קבלת פני המבקר והנעה להתחלת הסיור.
 
-const SIDE_OPTIONS = [
-  {id:'ship', label:'ספינה עתיקה', bg:'#BFD9E0', ico:'⛵'},
-  {id:'tomb', label:'קבר עתיק', bg:'#D8CBB4', ico:'⛩'},
-  {id:'building', label:'מבנה עתיק', bg:'#E3D9C4', ico:'🏛'}
-];
-const MORE_OPTIONS = [
-  {id:'sun', label:'שמש עתיקה', bg:'#F0DFAE', ico:'☀'},
-  {id:'tree', label:'עץ זית', bg:'#D7E0C4', ico:'🌿'},
-  {id:'amphora', label:'אגרטל חרס', bg:'#E6D2B8', ico:'🏺'},
-  {id:'scroll', label:'מגילה עתיקה', bg:'#EDE1C2', ico:'📜'}
-];
+            התנהגות נדרשת (מומשה בקוד למטה ב-<script>):
+            1. עם הכניסה למסך (בטעינת הדף) מופעל אוטומטית קטע שמע
+               המקריא למשתמש את טקסט הברכה + ההנחיה "לחצו על המצלמה".
+               ראו את אובייקט screenAudioTexts ופונקציית attemptInitialAudio.
+            2. לחיצה על כפתור המצלמה הכחול (start-button) מפעילה
+               את הפונקציה goToScreen(2) ומעבירה למסך הסריקה.
+            3. כפתור הרמקול העגול (replay-instruction-btn) מאפשר למבקר
+               להשמיע את ההוראה הקולית שוב בכל רגע, בלחיצה אחת -
+               ראו replayCurrentScreenAudio().
 
-function allSideOptions(){ return SIDE_OPTIONS.concat(MORE_OPTIONS); }
-function sideById(id){ return allSideOptions().find(o=>o.id===id); }
+            הערת נגישות: חלק מהדפדפנים חוסמים השמעת שמע אוטומטית
+            לפני אינטראקציה של המשתמש עם הדף. משום כך נוסף גם כפתור
+            הרמקול הידני, וגם מנגנון גיבוי שמנסה להשמיע את ההוראה
+            במגע הראשון של המשתמש בעמוד אם ההשמעה האוטומטית נחסמה.
+        -->
+        <div id="screen-1" class="screen active">
+            <div class="overlay-screen1"></div>
+            <div class="content-container-screen1">
+                <div class="header-container">
+                    <p class="museum-name-he">מוזיאון הכט</p>
+                    <p class="museum-name-en">Hecht Museum</p>
+                </div>
 
-function sideIllustration(opt, size){
-  return `<div style="width:100%;height:100%;background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:${size||70}px;">${opt.ico}</div>`;
-}
+                <div class="welcome-text">
+                    ברוכים הבאים לתצוגת המטבעות.<br>
+                    לחצו על המצלמה כדי להתחיל.
+                </div>
 
-function render(){
-  const phone = document.getElementById('phone');
-  phone.innerHTML = screens[state.step]();
-  bindEvents();
-}
+                <button class="start-button" onclick="goToScreen(2)" title="לחץ כדי להתחיל">
+                    <svg class="camera-icon" viewBox="0 0 24 24">
+                        <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                </button>
+            </div>
 
-function topbar(title, opts){
-  opts = opts || {};
-  const left = opts.back ? `<div class="icon-btn" data-action="back">‹</div>` : (opts.home ? `<div class="icon-btn" data-action="gotoIntro">⌂</div>` : `<div class="spacer"></div>`);
-  const right = opts.home2 ? `<div class="icon-btn" data-action="gotoIntro">⌂</div>` : (opts.menu ? `<div class="icon-btn" data-action="gotoMyCoins">≡</div>` : `<div class="spacer"></div>`);
-  return `<div class="topbar">${left}<span>${title}</span>${right}</div>`;
-}
+            <!-- כפתור השמעה חוזרת של הוראת המסך -->
+            <button class="replay-instruction-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z"/>
+                </svg>
+            </button>
+        </div>
 
-const screens = {
+        <!--
+            ===========================================================
+            מסך 2: צילום / סריקת המטבע
+            ===========================================================
+            מטרת המסך: הנחיית המבקר לכוון את מצלמת הטאבלט לעבר המטבע
+            הפיזי בתצוגה ולצלם אותו.
 
-intro(){
-  return `
-  ${topbar('', {})}
-  <div class="screen" style="justify-content:center;">
-    <h1>צור מטבע אישי</h1>
-    <p class="sub">מטבע שמספר את הסיפור שלך</p>
-    <div class="medallion-frame dashed">
-      <div class="placeholder">＋</div>
+            התנהגות נדרשת:
+            1. עם הכניסה למסך (קריאה ל-goToScreen(2)) מופעל אוטומטית
+               שמע המקריא: "כוונו את המצלמה ולחצו על הכפתור."
+            2. תצוגת camera-feed מוצגת כאן כתמונת דמה (SVG) של מטבעות
+               על שולחן, כדי לדמות מה שהמצלמה "רואה". בפרויקט האמיתי
+               יש להחליף זאת בזרם וידאו חי ממצלמת המכשיר (getUserMedia).
+            3. לחיצה על כפתור התריס (shutter-button) מבצעת את הצילום
+               בפועל (בפרויקט הסופי - שליחה לזיהוי תמונה) ומעבירה
+               למסך 3 לבחירת המטבע שזוהה.
+            4. כפתור הרמקול (audio-icon-right, כעת כפתור לחיץ אמיתי)
+               משמיע שוב את הוראת המסך - replayCurrentScreenAudio().
+        -->
+        <div id="screen-2" class="screen">
+            <!-- תמונת דמה (SVG) של מטבעות על שולחן, לדימוי מה שהמצלמה "רואה" -->
+            <svg class="camera-feed" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid slice" role="img" aria-label="תצוגת מצלמה עם מטבעות לדוגמה">
+                <defs>
+                    <radialGradient id="coinGradCamera" cx="30%" cy="30%">
+                        <stop offset="0%" stop-color="#e6ca65"/>
+                        <stop offset="100%" stop-color="#8a6d1d"/>
+                    </radialGradient>
+                    <linearGradient id="tableGradCamera" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#2b2320"/>
+                        <stop offset="100%" stop-color="#4a3728"/>
+                    </linearGradient>
+                </defs>
+                <rect width="1024" height="768" fill="#1c1917"/>
+                <rect x="0" y="430" width="1024" height="338" fill="url(#tableGradCamera)"/>
+                <circle cx="360" cy="470" r="70" fill="url(#coinGradCamera)" stroke="#f3e5ab" stroke-width="3"/>
+                <circle cx="512" cy="430" r="95" fill="url(#coinGradCamera)" stroke="#f3e5ab" stroke-width="4"/>
+                <circle cx="665" cy="465" r="65" fill="url(#coinGradCamera)" stroke="#f3e5ab" stroke-width="3"/>
+            </svg>
+
+            <div class="reticle">
+                <div class="reticle-dot"></div>
+            </div>
+
+            <div class="bottom-bar">
+                <button class="audio-icon-right icon-audio-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z"/>
+                    </svg>
+                </button>
+
+                <p class="instruction-text">כוונו את המצלמה</p>
+
+                <button class="shutter-button" onclick="goToScreen(3)" title="צלם ועבור לבחירה">
+                    <svg class="camera-icon" viewBox="0 0 24 24">
+                        <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                </button>
+
+                <p class="instruction-text">ולחצו על הכפתור.</p>
+            </div>
+        </div>
+
+        <!--
+            ===========================================================
+            מסך 3: בחירת מטבע מבין מספר תוצאות + אנימציית מעבר
+            ===========================================================
+            מטרת המסך: לאחר הצילום, המערכת זיהתה כמה מטבעות אפשריים
+            (main / left / right) והמבקר בוחר את המטבע הרלוונטי.
+
+            התנהגות נדרשת:
+            1. עם הכניסה למסך (קריאה ל-goToScreen(3)) מופעל אוטומטית
+               שמע המקריא: "בחרו את אחד המטבעות המסומנים על ידי
+               לחיצה עליו."
+            2. כל שלוש תיבות המטבע (coin-box) מסומנות במסגרת כחולה,
+               כפי שהיה עד כה. לחיצה על אחת מהן מפעילה את selectCoin(this):
+               - שתי התיבות האחרות נעלמות (opacity 0).
+               - התיבה שנבחרה (ורק היא) זזה בעצמה - לא אלמנט נפרד -
+                 ימינה לעבר פינת המסך, כדי שיהיה ברור למשתמש איזה
+                 מטבע בדיוק נבחר.
+               - פאנל לבן גולש מלמטה, ולבסוף המערכת עוברת למסך 5
+                 (המוצג למשתמש כ"מסך 4") עם פרטי המטבע שנבחר.
+            3. בפרויקט האמיתי יש להעביר ל-selectCoin גם מזהה מטבע כדי
+               שמסך הפרטים יציג את התוכן הנכון (טקסט, שמע, וידאו)
+               בהתאם למטבע שנבחר, ולא תוכן קבוע כפי שמוצג כאן באב-הטיפוס.
+        -->
+        <div id="screen-3" class="screen">
+            <div class="instruction-header-screen3" id="header-text-screen3">
+                <button class="audio-icon-large icon-audio-btn" onclick="replayCurrentScreenAudio()" title="השמע שוב את ההוראה">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4-.91 7-4.49 7-8.77s-3-7.86-7-8.77z"/>
+                    </svg>
+                </button>
+                <p class="instruction-text-screen3" id="main-instruction">
+                    בחרו את אחד המטבעות<br>המסומנים על ידי לחיצה עליו.
+                </p>
+            </div>
+
+            <div class="coin-box coin-box-main" onclick="selectCoin(this)" title="לחץ לבחירת המטבע">
+                <div class="coin-element">🪙</div>
+            </div>
+            <div class="coin-box coin-box-left" onclick="selectCoin(this)" title="לחץ לבחירת המטבע">
+                <div class="coin-element">🪙</div>
+            </div>
+            <div class="coin-box coin-box-right" onclick="selectCoin(this)" title="לחץ לבחירת המטבע">
+                <div class="coin-element">🪙</div>
+            </div>
+
+            <div class="sliding-white-panel" id="whitePanel"></div>
+        </div>
+
+        <!--
+            ===========================================================
+            מסך 5 בקוד (מוצג למשתמש כ"מסך 4"): פאנל הסבר מפורט ומולטימדיה
+            ===========================================================
+            מטרת המסך: הצגת ההסבר המלא (טקסטואלי, קולי וויזואלי)
+            על המטבע שהמבקר בחר במסך הקודם.
+
+            פריסה: צד שמאל (panel-right במחלקה, בגלל כיווניות RTL)
+            מציג את המטבע הנבחר בהגדלה + כותרת. צד ימין (panel-left)
+            מציג את 4 כפתורי הבקרה ואת כרטיס הטקסט הנגיש.
+
+            התנהגות נדרשת:
+            1. עם הכניסה למסך (קריאה ל-goToScreen(5)) מופעל אוטומטית
+               שמע המקריא את טקסט ההסבר הנגיש (accessible-text-card).
+            2. פאנל הבקרה (controls-row) כולל 4 כפתורים נקיים (ללא
+               טקסט מעליהם):
+               - כפתור 1 (משולש הפעלה - playArtifactAudio):
+                 מפעיל/משהה את ההקראה הקולית של ההסבר על המוצג.
+               - כפתור 2 (חץ מעגלי - replayArtifactAudio):
+                 מנגן את ההסבר הקולי מההתחלה.
+               - כפתור 3 (מסך + משולש - playArtifactVideo):
+                 פותח נגן וידאו/הדגמה חזותית של המוצג. באב-הטיפוס
+                 זוהי סימולציה בלבד (שכבת video-overlay); בפרויקט
+                 הסופי יש להחליף בנגן <video> עם קובץ אמיתי.
+               - כפתור 4 (חץ אחורה - resetPrototype):
+                 מאפס את אב-הטיפוס וחוזר למסך 1.
+        -->
+        <div id="screen-5" class="screen">
+
+            <!-- צד שמאל: נגן וטקסט -->
+            <div class="panel-left">
+
+                <div class="controls-row">
+                    <!-- כפתור 1: הפעלת/השהיית הקראה קולית על המוצג (משולש הפעלה) -->
+                    <div class="control-wrapper">
+                        <button class="ctrl-btn" id="playBtn" onclick="playArtifactAudio()" title="נגן / השהה הסבר קולי">
+                            <svg class="ctrl-icon" id="playIcon" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- כפתור 2: ניגון ההסבר הקולי מחדש מההתחלה -->
+                    <div class="control-wrapper">
+                        <button class="ctrl-btn" onclick="replayArtifactAudio()" title="נגן שוב מההתחלה">
+                            <svg class="ctrl-icon" viewBox="0 0 24 24">
+                                <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- כפתור 3: פתיחת סרטון/הדגמה חזותית על המוצג (מסך + משולש) -->
+                    <div class="control-wrapper">
+                        <button class="ctrl-btn" onclick="playArtifactVideo()" title="הצג סרטון הסבר">
+                            <svg class="ctrl-icon" viewBox="0 0 24 24">
+                                <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-1l6-4-6-4v8z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- כפתור 4: איפוס אב-הטיפוס וחזרה למסך הפתיחה -->
+                    <div class="control-wrapper">
+                        <button class="ctrl-btn" onclick="resetPrototype()" title="חזור להתחלה">
+                            <svg class="ctrl-icon" viewBox="0 0 24 24">
+                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="accessible-text-card">
+                    <p id="artifact-description">
+                        זהו מטבע כסף שנטבע<br>
+                        על ידי המלך אגריפס<br>
+                        הראשון...
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- צד ימין: כותרת ומטבע -->
+            <div class="panel-right">
+                <div class="coin-title">
+                    מטבע כסף של<br>
+                    המלך אגריפס
+                </div>
+                <div class="large-coin-display" title="דיוקן המלך אגריפס על המטבע">
+                    🪙
+                </div>
+            </div>
+
+            <!--
+                שכבת דמו-וידאו: נפתחת בלחיצה על כפתור 3 (playArtifactVideo).
+                זוהי סימולציית "מקרין סרטון" בלבד - יש להחליף בפרויקט
+                הסופי בתגית <video> אמיתית עם קובץ ההדגמה של המוצג.
+            -->
+            <div class="video-overlay" id="videoOverlay">
+                <div class="video-overlay-content">
+                    <div class="video-placeholder">
+                        <svg class="video-spin-icon" viewBox="0 0 24 24">
+                            <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                        </svg>
+                        <p>מציג סרטון הדגמה על המטבע...</p>
+                    </div>
+                    <button class="video-close-btn" onclick="closeVideoOverlay()">סגור</button>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-    <button class="btn btn-primary" data-action="startCreate">התחל יצירה</button>
-    ${state.myCoins.length ? `<button class="btn btn-ghost" data-action="gotoMyCoins">המטבעות שלי</button>` : ''}
-  </div>`;
-},
 
-takePhoto(){
-  return `
-  ${topbar('צילום הדמות שלך', {back:true})}
-  <div class="screen" style="justify-content:center;">
-    <h1 style="font-size:19px;">צלם את עצמך</h1>
-    <p class="sub">זה יהיה רק אתה בתמונה</p>
-    <div class="medallion-frame dashed" style="position:relative;">
-      <div class="corner-marks"><span></span><span></span><span></span><span></span></div>
-      <div class="placeholder">🙂</div>
-    </div>
-    <input type="file" accept="image/*" capture="user" class="hidden-input" id="photoInput">
-    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-      <div class="icon-btn" style="width:88px;height:88px;font-size:38px;" data-action="triggerPhoto">📷</div>
-      <span style="font-weight:700;color:var(--bronze-dark);font-size:18px;">צלם</span>
-    </div>
-  </div>`;
-},
+    <script>
+        /* ==========================================================
+           מפת טקסטים להקראה קולית אוטומטית עבור כל מסך.
+           בכל כניסה למסך מוקרא הטקסט המתאים למבקר.
+           בפרויקט הסופי מומלץ להחליף את ה-Web Speech API בקובצי
+           שמע מוקלטים מראש (איכות והתאמה קוגניטיבית טובה יותר).
+           ========================================================== */
+        const screenAudioTexts = {
+            1: "ברוכים הבאים למוזיאון הכט. לחצו על סמל המצלמה כדי להתחיל בסיור.",
+            2: "כוונו את המצלמה אל המטבע ולחצו על כפתור הצילום.",
+            3: "בחרו את אחד המטבעות המסומנים על ידי לחיצה עליו.",
+            5: "זהו מטבע כסף שנטבע על ידי המלך אגריפס הראשון."
+        };
 
-confirmPhoto(){
-  return `
-  ${topbar('אישור התמונה', {back:true})}
-  <div class="screen" style="justify-content:center;">
-    <h1 style="font-size:19px;">האם זו תמונה טובה?</h1>
-    <div class="medallion-frame">
-      <img src="${state.photo}">
-    </div>
-    <div class="btn-row" style="justify-content:center;">
-      <div class="btn-circle no" data-action="retakePhoto">✕</div>
-      <div class="btn-circle yes" data-action="confirmPhoto">✓</div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-outline" data-action="retakePhoto">צלם שוב</button>
-      <button class="btn btn-primary" data-action="confirmPhoto">זה טוב</button>
-    </div>
-  </div>`;
-},
+        /* פונקציית הקראה כללית - מבוססת על Web Speech API (דפדפן).
+           עוצרת כל הקראה קודמת לפני שמתחילה הקראה חדשה, כדי שלא
+           ישמעו שתי הקראות יחד. */
+        function speak(text, onEndCallback) {
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'he-IL';
+            utterance.rate = 0.95;
+            if (typeof onEndCallback === 'function') {
+                utterance.onend = onEndCallback;
+            }
+            window.speechSynthesis.speak(utterance);
+        }
 
-chooseSide(){
-  const opts = state.showMoreOptions ? allSideOptions() : SIDE_OPTIONS;
-  return `
-  ${topbar('בחירת הצד השני', {back:true})}
-  <div class="screen">
-    <h1 style="font-size:19px;">בחר מה יופיע בצד השני</h1>
-    ${opts.map(o=>`
-      <div class="icon-tile ${state.secondSide===o.id?'selected':''}" data-action="selectSide" data-id="${o.id}">
-        <div class="ico">${sideIllustration(o,28)}</div>
-        <span class="label">${o.label}</span>
-      </div>`).join('')}
-    ${!state.showMoreOptions ? `<div class="more-toggle" data-action="toggleMore">עוד אפשרויות ▾</div>` : ''}
-  </div>`;
-},
+        // מזהה המסך הפעיל כרגע - משמש את כפתורי ה"השמע שוב" בכל מסך
+        let currentScreenNumber = 1;
 
-confirmSide(){
-  const opt = sideById(state.secondSide);
-  return `
-  ${topbar('אישור הצד השני', {back:true})}
-  <div class="screen" style="justify-content:center;">
-    <h1 style="font-size:19px;">האם זה מתאים?</h1>
-    <div class="big-illustration">${sideIllustration(opt,90)}</div>
-    <div class="btn-row" style="justify-content:center;">
-      <div class="btn-circle no" data-action="backToChooseSide">✕</div>
-      <div class="btn-circle yes" data-action="confirmSide">✓</div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-outline" data-action="backToChooseSide">בחר שוב</button>
-      <button class="btn btn-primary" data-action="confirmSide">זה מתאים</button>
-    </div>
-  </div>`;
-},
+        /* מעבר בין מסכי אב-הטיפוס.
+           בכל מעבר: (1) מוסתרים כל המסכים, (2) מוצג המסך היעד,
+           (3) מופעל אוטומטית קטע השמע המתאים למסך היעד. */
+        function goToScreen(screenNumber) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            const targetScreen = document.getElementById('screen-' + screenNumber);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
 
-previewCombined(){
-  const opt = sideById(state.secondSide);
-  return `
-  ${topbar('תצוגה מקדימה', {back:true})}
-  <div class="screen" style="justify-content:center;">
-    <h1 style="font-size:19px;">ככה יראה המטבע שלך</h1>
-    <div class="split-coin">
-      <div class="half left" style="background-image:url('${state.photo}')"></div>
-      <div class="half right" style="background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:60px;">${opt.ico}</div>
-      <div class="divider"></div>
-    </div>
-    <p class="sub">יפה! בוא נשמור</p>
-    <button class="btn btn-primary" data-action="gotoName">שמור מטבע</button>
-    <button class="btn btn-ghost" data-action="backToConfirmSide">שנה משהו</button>
-  </div>`;
-},
+            currentScreenNumber = screenNumber;
 
-nameCoin(){
-  return `
-  ${topbar('שם המטבע', {back:true})}
-  <div class="screen" style="justify-content:center;">
-    <h1 style="font-size:19px;">תן שם למטבע שלך</h1>
-    <div class="medallion-frame" style="border-style:solid;">
-      <div class="placeholder" style="font-size:34px;">✎</div>
-    </div>
-    <input class="name-input" id="coinNameInput" placeholder="המטבע שלי" value="${state.coinName}">
-    <button class="btn btn-primary" data-action="submitName">המשך</button>
-  </div>`;
-},
+            // === הפעלת שמע אוטומטית עם הכניסה למסך ===
+            if (screenAudioTexts[screenNumber]) {
+                speak(screenAudioTexts[screenNumber]);
+            }
+        }
 
-reveal(){
-  const opt = sideById(state.secondSide);
-  return `
-  ${topbar('הצגת המטבע', {back:true})}
-  <div class="screen" style="justify-content:center;position:relative;">
-    <span class="sparkle" style="top:70px;left:26px;">✦</span>
-    <span class="sparkle" style="top:60px;right:30px;">✦</span>
-    <h1 style="font-size:20px;">המטבע שלך מוכן!</h1>
-    <div class="split-coin">
-      <div class="half left" style="background-image:url('${state.photo}')"></div>
-      <div class="half right" style="background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:60px;">${opt.ico}</div>
-      <div class="divider"></div>
-    </div>
-    <button class="btn btn-primary" data-action="saveToMyCoins">שמור למטבעות שלי ♥</button>
-    <button class="btn btn-outline" data-action="viewFinalCoin">צפה במטבע</button>
-  </div>`;
-},
+        /* השמעה חוזרת של הוראת המסך הפעיל כרגע.
+           כפתור הרמקול בכל מסך (1, 2, 3) קורא לפונקציה הזו, כדי
+           שהמבקר יוכל לשמוע את ההוראה שוב בכל רגע, גם אם ההשמעה
+           האוטומטית לא נשמעה (למשל עקב חסימת דפדפן). */
+        function replayCurrentScreenAudio() {
+            if (screenAudioTexts[currentScreenNumber]) {
+                speak(screenAudioTexts[currentScreenNumber]);
+            }
+        }
 
-myCoins(){
-  return `
-  ${topbar('המטבעות שלי', {menu:true, home2:true})}
-  <div class="screen">
-    <h1 style="font-size:19px;">המטבע האישי שלי</h1>
-    <div class="grid2">
-      ${state.myCoins.map((c,i)=>`
-        <div class="coin-card" data-action="openCoin" data-i="${i}">
-          <div class="mini-coin">
-            <div class="half" style="left:0;background-image:url('${c.photo}')"></div>
-            <div class="half" style="right:0;background:${sideById(c.secondSide).bg};display:flex;align-items:center;justify-content:center;font-size:26px;">${sideById(c.secondSide).ico}</div>
-          </div>
-          <span class="cname">${c.name}</span>
-        </div>`).join('')}
-      <div class="add-card" data-action="startCreate">
-        <span class="plus">＋</span>
-        <span>צור מטבע חדש</span>
-      </div>
-    </div>
-  </div>`;
-},
+        /* selectCoin(el): מופעלת בלחיצה על אחת מתיבות המטבע במסך 3.
+           el הוא בדיוק האלמנט שנלחץ - כך שהתיבה שבאמת "עפה" ימינה
+           היא תמיד המטבע שהמשתמש בחר, ולא אלמנט קבוע-מיקום נפרד. */
+        function selectCoin(el) {
+            const textElement = document.getElementById('main-instruction');
+            textElement.innerHTML = 'מעבד... המטבע הנבחר<br>עובר להצגה.';
 
-viewCoin(){
-  const c = state.myCoins[state.activeCoinIndex];
-  const opt = sideById(c.secondSide);
-  return `
-  ${topbar('המטבע שלי', {back:true})}
-  <div class="screen" style="justify-content:center;">
-    <h1 style="font-size:19px;">${c.name}</h1>
-    <p class="sub">גרור ימינה או שמאלה כדי לסובב את המטבע</p>
-    <div class="coin3d-wrap">
-      <div class="coin3d-inner" id="coin3dInner">
-        <div class="coin3d-face front" style="background-image:url('${c.photo}')"></div>
-        <div class="coin3d-face back" style="background:${opt.bg};display:flex;align-items:center;justify-content:center;font-size:60px;">${opt.ico}</div>
-      </div>
-    </div>
-    <button class="btn btn-ghost" id="flipCoinBtn">↺ הפוך מטבע</button>
-    <div class="share-row">
-      <button class="btn btn-ghost" data-action="none">🔊 האזנה</button>
-      <button class="btn btn-primary" id="shareBtn" data-action="shareCoin">⇧ שתף בוואטסאפ</button>
-    </div>
-    <p class="sub" id="shareStatus" style="min-height:16px;"></p>
-  </div>`;
-}
+            const screenEl = document.getElementById('screen-3');
+            const screenRect = screenEl.getBoundingClientRect();
+            const elRect = el.getBoundingClientRect();
 
-};
+            // קיבוע המיקום הנוכחי של התיבה שנבחרה בפיקסלים (יחסית למסך),
+            // כדי שיהיה מיקום התחלתי ברור לפני מעבר ליעד החדש
+            el.style.top = (elRect.top - screenRect.top) + 'px';
+            el.style.left = (elRect.left - screenRect.left) + 'px';
+            el.style.right = 'auto';
+            el.style.margin = '0';
 
-function setupCoin3D(){
-  const inner = document.getElementById('coin3dInner');
-  if(!inner) return;
-  let rotation = 0;
-  let dragging = false;
-  let startX = 0;
-  let startRotation = 0;
+            // הסתרת שתי תיבות המטבע האחרות שלא נבחרו
+            document.querySelectorAll('.coin-box').forEach(box => {
+                if (box !== el) {
+                    box.style.opacity = '0';
+                    box.style.pointerEvents = 'none';
+                }
+            });
 
-  function apply(withTransition){
-    inner.style.transition = withTransition ? 'transform .5s cubic-bezier(.2,.8,.2,1)' : 'none';
-    inner.style.transform = `rotateY(${rotation}deg)`;
-    const light = (0.82 + 0.18*Math.cos(rotation*Math.PI/180)).toFixed(2);
-    inner.style.filter = `brightness(${light})`;
-  }
+            // מעבר לפריים הבא כדי שהדפדפן "יתפוס" את המיקום ההתחלתי
+            // לפני שמגדירים את יעד התנועה - כדי שהמעבר יהיה אנימציה חלקה
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    el.classList.add('flying-to-right');
+                    el.style.top = '30px';
+                    el.style.left = (screenRect.width - 150) + 'px';
+                    el.style.width = '110px';
+                    el.style.height = '110px';
+                });
+            });
 
-  inner.addEventListener('pointerdown', (e)=>{
-    dragging = true;
-    inner.classList.add('dragging');
-    startX = e.clientX;
-    startRotation = rotation;
-    inner.setPointerCapture(e.pointerId);
-  });
-  inner.addEventListener('pointermove', (e)=>{
-    if(!dragging) return;
-    rotation = startRotation + (e.clientX - startX) * 0.6;
-    apply(false);
-  });
-  inner.addEventListener('pointerup', ()=>{ dragging = false; inner.classList.remove('dragging'); });
-  inner.addEventListener('pointercancel', ()=>{ dragging = false; inner.classList.remove('dragging'); });
+            setTimeout(() => {
+                document.getElementById('whitePanel').classList.add('slide-up');
+            }, 300);
 
-  const flipBtn = document.getElementById('flipCoinBtn');
-  if(flipBtn){
-    flipBtn.addEventListener('click', ()=>{
-      rotation += 180;
-      apply(true);
-    });
-  }
+            // מעבר למסך 5 (מוצג למשתמש כ"מסך 4") רק בסיום מלא של האנימציות
+            setTimeout(() => {
+                goToScreen(5);
+            }, 1900);
+        }
 
-  apply(false);
-}
+        /* ==========================================================
+           מסך 5 - כפתור 1: הפעלה/השהיה של ההקראה הקולית על המוצג.
+           לוחצים בפעם הראשונה -> הקראה מתחילה, האייקון והצבע
+           משתנים למצב "מושמע". בסיום ההקראה, האייקון חוזר למצב "נגן".
+           לחיצה נוספת בזמן שההקראה פועלת עוצרת אותה.
+           ========================================================== */
+        let isArtifactAudioPlaying = false;
 
-function loadImage(src){
-  return new Promise((resolve, reject)=>{
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = ()=>resolve(img);
-    img.onerror = reject;
-    img.src = src;
-  });
-}
+        function setPlayButtonState(playing) {
+            isArtifactAudioPlaying = playing;
+            const btn = document.getElementById('playBtn');
+            const icon = document.getElementById('playIcon');
+            if (playing) {
+                btn.classList.add('is-playing');
+                btn.title = 'השהה הקראה';
+                icon.innerHTML = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'; // אייקון "השהה"
+            } else {
+                btn.classList.remove('is-playing');
+                btn.title = 'נגן / השהה הסבר קולי';
+                icon.innerHTML = '<path d="M8 5v14l11-7z"/>'; // אייקון "נגן"
+            }
+        }
 
-async function renderCoinToBlob(coin){
-  const opt = sideById(coin.secondSide);
-  const size = 600;
-  const canvas = document.createElement('canvas');
-  canvas.width = size; canvas.height = size;
-  const ctx = canvas.getContext('2d');
+        function playArtifactAudio() {
+            if (isArtifactAudioPlaying) {
+                // לחיצה נוספת בזמן ניגון - עוצרת את ההקראה
+                window.speechSynthesis.cancel();
+                setPlayButtonState(false);
+                return;
+            }
+            const text = document.getElementById('artifact-description').innerText.trim();
+            setPlayButtonState(true);
+            speak(text, () => setPlayButtonState(false));
+        }
 
-  ctx.fillStyle = '#EFE3C8';
-  ctx.fillRect(0,0,size,size);
+        /* מסך 5 - כפתור 2: ניגון ההסבר הקולי מחדש מההתחלה */
+        function replayArtifactAudio() {
+            const text = document.getElementById('artifact-description').innerText.trim();
+            setPlayButtonState(true);
+            speak(text, () => setPlayButtonState(false));
+        }
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(size/2, size/2, size/2 - 14, 0, Math.PI*2);
-  ctx.clip();
+        /* ==========================================================
+           מסך 5 - כפתור 3: פתיחת שכבת ה"וידאו" (סימולציה לאב-הטיפוס).
+           בפרויקט הסופי: להחליף את שכבת video-placeholder בתגית
+           <video controls autoplay src="קובץ_הדגמה.mp4"></video>
+           עם קובץ הווידאו האמיתי של המוצג שנבחר.
+           ========================================================== */
+        function playArtifactVideo() {
+            // עוצרים הקראה קולית פעילה (אם יש) כדי שלא תתנגש עם הווידאו
+            window.speechSynthesis.cancel();
+            setPlayButtonState(false);
+            document.getElementById('videoOverlay').classList.add('active');
+        }
 
-  const photoImg = await loadImage(coin.photo);
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(0,0,size/2,size);
-  ctx.clip();
-  const iw = photoImg.width, ih = photoImg.height;
-  const scale = Math.max(size/iw, size/ih);
-  const dw = iw*scale, dh = ih*scale;
-  ctx.drawImage(photoImg, size/2-dw/2, size/2-dh/2, dw, dh);
-  ctx.restore();
+        function closeVideoOverlay() {
+            document.getElementById('videoOverlay').classList.remove('active');
+        }
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(size/2,0,size/2,size);
-  ctx.clip();
-  ctx.fillStyle = opt.bg;
-  ctx.fillRect(size/2,0,size/2,size);
-  ctx.font = '220px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(opt.ico, size/2 + size/4, size/2 + 10);
-  ctx.restore();
+        /* מסך 5 - כפתור 4: איפוס אב-הטיפוס וחזרה למסך 1 */
+        function resetPrototype() {
+            window.speechSynthesis.cancel();
+            setPlayButtonState(false);
+            document.getElementById('videoOverlay').classList.remove('active');
 
-  ctx.restore();
+            // איפוס מצב האנימציות במסך 3
+            const textElement = document.getElementById('main-instruction');
+            if (textElement) {
+                textElement.innerHTML = 'בחרו את אחד המטבעות<br>המסומנים על ידי לחיצה עליו.';
+            }
 
-  ctx.beginPath();
-  ctx.arc(size/2, size/2, size/2 - 14, 0, Math.PI*2);
-  ctx.lineWidth = 22;
-  ctx.strokeStyle = '#A8763E';
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(size/2, size/2, size/2 - 3, 0, Math.PI*2);
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = '#7C5426';
-  ctx.stroke();
+            // איפוס כל תיבות המטבע: הסרת המחלקה וכל הסגנון שהוגדר דינמית
+            // ב-selectCoin, כדי שכל תיבה תחזור למיקום המקורי שלה מה-CSS
+            document.querySelectorAll('.coin-box').forEach(box => {
+                box.classList.remove('flying-to-right');
+                box.removeAttribute('style');
+            });
 
-  return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-}
+            const whitePanel = document.getElementById('whitePanel');
+            if (whitePanel) {
+                whitePanel.classList.remove('slide-up');
+            }
 
-async function shareCoin(coin){
-  const statusEl = document.getElementById('shareStatus');
-  if(statusEl) statusEl.textContent = 'מכין תמונה לשיתוף...';
-  try{
-    const blob = await renderCoinToBlob(coin);
-    const file = new File([blob], (coin.name || 'המטבע-שלי') + '.png', {type:'image/png'});
-    const shareText = 'הנה המטבע האישי שלי: ' + coin.name;
+            // חזרה למסך 1 (כולל הפעלת השמע המתאים דרך goToScreen)
+            goToScreen(1);
+        }
 
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], title:coin.name, text:shareText});
-      if(statusEl) statusEl.textContent = '';
-    } else {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = file.name;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      if(statusEl) statusEl.textContent = 'התמונה הורדה. פותח וואטסאפ - צרף אותה בשיחה.';
-      setTimeout(()=>{
-        window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
-      }, 600);
-    }
-  }catch(err){
-    if(err && err.name === 'AbortError') { if(statusEl) statusEl.textContent=''; return; }
-    if(statusEl) statusEl.textContent = 'לא הצלחנו לשתף אוטומטית, ננסה דרך קישור טקסט.';
-    window.open('https://wa.me/?text=' + encodeURIComponent('הנה המטבע האישי שלי: ' + coin.name), '_blank');
-  }
-}
+        /* ==========================================================
+           הפעלת ההקראה הראשונית עם טעינת הדף, שכן מסך 1 פעיל
+           כברירת מחדל ולא עובר דרך goToScreen().
 
-function bindEvents(){
-  const phone = document.getElementById('phone');
-  phone.querySelectorAll('[data-action]').forEach(el=>{
-    el.addEventListener('click', (e)=>{
-      const action = el.getAttribute('data-action');
-      const i = el.getAttribute('data-i');
-      const id = el.getAttribute('data-id');
-      handleAction(action, {i, id});
-    });
-  });
-  const photoInput = document.getElementById('photoInput');
-  if(photoInput){
-    photoInput.addEventListener('change', (e)=>{
-      const file = e.target.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev)=>{
-        state.photo = ev.target.result;
-        state.step = 'confirmPhoto';
-        render();
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-  const nameInput = document.getElementById('coinNameInput');
-  if(nameInput){
-    nameInput.addEventListener('input', (e)=>{ state.coinName = e.target.value; });
-  }
-  const slider = document.getElementById('splitSlider');
-  if(slider){
-    slider.addEventListener('input', (e)=>{
-      state.splitPos = e.target.value;
-    });
-  }
-  setupCoin3D();
-}
+           הערה חשובה: רוב הדפדפנים חוסמים השמעת שמע אוטומטית לפני
+           שהמשתמש ביצע אינטראקציה כלשהי עם הדף (מדיניות autoplay).
+           לכן, בנוסף לניסיון ההשמעה המיידי, נוסף כאן מנגנון גיבוי:
+           אם בתוך זמן קצר מתברר שההשמעה לא התחילה בפועל, המערכת
+           תמתין למגע הראשון של המשתמש בעמוד (לחיצה או מגע) ותשמיע
+           את ההוראה של המסך הפעיל באותו רגע. כמו כן, כפתור הרמקול
+           (replay-instruction-btn) מאפשר בכל מקרה השמעה חוזרת ידנית.
+           ========================================================== */
+        function attemptInitialAudio() {
+            speak(screenAudioTexts[1]);
 
-function handleAction(action, data){
-  switch(action){
-    case 'startCreate':
-      state.photo=null; state.secondSide=null; state.coinName=''; state.showMoreOptions=false;
-      state.step='takePhoto'; break;
-    case 'triggerPhoto':
-      document.getElementById('photoInput').click(); return;
-    case 'retakePhoto':
-      state.step='takePhoto'; break;
-    case 'confirmPhoto':
-      state.step='chooseSide'; break;
-    case 'toggleMore':
-      state.showMoreOptions=true; break;
-    case 'selectSide':
-      state.secondSide=data.id; state.step='confirmSide'; break;
-    case 'backToChooseSide':
-      state.step='chooseSide'; break;
-    case 'confirmSide':
-      state.step='previewCombined'; break;
-    case 'backToConfirmSide':
-      state.step='chooseSide'; break;
-    case 'gotoName':
-      state.step='nameCoin'; break;
-    case 'submitName':
-      const val = document.getElementById('coinNameInput').value.trim();
-      state.coinName = val || 'המטבע שלי';
-      state.step='reveal'; break;
-    case 'saveToMyCoins':
-      state.myCoins.push({photo:state.photo, secondSide:state.secondSide, name:state.coinName});
-      state.step='myCoins'; break;
-    case 'viewFinalCoin':
-      state.myCoins.push({photo:state.photo, secondSide:state.secondSide, name:state.coinName});
-      state.activeCoinIndex = state.myCoins.length-1;
-      state.splitPos=50;
-      state.step='viewCoin'; break;
-    case 'openCoin':
-      state.activeCoinIndex = parseInt(data.i);
-      state.splitPos=50;
-      state.step='viewCoin'; break;
-    case 'gotoMyCoins':
-      state.step='myCoins'; break;
-    case 'gotoIntro':
-      state.step='intro'; break;
-    case 'back':
-      goBack(); break;
-    case 'shareCoin':
-      shareCoin(state.myCoins[state.activeCoinIndex]);
-      return;
-    case 'none':
-      return;
-  }
-  render();
-}
+            setTimeout(() => {
+                const autoplayBlocked = !window.speechSynthesis || !window.speechSynthesis.speaking;
+                if (autoplayBlocked) {
+                    const unlockAudioOnce = () => {
+                        if (!window.speechSynthesis.speaking) {
+                            replayCurrentScreenAudio();
+                        }
+                        document.removeEventListener('click', unlockAudioOnce);
+                        document.removeEventListener('touchstart', unlockAudioOnce);
+                    };
+                    document.addEventListener('click', unlockAudioOnce, { once: true });
+                    document.addEventListener('touchstart', unlockAudioOnce, { once: true });
+                }
+            }, 300);
+        }
 
-function goBack(){
-  const map = {
-    takePhoto:'intro', confirmPhoto:'takePhoto', chooseSide:'confirmPhoto',
-    confirmSide:'chooseSide', previewCombined:'confirmSide', nameCoin:'previewCombined',
-    reveal:'nameCoin', myCoins:'intro', viewCoin:'myCoins'
-  };
-  state.step = map[state.step] || 'intro';
-}
-
-render();
-</script>
+        window.addEventListener('DOMContentLoaded', attemptInitialAudio);
+    </script>
 </body>
 </html>
